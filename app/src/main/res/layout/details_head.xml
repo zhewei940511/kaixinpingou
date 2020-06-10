@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical">
+    <com.stx.xhb.xbanner.XBanner
+        android:id="@+id/bannertop"
+        android:layout_width="match_parent"
+        android:layout_height="375dp"
+        android:layout_gravity="center"
+        app:isAutoPlay="false"
+        app:isHandLoop="true"
+        app:isShowNumberIndicator="true"
+        app:numberIndicatorBacgroud="@mipmap/numberindicatoricon"
+        app:pointsPosition="RIGHT"
+        app:pointsVisibility="true" />
+</LinearLayout>

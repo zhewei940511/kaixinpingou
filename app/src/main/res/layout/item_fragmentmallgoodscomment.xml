@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:paddingTop="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_headPic"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@mipmap/ic_touxiang"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@+id/iv_headPic"
+            android:text="暮看日西沉"
+            android:textColor="#646464"
+            android:textSize="@dimen/typeface12sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_alignStart="@+id/tv_name"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="2019-08-19  10:20"
+            android:textColor="#969696"
+            android:textSize="@dimen/typeface11sp" />
+
+        <com.willy.ratingbar.ScaleRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:srb_clearRatingEnabled="true"
+            app:srb_drawableEmpty="@mipmap/ic_plant_gray"
+            app:srb_drawableFilled="@mipmap/ic_plant"
+            app:srb_isIndicator="true"
+            app:srb_minimumStars="1"
+            app:srb_numStars="5"
+            app:srb_starHeight="13dp"
+            app:srb_starPadding="5dp"
+            app:srb_starWidth="14dp"
+            app:srb_stepSize="0.5" />
+    </RelativeLayout>
+    <TextView
+        android:paddingLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_12"
+        android:textColor="@color/black_99"
+        android:textSize="@dimen/typeface11sp"
+        android:text="规格:自然黑棕色，4G"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:paddingRight="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_11"
+        android:textColor="@color/black_33"
+        android:textSize="@dimen/typeface14sp"
+        android:text="产品很满意，颜色很好，产品很满意，颜色很好，产品 很满意，颜色很好"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/img_rv"
+       android:overScrollMode="never"
+       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+       app:spanCount="3"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
+    <View
+        android:layout_marginTop="@dimen/dp_22"
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"/>
+</LinearLayout>

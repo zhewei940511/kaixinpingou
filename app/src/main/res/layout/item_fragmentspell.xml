@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="307.5dp"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_3">
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="@dimen/dp_17"
+            android:textSize="@dimen/typeface14sp"
+            android:textColor="@color/black_33"
+            android:text="团号:168021581"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginRight="18.5dp"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/colorNavy"
+            android:text="进行中"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="118dp"
+            android:layout_height="118dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/test_one" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="益普利生牌维生素C咀嚼片30片 *2"
+                android:textColor="@color/black_33"
+                android:textSize="@dimen/typeface15sp" />
+
+            <Button
+                android:layout_width="55dp"
+                android:layout_height="@dimen/dp_17"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@mipmap/label_bg"
+                android:text="增强体质"
+                android:textColor="#FF4B42"
+                android:textSize="@dimen/typeface9sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_7"
+                android:text="增强体质，预防感冒的作用"
+                android:textColor="@color/black_66"
+                android:textSize="@dimen/typeface11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_7"
+                android:text="$79.5零售价"
+                android:textColor="#B3B3B3"
+                android:textSize="@dimen/typeface11sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥73.9"
+                    android:textColor="#F1091A"
+                    android:textSize="@dimen/typeface21sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_3"
+                    android:text="商城价"
+                    android:textColor="@color/black_33"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:text="￥3.9"
+                    android:textColor="#F1091A"
+                    android:textSize="@dimen/typeface21sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="拼购价"
+                    android:textColor="@color/black_33"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/dp_11"
+                android:background="#F5F5F5" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:textColor="@color/colorNavy"
+            android:text="转发给朋友"
+            android:background="@drawable/shape_button_red_66"
+            android:layout_marginLeft="73dp"
+            android:layout_width="90dp"
+            android:layout_height="@dimen/dp_30"/>
+        <Button
+            android:textColor="#3D9FD0"
+            android:text="统计"
+            android:background="@drawable/shape_button_blue_d0"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="90dp"
+            android:layout_height="@dimen/dp_30"/>
+        <Button
+            android:textColor="#3D9FD0"
+            android:text="关闭"
+            android:background="@drawable/shape_button_blue_d0"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="90dp"
+            android:layout_height="@dimen/dp_30"/>
+    </LinearLayout>
+    <View
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+</LinearLayout>

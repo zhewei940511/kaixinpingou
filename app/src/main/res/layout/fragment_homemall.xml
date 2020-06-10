@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    <LinearLayout-->
+    <!--        -->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@color/white">-->
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/root_view"
+        android:layout_width="351dp"
+        android:layout_height="35dp"
+        android:background="@drawable/shape_layout_5">
+
+
+            <TextView
+                android:id="@+id/search_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_5"
+                android:textColor="#919191"
+                android:hint="植物保罗洗发水"
+                android:textColorHint="#919191"
+                android:textSize="@dimen/typeface14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_15"
+                android:src="@mipmap/ic_search" />
+
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_12">
+
+            <com.stx.xhb.xbanner.XBanner
+                android:id="@+id/bannertop"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:AutoPlayTime="3000"
+                app:isAutoPlay="true"
+                app:isShowIndicatorOnlyOne="true"
+                app:pageChangeDuration="800"
+                app:pointNormal="@drawable/shape_noraml"
+                app:pointSelect="@drawable/shape_selected"
+                app:pointsPosition="CENTER"
+                app:tipTextSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/gray" />
+
+            <cn.mtjsoft.www.gridviewpager_recycleview.GridViewPager
+                android:id="@+id/gridviewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:column_count="6"
+                app:img_height="@dimen/dp_40"
+                app:img_width="@dimen/dp_40"
+                app:point_is_show="false"
+                app:row_count="1"
+                app:verticalSpacing= "10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="爆款推荐"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/typeface18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="查看更多"
+                    android:textColor="@color/black_66"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_hotstyletorecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

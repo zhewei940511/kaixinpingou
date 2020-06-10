@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <include layout="@layout/base_title_view"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/header_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:textSize="@dimen/typeface15sp"
+        android:textColor="@color/white"
+        android:text="添加新地址"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_button_main"
+        android:layout_alignParentBottom="true"
+        android:layout_width="341dp"
+        android:layout_height="@dimen/dp_45"/>
+</RelativeLayout>

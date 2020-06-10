@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.laojiashop.laojia">
+    <!-- 拨打电话的权限，这里必须要添加权限，否则当点击电话号码的时候程序会崩溃 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 腾讯Bugly -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity"/><!--登录界面-->
+        <activity android:name=".activity.RegisteredActivity"/><!--注册界面-->
+        <activity android:name=".activity.MallGoodsDetailsOtherActivity"/><!--商品详情页面-->
+        <activity android:name=".activity.MyaddressActivity"/><!--我的地址界面-->
+        <activity android:name=".activity.NewaddressActivity"/><!--新增地址界面-->
+        <activity android:name=".activity.SelectLocationActivity"/><!--定位界面-->
+        <activity android:name=".activity.SearchActivity"/><!--地址搜索界面-->
+        <activity android:name=".activity.ModifyfeedbackActivity"/><!--意见反馈-->
+        <activity android:name=".activity.MorecommentsActivity"/><!--查看更多评价-->
+        <activity android:name=".activity.BuyNowActivity"/><!--立即购买-->
+        <activity android:name=".activity.SetActivity"/><!--设置界面-->
+        <activity android:name=".activity.ChangethepasswordActivity"/><!--修改密碼-->
+        <activity android:name=".activity.BindphonenumberActivity"/><!--绑定手机号-->
+        <activity android:name=".activity.GoldcoinsActivity"/><!--我得金币-->
+        <activity android:name=".activity.WithdrawalActivity"/><!--提现界面-->
+        <activity android:name=".activity.WithdrawalRecordActivity"/><!--提现记录界面-->
+        <activity android:name=".activity.ReceivedividendsActivity"/><!--分红权-->
+        <!--今日头条的适配-->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="667" />
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" /> <!-- 高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="e952ff401b2d39a42c3c87b11a3d8fd7" /> <!-- 高德地图定位 -->
+        <service android:name="com.amap.api.location.APSService" />
+    </application>
+
+
+</manifest>

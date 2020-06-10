@@ -1,0 +1,2 @@
+rootProject.name='laojia'
+include ':app',':library'

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/rootView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41.5dp"
+        android:layout_marginTop="@dimen/dp_100"
+        android:text="@string/regist_txt"
+        android:textColor="@color/black_28"
+        android:textSize="30sp" />
+
+<!--    <EditText-->
+<!--        android:id="@+id/et_registphonenum"-->
+<!--      />-->
+    <com.laojiashop.laojia.view.ClearEditText
+        android:id="@+id/et_registphonenum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41.5dp"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginRight="41.5dp"
+        android:background="@null"
+        android:drawableRight="@mipmap/icon_close"
+        android:hint="@string/login_phonenum"
+        android:padding="@dimen/dp_10"
+        android:textColor="#919191"
+        android:textColorHint="#999999"
+        android:textSize="@dimen/typeface12sp"/>
+    <View
+        android:layout_width="292dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="41.5dp"
+        android:background="#F5F5F5" />
+
+    <RelativeLayout
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41.5dp"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginRight="41.5dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@null"
+            android:hint="@string/login_phonepwd"
+            android:padding="@dimen/dp_10"
+            android:textColor="#919191"
+            android:textColorHint="#999999"
+            android:textSize="@dimen/typeface12sp" />
+
+        <Button
+            android:id="@+id/btn_getregistcode"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_28"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_button_main"
+            android:gravity="center"
+            android:text="获取验证码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/typeface11sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="292dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="41.5dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41.5dp"
+        android:layout_marginTop="@dimen/dp_16">
+
+        <CheckBox
+            android:id="@+id/ck_sure"
+            android:layout_width="14dp"
+            android:layout_height="@dimen/dp_14"
+            android:background="@drawable/checkboxstyle" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="我已阅读并同意"
+                android:textColor="@color/black_66"
+                android:textSize="@dimen/typeface13sp" />
+
+            <TextView
+                android:id="@+id/tv_registagreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《注册服务协议》"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/typeface13sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_regist"
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="61dp"
+        android:clickable="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/shape_button_main_34"
+        android:text="@string/regist_txt"
+        android:textColor="@color/colorWhite" />
+
+    <LinearLayout
+        android:id="@+id/ly_gotologin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已有账号?"
+            android:textColor="@color/black_66"
+            android:textSize="@dimen/typeface13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_txt"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/typeface13sp" />
+    </LinearLayout>
+
+</LinearLayout>
