@@ -5,14 +5,39 @@
     android:orientation="vertical">
     <include layout="@layout/base_title_view" />
     <FrameLayout
+        android:layout_width="330dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
         android:background="@mipmap/icon_receivedividends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
         <TextView
-            android:text="不对头不对头"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="51dp"
+            android:textSize="@dimen/typeface14sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/dp_11"
+            android:layout_marginTop="@dimen/dp_27"
+            android:text="累计分红"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_22"
+                android:text="123.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:textSize="@dimen/typeface14sp"
+                android:text="兑换"
+                android:textColor="#6A84FF"
+                android:background="@drawable/shape_withdrawal_layout_blue"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_28"/>
+        </RelativeLayout>
     </FrameLayout>
 </LinearLayout>
