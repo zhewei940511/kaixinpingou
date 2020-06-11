@@ -78,17 +78,19 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:layout_marginLeft="@dimen/dp_11"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
                                 android:text="累计收益"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
+                                android:layout_marginLeft="@dimen/dp_11"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
                                 android:text="0.00"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/typeface18sp" />
@@ -103,7 +105,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
                                 android:text="已发放"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
@@ -111,7 +113,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
                                 android:text="99.00"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/typeface18sp" />
@@ -126,7 +128,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
                                 android:text="待发放"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
@@ -134,7 +136,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
                                 android:text="0.00"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/typeface18sp" />
@@ -144,6 +146,7 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.flyco.tablayout.SlidingTabLayout
+
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"

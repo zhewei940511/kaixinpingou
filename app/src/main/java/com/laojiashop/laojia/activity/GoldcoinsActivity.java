@@ -1,6 +1,7 @@
 package com.laojiashop.laojia.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,9 +19,6 @@ import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
 import com.laojiashop.laojia.fragment.Goldcoins.AlltransactionsFragment;
 import com.laojiashop.laojia.fragment.Goldcoins.SpellgrouprewardsFragment;
-import com.laojiashop.laojia.fragment.HappybeanPage.HasendedFragment;
-import com.laojiashop.laojia.fragment.HappybeanPage.OngoingFragment;
-import com.laojiashop.laojia.fragment.MyspellingPage.SpellgroupFragment;
 
 import java.util.ArrayList;
 
@@ -85,11 +83,19 @@ public class GoldcoinsActivity extends BaseActivity {
     }
 
 
-    //提现按钮
-    @OnClick(R.id.btn_withdrawal)
-    public void onViewClicked() {
-        jumpActivity(WithdrawalActivity.class);
+    @OnClick({R.id.iv_header_back, R.id.btn_withdrawal})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_header_back:
+                finish();
+                break;
+                //提现按钮
+            case R.id.btn_withdrawal:
+                jumpActivity(WithdrawalActivity.class);
+                break;
+        }
     }
+
 
     //vp适配器
     private class MyPagerAdapter extends FragmentPagerAdapter {

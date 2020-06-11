@@ -49,7 +49,7 @@ public class SpellgroupFragment extends BaseFragment {
         }
         SpellgroupFragmentAdapter adapter=new SpellgroupFragmentAdapter(R.layout.item_fragmentspell,mDataList);
         adapter.openLoadAnimation();
-        rvRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+      //  rvRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
         //刷新数据
       //  pageLoadUtil = PageLoadUtil.get((BaseActivity) getActivity(), rvRecycler, adapter, refreshLayout);
 

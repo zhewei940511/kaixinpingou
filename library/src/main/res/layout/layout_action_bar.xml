@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/actionBarContentView"
         android:layout_alignParentTop="@id/actionBarContentView"
-        android:background="#5ED3AE" />
+        android:background="#ffffff" />
 
     <FrameLayout
         android:id="@+id/actionBarContentView"
@@ -28,7 +28,7 @@
                 android:layout_width="8.5dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_back_01" />
+                android:src="@mipmap/all_back" />
         </FrameLayout>
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="#ffffffff"
+            android:textColor="#000000"
             android:textSize="14sp"
             tools:text="全部订单" />
 

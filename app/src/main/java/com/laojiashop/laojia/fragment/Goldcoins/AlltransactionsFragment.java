@@ -43,7 +43,7 @@ public class AlltransactionsFragment extends BaseFragment {
             HotstyletorecommendBean databean = new HotstyletorecommendBean();
             mDataList.add(databean);
         }
-        HomemallPageFragmentAdapter adapter=new HomemallPageFragmentAdapter(R.layout.item_hotstyletorecommend,mDataList);
+        HomemallPageFragmentAdapter adapter=new HomemallPageFragmentAdapter(R.layout.item_alltransactionsfragment,mDataList);
         adapter.openLoadAnimation();
         rvHotstyletorecommend.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
         rvHotstyletorecommend.setAdapter(adapter);
