@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -84,24 +85,23 @@ public class ShoporderActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                       // ActionBarUtil.setTitle(mActivity, "全部订单");
                         tvHeaderTitle.setText("全部订单");
                         break;
                     case 1:
                         tvHeaderTitle.setText("待付款");
-                       // ActionBarUtil.setTitle(mActivity, "待付款");
+
                         break;
                     case 2:
                         tvHeaderTitle.setText("待发货");
-                       // ActionBarUtil.setTitle(mActivity, "待发货");
+
                         break;
                     case 3:
                         tvHeaderTitle.setText("待收货");
-                       // ActionBarUtil.setTitle(mActivity, "待收货");
+
                         break;
                     case 4:
                         tvHeaderTitle.setText("待评价");
-                        //ActionBarUtil.setTitle(mActivity, "待评价");
+
                         break;
                 }
             }
@@ -125,6 +125,18 @@ public class ShoporderActivity extends BaseActivity {
                 //待付款
             case "2":
                 viewPager.setCurrentItem(1, true);
+                break;
+                //待发货
+            case "3":
+                viewPager.setCurrentItem(2, true);
+                break;
+                //待收货
+            case "4":
+                viewPager.setCurrentItem(3, true);
+                break;
+                //已签收
+            case "5":
+                viewPager.setCurrentItem(4, true);
                 break;
         }
 

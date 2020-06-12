@@ -101,12 +101,21 @@ public class MePageFragment extends BaseFragment {
                 break;
                 //待发货
             case R.id.ly_mepagedropshipping:
+                Intent dropshippingintent=new Intent(getActivity(),ShoporderActivity.class);
+                dropshippingintent.putExtra("index","3");
+                startActivity(dropshippingintent);
                 break;
                 //待收货
             case R.id.ly_mepageforthegoods:
+                Intent forthegoodsintent=new Intent(getActivity(),ShoporderActivity.class);
+                forthegoodsintent.putExtra("index","4");
+                startActivity(forthegoodsintent);
                 break;
-                //已收货
+                //签收
             case R.id.mepagehavethegoods:
+                Intent havethegoodsintent=new Intent(getActivity(),ShoporderActivity.class);
+                havethegoodsintent.putExtra("index","5");
+                startActivity(havethegoodsintent);
                 break;
                 //全部订单
             case R.id.ly_allorders:
