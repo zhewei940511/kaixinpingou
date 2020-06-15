@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.activity.GoldcoinsActivity;
 import com.laojiashop.laojia.activity.MeHappybeanActivity;
+import com.laojiashop.laojia.activity.MycollectionActivity;
 import com.laojiashop.laojia.activity.ReceivedividendsActivity;
 import com.laojiashop.laojia.activity.SetActivity;
 import com.laojiashop.laojia.activity.ShoporderActivity;
@@ -42,6 +43,8 @@ public class MePageFragment extends BaseFragment {
     LinearLayout mepagehavethegoods;
     @BindView(R.id.ly_allorders)
     LinearLayout lyAllorders;
+    @BindView(R.id.ly_mycollection)
+    RelativeLayout lyMycollection;
 
     @Override
     protected int getContentViewRes() {
@@ -72,9 +75,14 @@ public class MePageFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ly_receivedividends, R.id.rl_addressmanagement, R.id.ly_goldcoins, R.id.ly_happybean,R.id.ly_mepagegenerationofpayment, R.id.ly_mepagedropshipping, R.id.ly_mepageforthegoods, R.id.mepagehavethegoods, R.id.ly_allorders})
+    @OnClick({R.id.ly_mycollection,R.id.ly_receivedividends, R.id.rl_addressmanagement, R.id.ly_goldcoins, R.id.ly_happybean, R.id.ly_mepagegenerationofpayment, R.id.ly_mepagedropshipping, R.id.ly_mepageforthegoods, R.id.mepagehavethegoods, R.id.ly_allorders})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+                //我的收藏
+            case R.id.ly_mycollection:
+                Intent mycollectionintent = new Intent(mAty, MycollectionActivity.class);
+                startActivity(mycollectionintent);
+                break;
             //我得金币点击事件
             case R.id.ly_goldcoins:
                 Intent intent = new Intent(mAty, GoldcoinsActivity.class);
@@ -93,38 +101,41 @@ public class MePageFragment extends BaseFragment {
                 Intent happybeanintent = new Intent(mAty, MeHappybeanActivity.class);
                 startActivity(happybeanintent);
                 break;
-                //待付款
+            //待付款
             case R.id.ly_mepagegenerationofpayment:
-                Intent generationointent=new Intent(getActivity(),ShoporderActivity.class);
-                generationointent.putExtra("index","2");
+                Intent generationointent = new Intent(getActivity(), ShoporderActivity.class);
+                generationointent.putExtra("index", "2");
                 startActivity(generationointent);
                 break;
-                //待发货
+            //待发货
             case R.id.ly_mepagedropshipping:
-                Intent dropshippingintent=new Intent(getActivity(),ShoporderActivity.class);
-                dropshippingintent.putExtra("index","3");
+                Intent dropshippingintent = new Intent(getActivity(), ShoporderActivity.class);
+                dropshippingintent.putExtra("index", "3");
                 startActivity(dropshippingintent);
                 break;
-                //待收货
+            //待收货
             case R.id.ly_mepageforthegoods:
-                Intent forthegoodsintent=new Intent(getActivity(),ShoporderActivity.class);
-                forthegoodsintent.putExtra("index","4");
+                Intent forthegoodsintent = new Intent(getActivity(), ShoporderActivity.class);
+                forthegoodsintent.putExtra("index", "4");
                 startActivity(forthegoodsintent);
                 break;
-                //签收
+            //签收
             case R.id.mepagehavethegoods:
-                Intent havethegoodsintent=new Intent(getActivity(),ShoporderActivity.class);
-                havethegoodsintent.putExtra("index","5");
+                Intent havethegoodsintent = new Intent(getActivity(), ShoporderActivity.class);
+                havethegoodsintent.putExtra("index", "5");
                 startActivity(havethegoodsintent);
                 break;
-                //全部订单
+            //全部订单
             case R.id.ly_allorders:
-                Intent allorderintent=new Intent(getActivity(),ShoporderActivity.class);
-                allorderintent.putExtra("index","1");
+                Intent allorderintent = new Intent(getActivity(), ShoporderActivity.class);
+                allorderintent.putExtra("index", "1");
                 startActivity(allorderintent);
-               // startActivity(new Intent(getContext(), ShoporderActivity.class));
+                // startActivity(new Intent(getContext(), ShoporderActivity.class));
                 break;
         }
     }
 
+    @OnClick()
+    public void onViewClicked() {
+    }
 }

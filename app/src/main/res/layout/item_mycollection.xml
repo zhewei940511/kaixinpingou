@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_150"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_10"
+        android:scaleType="fitXY"
+        android:src="@mipmap/one_test" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_12"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="新疆小苹果新疆小苹果新疆小苹果 新疆小苹果"
+            android:textColor="@color/black_33"
+            android:textSize="@dimen/typeface14sp" />
+
+        <co.lujun.androidtagview.TagContainerLayout
+            android:id="@+id/tga_mycollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_12"
+            android:padding="10dp"
+            app:container_border_radius="0dp"
+            app:container_border_width="4dp"
+            app:container_enable_drag="true"
+            app:horizontal_interval="10dp"
+            app:tag_clickable="false"
+            app:container_border_color="#ffffff"
+            app:container_background_color="#ffffff"
+            app:tag_text_color="@color/black_33"
+            app:vertical_interval="10dp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="￥36.2"
+            android:textColor="#FF666C"
+            android:textSize="@dimen/typeface13sp" />
+
+        <Button
+            android:id="@+id/btn_delectcollection"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_25"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="@dimen/dp_12"
+            android:background="@drawable/shape_button_black_cc"
+            android:text="删除"
+            android:textColor="@color/black_33" />
+    </LinearLayout>
+</LinearLayout>

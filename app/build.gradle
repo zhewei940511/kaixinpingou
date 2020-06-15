@@ -157,5 +157,7 @@ dependencies {
     implementation 'com.github.jdsjlzx:LRecyclerView:1.4.1'
     //开关按钮
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
+    //标签控件
+    implementation 'co.lujun:androidtagview:1.1.7'
 
 }

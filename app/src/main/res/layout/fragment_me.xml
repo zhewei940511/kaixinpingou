@@ -302,6 +302,7 @@
             android:layout_width="321dp"
             android:layout_height="1dp"/>
         <RelativeLayout
+            android:id="@+id/ly_mycollection"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

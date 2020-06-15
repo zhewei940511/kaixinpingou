@@ -51,7 +51,6 @@ public class MeShopFragment extends BaseFragment {
             HotstyletorecommendBean databean = new HotstyletorecommendBean();
             mDataList.add(databean);
         }
-
         adapter.addData(mDataList);
         adapter.openLoadAnimation();
         //rvRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
