@@ -4,4 +4,67 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
     <include layout="@layout/base_title_view" />
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_layout_5"
+        android:orientation="vertical"
+        android:layout_width="351dp"
+        android:layout_height="176dp">
+        <TextView
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_17"
+            android:textSize="@dimen/typeface14sp"
+            android:textColor="@color/black_33"
+            android:text="商品信息"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitXY"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="31dp"
+                android:src="@mipmap/one_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="31dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/typeface13sp"
+                    android:text="舒蕾洗发水山茶花焗油莹亮600ml*2 瓶"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="@dimen/typeface12sp"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:textColor="@color/black_99"
+                    android:text="规格：600ml*2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="@dimen/typeface12sp"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:textColor="@color/black_33"
+                    android:text="￥39.90 x1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_gravity="right"
+                    android:text="合计￥39.9（含运费￥0）"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
