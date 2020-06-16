@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.laojiashop.laojia.R;
+import com.laojiashop.laojia.activity.GoodscommentActivity;
 import com.laojiashop.laojia.activity.OrderdetailsActivity;
 import com.laojiashop.laojia.adapter.HomemallPageFragmentAdapter;
 import com.laojiashop.laojia.adapter.MeShopFragmentAdapter;
@@ -54,6 +55,7 @@ public class MeShopFragment extends BaseFragment {
         adapter.addData(mDataList);
         adapter.openLoadAnimation();
         //rvRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        //item内部按钮点击时间
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -63,6 +65,14 @@ public class MeShopFragment extends BaseFragment {
                     Intent intent=new Intent(mAty, OrderdetailsActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+        //item点击实践
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent=new Intent(mAty, GoodscommentActivity.class);
+                startActivity(intent);
             }
         });
         rvRecycler.setAdapter(adapter);
