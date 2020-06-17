@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.laojiashop.laojia.R;
+import com.laojiashop.laojia.activity.FeedbackActivity;
 import com.laojiashop.laojia.activity.GoldcoinsActivity;
 import com.laojiashop.laojia.activity.MeHappybeanActivity;
 import com.laojiashop.laojia.activity.MycollectionActivity;
@@ -45,6 +46,8 @@ public class MePageFragment extends BaseFragment {
     LinearLayout lyAllorders;
     @BindView(R.id.ly_mycollection)
     RelativeLayout lyMycollection;
+    @BindView(R.id.rl_feedback)
+    RelativeLayout rlFeedback;
 
     @Override
     protected int getContentViewRes() {
@@ -75,10 +78,15 @@ public class MePageFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ly_mycollection,R.id.ly_receivedividends, R.id.rl_addressmanagement, R.id.ly_goldcoins, R.id.ly_happybean, R.id.ly_mepagegenerationofpayment, R.id.ly_mepagedropshipping, R.id.ly_mepageforthegoods, R.id.mepagehavethegoods, R.id.ly_allorders})
+    @OnClick({R.id.rl_feedback,R.id.ly_mycollection, R.id.ly_receivedividends, R.id.rl_addressmanagement, R.id.ly_goldcoins, R.id.ly_happybean, R.id.ly_mepagegenerationofpayment, R.id.ly_mepagedropshipping, R.id.ly_mepageforthegoods, R.id.mepagehavethegoods, R.id.ly_allorders})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-                //我的收藏
+            //意见反馈
+            case R.id.rl_feedback:
+                Intent feedbackintent = new Intent(mAty, FeedbackActivity.class);
+                startActivity(feedbackintent);
+                break;
+            //我的收藏
             case R.id.ly_mycollection:
                 Intent mycollectionintent = new Intent(mAty, MycollectionActivity.class);
                 startActivity(mycollectionintent);
@@ -135,7 +143,4 @@ public class MePageFragment extends BaseFragment {
         }
     }
 
-    @OnClick()
-    public void onViewClicked() {
-    }
 }

@@ -162,5 +162,6 @@ dependencies {
     //图片加载
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 /**
- * 开心豆界面
+ * 开心豆界面(弃用)
  */
 @SuppressLint("ValidFragment")
 public class HappybeanPageFragment extends BaseFragment {

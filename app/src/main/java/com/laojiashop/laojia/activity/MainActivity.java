@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.fragment.ClassificationPageFragment;
 import com.laojiashop.laojia.fragment.HappybeanPageFragment;
 import com.laojiashop.laojia.fragment.HomemallPageFragment;
 import com.laojiashop.laojia.fragment.MePageFragment;
@@ -26,11 +27,11 @@ public class MainActivity extends BaseActivity {
     //定义字体颜色
     private int normalTextColor = Color.parseColor("#333333");
     private int selectTextColor = Color.parseColor("#FF666C");
-    private String[] tabText = {"商城", "我的拼团", "开心豆", "我的"};
+    private String[] tabText = {"商城", "分类","我的拼团", "我的"};
     //未选中icon
-    private int[] normalIcon = {R.mipmap.home_icon_uncheck, R.mipmap.merchants_icon_uncheck,R.mipmap.tieba_icon_uncheck, R.mipmap.me_icon_uncheck};
+    private int[] normalIcon = {R.mipmap.home_icon_uncheck,R.mipmap.classification_icon_uncheck, R.mipmap.merchants_icon_uncheck, R.mipmap.me_icon_uncheck};
     //选中时icon
-    private int[] selectIcon = {R.mipmap.home_icon_check, R.mipmap.merchants_icon_check,  R.mipmap.tieba_icon_check, R.mipmap.me_icon_check};
+    private int[] selectIcon = {R.mipmap.home_icon_check, R.mipmap.classification_icon_check,R.mipmap.merchants_icon_check, R.mipmap.me_icon_check};
 
     private List<Fragment> fragments = new ArrayList<>();
 
@@ -49,8 +50,9 @@ public class MainActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         navigationBar = findViewById(R.id.navigationBar);
         fragments.add(new HomemallPageFragment());
+        fragments.add(new ClassificationPageFragment());
         fragments.add(new MyspellingPageFragment());
-        fragments.add(new HappybeanPageFragment());
+//        fragments.add(new HappybeanPageFragment());
         fragments.add(new MePageFragment());
         navigationBar.titleItems(tabText)
                 .normalIconItems(normalIcon)

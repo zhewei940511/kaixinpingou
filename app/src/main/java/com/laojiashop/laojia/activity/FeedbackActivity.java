@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.GridImageAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
@@ -29,11 +30,10 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
-import com.luck.picture.lib.style.PictureParameterStyle;
 import com.luck.picture.lib.tools.ScreenUtils;
-import com.luck.picture.lib.tools.SdkVersionUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,43 +41,45 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 商品评价界面
+ * 意见反馈
  */
-public class GoodscommentActivity extends BaseActivity {
+public class FeedbackActivity extends BaseActivity {
     @BindView(R.id.iv_header_back)
     ImageView ivHeaderBack;
     @BindView(R.id.tv_header_title)
     TextView tvHeaderTitle;
-    @BindView(R.id.tv_header_right)
-    TextView tvHeaderRight;
     @BindView(R.id.header_title_view)
     RelativeLayout headerTitleView;
-    @BindView(R.id.id_editor_detail)
-    EditText idEditorDetail;
     @BindView(R.id.picselect_recycler)
     RecyclerView picselectRecycler;
-    private int maxSelectNum = 9;
-    private  FullyGridLayoutManager fullyGridLayoutManager;
+    @BindView(R.id.tv_showchoosetype)
+    TextView tvShowchoosetype;
+    @BindView(R.id.rl_choosetype)
+    RelativeLayout rlChoosetype;
+    private int maxSelectNum = 3;
+    private FullyGridLayoutManager fullyGridLayoutManager;
     private GridImageAdapter gridImageAdapter;
+    //选择器
+    private OptionsPickerView optionsPickerView;
+    /**
+     * 模拟数据显示
+     */
+    private List<String> choosetype;
     @Override
     protected void setRootView() {
-        setContentView(R.layout.activity_goodscomment);
+        setContentView(R.layout.activity_feedback);
     }
 
     @Override
     protected void initViews() {
         getBarDistance(headerTitleView);
-        tvHeaderTitle.setText("发表评价");
-        tvHeaderRight.setVisibility(View.VISIBLE);
-        tvHeaderRight.setTextColor(Color.parseColor("#FF666C"));
-        tvHeaderRight.setText("提交");
-    //        picselectRecycler.setLayoutManager(new LinearLayoutManager(mAt));
-        fullyGridLayoutManager= new FullyGridLayoutManager(this,
+        tvHeaderTitle.setText("意见反馈");
+        fullyGridLayoutManager = new FullyGridLayoutManager(this,
                 3, GridLayoutManager.VERTICAL, false);
         gridImageAdapter = new GridImageAdapter(mAt, onAddPicClickListener);
         picselectRecycler.setLayoutManager(fullyGridLayoutManager);
         picselectRecycler.addItemDecoration(new GridSpacingItemDecoration(3,
-                ScreenUtils.dip2px(this, 6), false));
+                ScreenUtils.dip2px(this, 8), false));
         gridImageAdapter.setSelectMax(maxSelectNum);
         picselectRecycler.setAdapter(gridImageAdapter);
         gridImageAdapter.setOnItemClickListener((v, position) -> {
@@ -106,7 +108,7 @@ public class GoodscommentActivity extends BaseActivity {
 //                        animationStyle.activityPreviewExitAnimation = R.anim.picture_anim_down_out;
                         PictureSelector.create(mAt)
                                 .themeStyle(R.style.picture_default_style) // xml设置主题
-                              //  .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
+                                //  .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
                                 //.setPictureWindowAnimationStyle(animationStyle)// 自定义页面启动动画
                                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)// 设置相册Activity方向，不设置默认使用系统
                                 .isNotPreviewDownload(true)// 预览图片长按是否可以下载
@@ -117,26 +119,15 @@ public class GoodscommentActivity extends BaseActivity {
                 }
             }
         });
-
-//        gridImageAdapter.setItemLongClickListener((holder, position, v) -> {
-//            //如果item不是最后一个，则执行拖拽
-//            needScaleBig = true;
-//            needScaleSmall = true;
-//            int size = mAdapter.getData().size();
-//            if (size != maxSelectNum) {
-//                mItemTouchHelper.startDrag(holder);
-//                return;
-//            }
-//            if (holder.getLayoutPosition() != size - 1) {
-//                mItemTouchHelper.startDrag(holder);
-//            }
-//        });
-
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        choosetype=new ArrayList<>();
+        choosetype.add("订单");
+        choosetype.add("咨询");
+        choosetype.add("合作");
+        choosetype.add("服务");
     }
 
     @Override
@@ -150,19 +141,7 @@ public class GoodscommentActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.iv_header_back)
-    public void onViewClicked() {
-        finish();
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-    private GridImageAdapter.onAddPicClickListener onAddPicClickListener=new GridImageAdapter.onAddPicClickListener() {
+    private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
         @Override
         public void onAddPicClick() {
             //参数很多，根据需要添加
@@ -194,6 +173,40 @@ public class GoodscommentActivity extends BaseActivity {
                     .forResult(new MyResultCallback(gridImageAdapter));//结果回调onActivityResult code
         }
     };
+
+    @OnClick({R.id.iv_header_back, R.id.rl_choosetype})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_header_back:
+                finish();
+                break;
+            case R.id.rl_choosetype:
+                    showpick();
+                break;
+        }
+    }
+
+    /**
+     * 弹窗
+     */
+    private void showpick()
+    {
+        optionsPickerView=new OptionsPickerBuilder(mAt, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                String tx=choosetype.get(options1);
+                tvShowchoosetype.setText(tx);
+            }
+        }).setTitleText("")//设置标题
+                .setTitleBgColor(Color.parseColor("#ffffff"))//设置背景颜色
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .setLineSpacingMultiplier(2)//设置行间距
+                .setCancelColor(Color.parseColor("#666666"))
+                .setSubmitColor(Color.parseColor("#FF666C"))
+                .build();
+        optionsPickerView.setPicker(choosetype);
+        optionsPickerView.show();
+    }
     /**
      * 返回结果回调
      */
@@ -235,10 +248,8 @@ public class GoodscommentActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-        {
-            switch (requestCode)
-            {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
