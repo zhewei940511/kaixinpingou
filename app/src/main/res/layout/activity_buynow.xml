@@ -269,8 +269,8 @@
 
                     <com.kyleduo.switchbutton.SwitchButton
                         android:id="@+id/order_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="33dp"
+                        android:layout_height="@dimen/dp_17"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dp_12" />

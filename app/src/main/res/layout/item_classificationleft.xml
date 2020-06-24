@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="55dp">
+    <View
+        android:visibility="gone"
+        android:background="#FF666C"
+        android:layout_gravity="center"
+        android:layout_width="5dp"
+        android:layout_height="@dimen/dp_25"/>
+    <TextView
+        android:text="测试数据"
+        android:layout_gravity="center"
+        android:textColor="@color/black_33"
+        android:layout_marginLeft="@dimen/dp_19"
+        android:id="@+id/tv_lefttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

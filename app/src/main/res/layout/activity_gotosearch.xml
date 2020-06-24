@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_25"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="33dp">
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="310dp"
+        android:layout_height="35dp"
+        android:background="@drawable/shape_layout_13f7">
+
+        <ImageView
+            android:id="@+id/img_suresearch"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:src="@mipmap/ic_search" />
+
+        <EditText
+            android:textCursorDrawable="@drawable/shape_cursor_color"
+            android:layout_marginLeft="41dp"
+            android:background="@null"
+            android:id="@+id/search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_5"
+            android:textColor="#919191"
+            android:hint="植物保罗洗发水"
+            android:textColorHint="#919191"
+            android:textSize="@dimen/typeface14sp" />
+
+
+    </RelativeLayout>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_17"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/typeface14sp"
+            android:textColor="@color/black_33"
+            android:id="@+id/tv_searchcancle"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <TextView
+
+        android:textSize="@dimen/typeface14sp"
+        android:textColor="@color/black_33"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:text="最近搜索"
+        android:layout_marginTop="@dimen/dp_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <co.lujun.androidtagview.TagContainerLayout
+        android:layout_marginTop="@dimen/dp_14"
+        android:id="@+id/tga_recentsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_12"
+        android:padding="10dp"
+        app:container_border_radius="0dp"
+        app:container_border_width="4dp"
+        app:tag_border_color="#F2F2F2"
+        app:container_enable_drag="true"
+        app:tag_background_color="#F2F2F2"
+        app:horizontal_interval="10dp"
+        app:tag_clickable="true"
+        app:container_border_color="#ffffff"
+        app:container_background_color="#ffffff"
+        app:tag_text_color="@color/black_33"
+        app:vertical_interval="@dimen/dp_12" />
+    <TextView
+        android:textSize="@dimen/typeface14sp"
+        android:textColor="@color/black_33"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:text="热门搜素"
+        android:layout_marginTop="@dimen/dp_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <co.lujun.androidtagview.TagContainerLayout
+        android:layout_marginTop="@dimen/dp_14"
+        android:id="@+id/tga_topsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_12"
+        android:padding="10dp"
+        app:container_border_radius="0dp"
+        app:container_border_width="4dp"
+        app:container_enable_drag="true"
+        app:horizontal_interval="10dp"
+        app:tag_clickable="true"
+         app:tag_border_color="#F2F2F2"
+        app:container_border_color="#ffffff"
+        app:container_background_color="#ffffff"
+        app:tag_text_color="@color/black_33"
+        app:vertical_interval="@dimen/dp_12" />
+</LinearLayout>

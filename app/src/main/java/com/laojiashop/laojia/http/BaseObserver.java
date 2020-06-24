@@ -54,26 +54,17 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
     @Override
     public void onNext(BaseResult<T> t) {
         mData = t;
-        /**
-         * 判断返回码
-         */
         try {
-            if (t.code.equals("0")||t.code.equals("203")) {
+            if (t.code.equals("200")||t.code.equals("203")) {
                 onHandleSuccess(t.data);
             }
-//            else if (t.code.equals("202")) {
+//            //else if (t.code.equals("202")) {
 ////                LoginActivity.start(context);
 ////                LoginInfoUtil.saveLoginInfo("","");
 //            }
-            else {
+        else {
                 onError(new ApiException(t.code, t.msg));
             }
-//            if (t.getResultcode().equals("200"))
-//            {
-//                onHandleSuccess(t.getResult());
-//            }else {
-//                onError(new ApiException(t.getResultcode(), t.getReason()));
-//            }
         } catch (Exception e) {
             onError(new ApiException(ApiException.TYPE_SYSTEM, e.getMessage()));
             e.printStackTrace();

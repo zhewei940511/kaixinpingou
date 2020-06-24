@@ -3,7 +3,26 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
-
+//    signingConfigs {
+//        debugConfig {
+//            storeFile file('zdpingou.jks')
+//            storePassword "123456"
+//            keyAlias "zdpingou"
+//            keyPassword "123456"
+//        }
+//        release {
+//            storeFile file('zdpingou.jks')
+//            storePassword "123456"
+//            keyAlias "zdpingou"
+//            keyPassword "123456"
+//        }
+//        debug {
+//            storeFile file('D:\\Users\\Administrator\\AndroidStudioProjects\\laojia\\app\\zdpingou.jks')
+//            storePassword '123456'
+//            keyAlias = 'zdpingou'
+//            keyPassword '123456'
+//        }
+//    }
     defaultConfig {
         applicationId "com.laojiashop.laojia"
         minSdkVersion 21
@@ -11,8 +30,9 @@ android {
         versionCode 1
         versionName "1.0"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
-      //  buildConfigField "String", "API_HOST", "\"http://andou.zhuosongkj.com/index.php/\""
-        buildConfigField "String", "API_HOST", "\"http://base.test.laojia99.com/\""
+       buildConfigField "String", "API_HOST", "\"http://andou.zhuosongkj.com/index.php/\""
+       // buildConfigField "String", "API_HOST", "\"http://base.test.laojia99.com/\""
+      //  buildConfigField "String", "API_HOST", "\"https://test.cangbaopai.com/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -163,5 +183,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
-
+    //侧滑效果
+    implementation 'com.lxj:xpopup:1.8.10-x'
+    //地址选择器
+    implementation 'com.github.chihane:JDAddressSelector:1.1.4'
 }

@@ -5,14 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorNavy">
-
-        <include layout="@layout/base_title_view" />
-    </LinearLayout>
-
+    <include layout="@layout/base_title_view" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,8 +46,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginLeft="11dp"
-
-            android:text="联系电话:"
+            android:text="手机号码:"
             android:textColor="#646464"
             android:textSize="@dimen/typeface13sp" />
 
@@ -123,7 +115,8 @@
     <RelativeLayout
         android:id="@+id/ry_locationaddress"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="55dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -238,14 +231,13 @@
             android:text="设为默认收货地址"
             android:textColor="#646464" />
 
-        <CheckBox
-            android:id="@+id/defaultCkb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/order_switch"
+            android:layout_width="33dp"
+            android:layout_height="@dimen/dp_17"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_10"
-            android:button="@drawable/selector_checkbox" />
+            android:layout_marginRight="@dimen/dp_12" />
     </RelativeLayout>
 
     <Button

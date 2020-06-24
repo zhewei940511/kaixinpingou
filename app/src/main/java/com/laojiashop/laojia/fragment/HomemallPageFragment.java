@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,14 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.laojiashop.laojia.R;
-import com.laojiashop.laojia.activity.GoodsdetailsActivity;
-import com.laojiashop.laojia.activity.MallGoodsDetailsActivity;
+import com.laojiashop.laojia.activity.GotoSearchActivity;
 import com.laojiashop.laojia.activity.MallGoodsDetailsOtherActivity;
 import com.laojiashop.laojia.adapter.HomemallPageFragmentAdapter;
 import com.laojiashop.laojia.base.BaseFragment;
 import com.laojiashop.laojia.entity.HotstyletorecommendBean;
-import com.laojiashop.laojia.utils.BarUtils;
-import com.laojiashop.laojia.utils.StatusBarUtil;
 import com.laojiashop.laojia.utils.ToastUtil;
 import com.stx.xhb.xbanner.XBanner;
 
@@ -30,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.mtjsoft.www.gridviewpager_recycleview.GridViewPager;
 
 /**
@@ -42,8 +40,10 @@ public class HomemallPageFragment extends BaseFragment {
     GridViewPager gridviewpager;
     @BindView(R.id.rv_hotstyletorecommend)
     RecyclerView rvHotstyletorecommend;
+    @BindView(R.id.rl_gosearch)
+    RelativeLayout rlGosearch;
     private XBanner bannertops;
-//    @BindView(R.id.root_view)
+    //    @BindView(R.id.root_view)
 //    LinearLayout mRootView;
     @BindView(R.id.bannertop)
     XBanner mBanner;
@@ -99,14 +99,14 @@ public class HomemallPageFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mDataList=new ArrayList<>();
-        for (int i=0;i<4;i++) {
+        mDataList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
             HotstyletorecommendBean databean = new HotstyletorecommendBean();
             mDataList.add(databean);
         }
-        HomemallPageFragmentAdapter adapter=new HomemallPageFragmentAdapter(R.layout.item_hotstyletorecommend,mDataList);
+        HomemallPageFragmentAdapter adapter = new HomemallPageFragmentAdapter(R.layout.item_hotstyletorecommend, mDataList);
         adapter.openLoadAnimation();
-        rvHotstyletorecommend.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        rvHotstyletorecommend.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         rvHotstyletorecommend.setAdapter(adapter);
         //点击时间
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -124,4 +124,9 @@ public class HomemallPageFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.rl_gosearch)
+    public void onViewClicked() {
+        Intent intent=new Intent(mAty, GotoSearchActivity.class);
+        startActivity(intent);
+    }
 }

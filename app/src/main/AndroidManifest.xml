@@ -65,6 +65,10 @@
         <activity android:name=".activity.MycollectionActivity"/><!--我的收藏-->
         <activity android:name=".activity.GoodscommentActivity"/><!--评价界面-->
         <activity android:name=".activity.FeedbackActivity"/><!--意见反馈-->
+        <activity android:name=".activity.GotoSearchActivity"/><!--搜索页面-->
+        <activity android:name=".activity.SearchdetailspageActivity"/><!--搜索详细页面-->
+        <activity android:name=".activity.AddressmanagementActivity"/><!--地址管理-->
+        <activity android:name=".activity.MyTeamActivity"/><!--我的团队-->
         <!--今日头条的适配-->
         <meta-data
             android:name="design_width_in_dp"

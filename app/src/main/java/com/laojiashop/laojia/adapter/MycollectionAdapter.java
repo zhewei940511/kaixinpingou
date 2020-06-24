@@ -25,9 +25,9 @@ public class MycollectionAdapter extends BaseQuickAdapter<HotstyletorecommendBea
         tag=new ArrayList<>();
         for (int i=0;i<3;i++)
         {
-            tag.add("测试"+i);
+            tag.add("测试数据"+i);
         }
-        TagContainerLayout  tagContainerLayout=helper.getView(R.id.tga_mycollection);
+        TagContainerLayout tagContainerLayout=helper.getView(R.id.tga_mycollection);
         tagContainerLayout.setTags(tag);
         helper.addOnClickListener(R.id.btn_delectcollection);
     }

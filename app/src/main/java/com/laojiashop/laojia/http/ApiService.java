@@ -1,7 +1,10 @@
 package com.laojiashop.laojia.http;
 
 import com.google.gson.JsonElement;
+import com.laojiashop.laojia.model.ADProvince;
+import com.laojiashop.laojia.model.District;
 import com.laojiashop.laojia.model.User;
+import com.laojiashop.laojia.publish.Category;
 import com.zhuosongkj.android.library.model.BaseResult;
 
 import java.util.List;
@@ -11,9 +14,13 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ApiService {
     /**
@@ -24,6 +31,23 @@ public interface ApiService {
     Observable<BaseResult<User>> login(@Field("phone") String uid,
                                        @Field("password") String pwd,
                                        @Field("login_type") String login_type);
+
+//    /**
+//     * 商品分类
+//     * @param type
+//     * @return
+//     */
+//    @GET("category")
+//    Observable<Observable<List<Category>>> getMallGoodsCate(@Header("type") String type);
+
+    /**
+     * 地址
+     * @param provinceId
+     * @return
+     */
+    @GET("api/common/district")
+    Observable<BaseResult<List<ADProvince>>> districts(@Header("id")  int provinceId);
+//
 //    /**
 //     * 查询
 //     */

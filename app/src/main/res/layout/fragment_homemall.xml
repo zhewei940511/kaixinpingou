@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_marginTop="@dimen/dp_25"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/root_view"
+        android:id="@+id/rl_gosearch"
         android:layout_width="351dp"
         android:layout_height="35dp"
         android:background="@drawable/shape_layout_5">

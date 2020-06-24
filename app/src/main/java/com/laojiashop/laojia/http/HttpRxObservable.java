@@ -60,7 +60,7 @@ public class HttpRxObservable {
         Observable<BaseResult<T>> observable;
         if (lifecycle != null) {
             observable = apiObservable
-                   // .compose(lifecycle.bindUntilEvent(event))
+                    // .compose(lifecycle.bindUntilEvent(event))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         } else {

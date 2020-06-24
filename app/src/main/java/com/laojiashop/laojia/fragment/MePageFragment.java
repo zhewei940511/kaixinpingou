@@ -8,9 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.laojiashop.laojia.R;
+import com.laojiashop.laojia.activity.AddressmanagementActivity;
 import com.laojiashop.laojia.activity.FeedbackActivity;
 import com.laojiashop.laojia.activity.GoldcoinsActivity;
 import com.laojiashop.laojia.activity.MeHappybeanActivity;
+import com.laojiashop.laojia.activity.MyTeamActivity;
 import com.laojiashop.laojia.activity.MycollectionActivity;
 import com.laojiashop.laojia.activity.ReceivedividendsActivity;
 import com.laojiashop.laojia.activity.SetActivity;
@@ -48,6 +50,8 @@ public class MePageFragment extends BaseFragment {
     RelativeLayout lyMycollection;
     @BindView(R.id.rl_feedback)
     RelativeLayout rlFeedback;
+    @BindView(R.id.rl_myteam)
+    RelativeLayout rlMyteam;
 
     @Override
     protected int getContentViewRes() {
@@ -70,17 +74,19 @@ public class MePageFragment extends BaseFragment {
 
     }
 
-    //设置图标点击事件
-    @OnClick(R.id.img_myset)
-    public void onClicked() {
-        Intent intent = new Intent(mAty, SetActivity.class);
-        startActivity(intent);
-    }
-
-
-    @OnClick({R.id.rl_feedback,R.id.ly_mycollection, R.id.ly_receivedividends, R.id.rl_addressmanagement, R.id.ly_goldcoins, R.id.ly_happybean, R.id.ly_mepagegenerationofpayment, R.id.ly_mepagedropshipping, R.id.ly_mepageforthegoods, R.id.mepagehavethegoods, R.id.ly_allorders})
+    @OnClick({R.id.img_myset,R.id.rl_myteam,R.id.rl_feedback, R.id.ly_mycollection, R.id.ly_receivedividends, R.id.rl_addressmanagement, R.id.ly_goldcoins, R.id.ly_happybean, R.id.ly_mepagegenerationofpayment, R.id.ly_mepagedropshipping, R.id.ly_mepageforthegoods, R.id.mepagehavethegoods, R.id.ly_allorders})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //设置
+            case R.id.img_myset:
+                Intent setintent = new Intent(mAty, SetActivity.class);
+                startActivity(setintent);
+                break;
+            //我的团队
+            case R.id.rl_myteam:
+                Intent myteamintent=new Intent(mAty, MyTeamActivity.class);
+                startActivity(myteamintent);
+                break;
             //意见反馈
             case R.id.rl_feedback:
                 Intent feedbackintent = new Intent(mAty, FeedbackActivity.class);
@@ -103,6 +109,8 @@ public class MePageFragment extends BaseFragment {
                 break;
             //我的地址
             case R.id.rl_addressmanagement:
+                Intent addressmanagmentintent = new Intent(mAty, AddressmanagementActivity.class);
+                startActivity(addressmanagmentintent);
                 break;
             //开心豆
             case R.id.ly_happybean:
@@ -143,4 +151,7 @@ public class MePageFragment extends BaseFragment {
         }
     }
 
+    @OnClick()
+    public void onViewClicked() {
+    }
 }
