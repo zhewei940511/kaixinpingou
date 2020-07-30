@@ -1,25 +1,39 @@
 package com.laojiashop.laojia.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.laojiashop.laojia.R;
-import com.laojiashop.laojia.adapter.HomemallPageFragmentAdapter;
+import com.laojiashop.laojia.adapter.ClassificationDetailsAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.ClassificationDetailsBean;
 import com.laojiashop.laojia.entity.HotstyletorecommendBean;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.view.CustomDrawerPopupView;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.enums.PopupPosition;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,11 +66,21 @@ public class SearchdetailspageActivity extends BaseActivity {
     ImageView imgUp;
     @BindView(R.id.img_down)
     ImageView imgDown;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private CustomDrawerPopupView customDrawerPopupView;
-
     private ArrayList<HotstyletorecommendBean> mDataList;
-
     private boolean isClick = true;
+    //定义接收对象
+    private String keyword;
+    private int page = 1;
+    private ClassificationDetailsAdapter classificationDetailsAdapter;
+    //数据源
+    private List<ClassificationDetailsBean.DataBean> dataBeanList = new ArrayList<>();
+    //排序（newest 最新 goodsSales 销量 goodsPrice 价格 goodsComment 评价）
+    private String sort="";
+    //排序方式(asc 升序 desc 降序)//默认都是降序，除了价格会变动以外
+    private String sortBy="" ;
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_search_details_page);
@@ -65,30 +89,59 @@ public class SearchdetailspageActivity extends BaseActivity {
     @Override
     protected void initViews() {
         searchdetailRecycler.setLayoutManager(new LinearLayoutManager(mAt));
-        customDrawerPopupView = new CustomDrawerPopupView(mAt);
+//        customDrawerPopupView = new CustomDrawerPopupView(mAt);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        tgafristlist=new ArrayList<>();
-//        tgafristlist.add("软包抽纸");
-//        tgafristlist.add("盒装抽纸");
-//        tgafristlist.add("卷纸");
-//        tgaFrist.setTags(tgafristlist);
-        mDataList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            HotstyletorecommendBean databean = new HotstyletorecommendBean();
-            mDataList.add(databean);
-        }
-        HomemallPageFragmentAdapter adapter = new HomemallPageFragmentAdapter(R.layout.item_hotstyletorecommend, mDataList);
-        adapter.openLoadAnimation();
-        searchdetailRecycler.addItemDecoration(new DividerItemDecoration(mAt, DividerItemDecoration.VERTICAL));
-        searchdetailRecycler.setAdapter(adapter);
+        Intent intent = getIntent();
+        keyword = intent.getStringExtra("keyword");
+        classificationDetailsAdapter = new ClassificationDetailsAdapter(dataBeanList);
+        //无数据显示空
+        classificationDetailsAdapter.setEmptyView(LayoutInflater.from(mAt).inflate(R.layout.layout_empty_view, searchdetailRecycler, false));
+        //绑定适配器
+        searchdetailRecycler.setAdapter(classificationDetailsAdapter);
+        //设置头
+        refreshLayout.setRefreshFooter(new BallPulseFooter(mAt).setSpinnerStyle(SpinnerStyle.Scale));
+        //开启下拉刷新
+        refreshLayout.setEnableRefresh(true);
+        //开启上拉加载
+        refreshLayout.setEnableLoadMore(true);
+        refreshLayout.setEnableScrollContentWhenLoaded(true);
+        //取消内容不满一页时开启上拉加载功能
+        refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
+        refreshLayout.setEnableOverScrollBounce(true);
+
     }
 
     @Override
     public void getDataFromServer() {
-
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("keyword",keyword);
+        map.put("sort", sort);
+        map.put("sortBy", sortBy);
+        String s = JSON.toJSONString(map);
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getclassificainfo("mg_mall_goods_list",page,s)).subscribe(new BaseObserver<ClassificationDetailsBean>(mAt) {
+            @Override
+            public void onHandleSuccess(ClassificationDetailsBean classificationDetailsBean) throws IOException {
+                List<ClassificationDetailsBean.DataBean> dataBeans = classificationDetailsBean.getData();
+                if (page == 1) {
+                    dataBeanList.clear();
+                }
+                dataBeanList.addAll(dataBeans);
+                classificationDetailsAdapter.notifyDataSetChanged();
+                classificationDetailsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent = new Intent(mAt, MallGoodsDetailsActivity.class);
+                        intent.putExtra("goodid", dataBeans.get(position).getId());
+                        // intent.setClass();
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -113,6 +166,8 @@ public class SearchdetailspageActivity extends BaseActivity {
     @OnClick({R.id.search_edittext, R.id.ly_searchcomprehensive, R.id.ly_searchsales, R.id.ly_searchprice, R.id.ly_searchscreening})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //排序（newest 最新 goodsSales 销量 goodsPrice 价格 goodsComment 评价）
+            //排序方式(asc 升序 desc 降序)//默认都是降序，除了价格会变动以外
             case R.id.search_edittext:
                 break;
             case R.id.ly_searchcomprehensive:
@@ -121,18 +176,25 @@ public class SearchdetailspageActivity extends BaseActivity {
                 vwSearchcomprehensive.setVisibility(View.VISIBLE);
                 imgUp.setVisibility(View.VISIBLE);
                 imgDown.setVisibility(View.VISIBLE);
-                isClick=true;
+                isClick = true;
+                sort="";
+                sortBy="";
+                getDataFromServer();
                 break;
             case R.id.ly_searchsales:
                 selectstatu();
+                sort="goodsSales";
+                sortBy="desc";
+                getDataFromServer();
                 lySearchsales.setSelected(true);
                 vwSearchsales.setVisibility(View.VISIBLE);
                 imgUp.setVisibility(View.VISIBLE);
                 imgDown.setVisibility(View.VISIBLE);
-                isClick=true;
+                isClick = true;
                 break;
             case R.id.ly_searchprice:
                 selectstatu();
+                sort="goodsPrice";
                 lySearchprice.setSelected(true);
                 vwSearchprice.setVisibility(View.VISIBLE);
                 if (isClick) {
@@ -140,11 +202,15 @@ public class SearchdetailspageActivity extends BaseActivity {
                     imgDown.setVisibility(View.GONE);
                     //请求升序的数据
                     isClick = false;
+                    sortBy="asc";
+                    getDataFromServer();
                 } else {
                     //请求降序的数据
                     imgUp.setVisibility(View.GONE);
                     imgDown.setVisibility(View.VISIBLE);
                     isClick = true;
+                    sortBy="desc";
+                    getDataFromServer();
                 }
                 break;
             case R.id.ly_searchscreening:
@@ -153,7 +219,7 @@ public class SearchdetailspageActivity extends BaseActivity {
                 vwSearchscreening.setVisibility(View.VISIBLE);
                 imgUp.setVisibility(View.VISIBLE);
                 imgDown.setVisibility(View.VISIBLE);
-                isClick=true;
+                isClick = true;
                 //显示右边弹窗
                 new XPopup.Builder(mAt)
                         .popupPosition(PopupPosition.Right)//右边

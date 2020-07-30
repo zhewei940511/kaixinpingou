@@ -3,7 +3,6 @@ package com.laojiashop.laojia.http;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.zhuosongkj.android.library.model.BaseResult;
 
 
 import io.reactivex.Observable;

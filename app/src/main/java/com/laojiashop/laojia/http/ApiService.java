@@ -1,18 +1,36 @@
 package com.laojiashop.laojia.http;
 
 import com.google.gson.JsonElement;
+import com.laojiashop.laojia.activity.MainActivity;
+import com.laojiashop.laojia.entity.AddressmanagementBean;
+import com.laojiashop.laojia.entity.ClassificationDetailsBean;
+import com.laojiashop.laojia.entity.ClassificationPageBean;
+import com.laojiashop.laojia.entity.GoodsDetailBean;
+import com.laojiashop.laojia.entity.HomePageBean;
+import com.laojiashop.laojia.entity.MallGoodsCommentBean;
+import com.laojiashop.laojia.entity.MeHappyListBean;
+import com.laojiashop.laojia.entity.MeHappybean;
+import com.laojiashop.laojia.entity.MycollectionBean;
+import com.laojiashop.laojia.entity.MyteamBean;
+import com.laojiashop.laojia.entity.MyteamListBean;
+import com.laojiashop.laojia.entity.OrderBean;
+import com.laojiashop.laojia.entity.OrderGoodsdetailBean;
+import com.laojiashop.laojia.entity.SearchKeywordsBean;
+import com.laojiashop.laojia.entity.UserInfoBean;
 import com.laojiashop.laojia.model.ADProvince;
 import com.laojiashop.laojia.model.District;
+import com.laojiashop.laojia.model.ListData;
 import com.laojiashop.laojia.model.User;
 import com.laojiashop.laojia.publish.Category;
-import com.zhuosongkj.android.library.model.BaseResult;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -20,17 +38,281 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ApiService {
     /**
-     * 登录
+     * 手机号登录
      */
     @FormUrlEncoded
-    @POST("wxApi/User/login")
-    Observable<BaseResult<User>> login(@Field("phone") String uid,
-                                       @Field("password") String pwd,
-                                       @Field("login_type") String login_type);
+    @POST("User/login")
+    Observable<BaseResult<User>> login(@Field("phone") String phonenum,
+                                       @Field("sms_verification_code") String sms_verification_code,
+                                       @Field("source") String source, @Field("login_type") String login_type);
+
+    /**
+     * 微信登录
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("User/login")
+    Observable<BaseResult<User>> weilogin(@Field("code") String code, @Field("login_type") String login_type, @Field("source") String source);
+
+    /**
+     * 获取验证码
+     *
+     * @param phonenum
+     * @param type
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("Publics/getVerCode")
+    Observable<BaseResult<Object>> getcode(@Field("phone") String phonenum, @Field("type") String type);
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    @GET("User/getUserInfo")
+    Observable<BaseResult<UserInfoBean>> getuserinfo();
+
+    /**
+     * 开心豆明细
+     *
+     * @return
+     */
+    @GET("Core/getMyScoreInfo")
+    Observable<BaseResult<MeHappybean>> gethappyinfo();
+
+    /**
+     * 开心豆明细
+     *
+     * @return
+     */
+    @GET("Base/Score/getList")
+    Observable<BaseResult<MeHappyListBean>> gethappylistinfo(@Query("scence") String scence, @Query("page") int page, @Query("filter") String filter);
+
+    /**
+     * 首页数据
+     * @param table
+     * @return
+     */
+    @GET("Base/mallIndex")
+    Observable<BaseResult<HomePageBean>> gethomepageinfo(@Query("table") String table);
+
+    /**
+     * 商品详情
+     * @param id
+     * @return
+     */
+    @GET("Base/Goods/detail")
+    Observable<BaseResult<GoodsDetailBean>> getgooddetailinfo(@Query("id") String id);
+
+    /**
+     * 商品评价
+     * @param scence
+     * @param page
+     * @param filter
+     * @return
+     */
+    @GET("Base/Comment/getList")
+    Observable<BaseResult<MallGoodsCommentBean>> getgoodsevaluationlist(@Query("scence") String scence, @Query("page") int page, @Query("filter") String filter);
+
+    /**
+     * 商品详情
+     * @return
+     */
+    @GET("GoodsType/index")
+    Observable<BaseResult<List<ClassificationPageBean>>> getclassificationinfo();
+
+    /**
+     * 商品列表
+     * @param scence
+     * @param page
+     * @param filter
+     * @return
+     */
+    @GET("Base/Goods/getList")
+    Observable<BaseResult<ClassificationDetailsBean>> getclassificainfo(@Query("scence") String scence, @Query("page") int page, @Query("filter") String filter);
+
+    /**
+     *收藏
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("Base/addCollect")
+    Observable<BaseResult<Object>> getaddcollect(@Field("table") String table,@Field("item_id") String item_id);
+
+    /**
+     * 收藏列表
+     * @param scence
+     * @param page
+     * @return
+     */
+    @GET("Base/Collect/getList")
+    Observable<BaseResult<MycollectionBean>> getcollectgetList(@Query("scence") String scence,@Query("page") int page);
+
+    /**
+     * 获取地址列表
+     * @param scence
+     * @param page
+     * @return
+     */
+    @GET("Base/Address/getList")
+    Observable<BaseResult<AddressmanagementBean>> getaddressgetList(@Query("scence") String scence, @Query("page") int page);
+
+    /**
+     * 新增地址
+     * @param name
+     * @param phone
+     * @param province
+     * @param city
+     * @param area
+     * @param p_code
+     * @param c_code
+     * @param a_code
+     * @param code
+     * @param address
+     * @param is_def
+     * @param ssq
+     * @param user_id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("Base/Address/addRecord")
+    Observable<BaseResult<Object>> addressaddrecord(@Field("name") String name,
+                                                       @Field("phone") String phone,
+                                                       @Field("province") String province,
+                                                       @Field("city") String city,
+                                                       @Field("area") String area,
+                                                       @Field("p_code") String p_code,
+                                                       @Field("c_code") String c_code,
+                                                       @Field("a_code") String a_code,
+                                                       @Field("code") String code,
+                                                       @Field("address") String address,
+                                                       @Field("is_def") int is_def,
+                                                       @Field("ssq") String ssq,
+                                                       @Field("user_id") String user_id);
+
+    /**
+     * 商品列表
+     * @param scence
+     * @param page
+     * @param filter
+     * @return
+     */
+    @GET("Base/MallOrder/getList")
+    Observable<BaseResult<OrderBean>> getmallOrdergetList(@Query("scence") String scence, @Query("page") int page, @Query("filter") String filter);
+    /**
+     * 登出
+     * @return
+     */
+    @GET("User/logOut")
+    Observable<BaseResult<Object>> logOut();
+    /**
+     * 登出
+     * @return
+     */
+    @GET("Base/MallOrder/detail")
+    Observable<BaseResult<OrderGoodsdetailBean>> mallOrderdetail(@Query("id") int id);
+
+    /**
+     * 取消订单
+     * @param orderId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("MallOrder/cancelOrder")
+    Observable<BaseResult<Object>> mallcancelorder(@Field("orderId") int orderId);
+
+    /**
+     * 确认收货
+     * @param orderId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("MallOrder/confirmReceipt")
+    Observable<BaseResult<Object>> mallconfirmreceipt(@Field("orderId") int orderId);
+
+    /**
+     * 删除订单
+     * @param orderId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("MallOrder/deleteOrder")
+    Observable<BaseResult<Object>> malldeleteOrder(@Field("orderId") int orderId);
+
+    /**
+     * 搜索
+     * @return
+     */
+    @GET("Goods/keyword")
+    Observable<BaseResult<SearchKeywordsBean>> goodskeyword();
+
+    /**
+     * 创建订单
+     * @param type
+     * @param goodsId
+     * @param configIdx
+     * @param coin
+     * @param score
+     * @param pay
+     * @param number
+     * @param skuCombination
+     * @param addressId
+     * @param name
+     * @param identificationNumber
+     * @param remark
+     * @param liveUid
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("Base/Address/addRecord")
+    Observable<BaseResult<Object>> createorder(@Field("type") String type,
+                                               @Field("goodsId") String goodsId,
+                                               @Field("configIdx") String configIdx,
+                                                    @Field("coin") String coin,
+                                                    @Field("score") String score,
+                                                    @Field("pay") String pay,
+                                                    @Field("number") String number,
+                                                    @Field("skuCombination") String skuCombination,
+                                                    @Field("addressId") String addressId,
+                                                    @Field("name") String name,
+                                                    @Field("identificationNumber") String identificationNumber,
+                                                    @Field("remark") int remark,
+                                                    @Field("liveUid") String liveUid);
+
+//    /**
+//     *
+//     * @param map
+//     * @return
+//     */
+//    @FormUrlEncoded
+//    @POST("{path}")
+//    Observable<BaseResult<User>> loginother(@FieldMap Map<String, String> map);
+//
+//    /**
+//     * 我的团队列表
+//     * @param page
+//     * @return
+//     */
+//    @GET("MyTeam/getMyTeamList")
+//    Observable<BaseResult<MyteamListBean>> MyTeamList(@Header("page") int page);
+//
+//    /**
+//     * 开心豆
+//     * @param happyBean
+//     * @return
+//     */
+//    @FormUrlEncoded
+//    @POST("HappyBean/redeemPointsForThirdPartyPlatforms")
+//    Observable<BaseResult<Object>> happybean(@Field("happyBean") int happyBean);
 
 //    /**
 //     * 商品分类
@@ -40,13 +322,13 @@ public interface ApiService {
 //    @GET("category")
 //    Observable<Observable<List<Category>>> getMallGoodsCate(@Header("type") String type);
 
-    /**
-     * 地址
-     * @param provinceId
-     * @return
-     */
-    @GET("api/common/district")
-    Observable<BaseResult<List<ADProvince>>> districts(@Header("id")  int provinceId);
+//    /**
+//     * 地址
+//     * @param provinceId
+//     * @return
+//     */
+//    @GET("api/common/district")
+//    Observable<BaseResult<List<ADProvince>>> districts(@Header("id")  int provinceId);
 //
 //    /**
 //     * 查询

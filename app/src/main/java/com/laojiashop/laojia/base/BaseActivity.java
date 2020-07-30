@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.listener.LifeCycleListener;
+import com.laojiashop.laojia.utils.ActivityManage;
 import com.laojiashop.laojia.utils.BarUtils;
 import com.laojiashop.laojia.view.TopView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -32,6 +33,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends RxAppCompat
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mAt = this;
+        ActivityManage.addActivity(mAt);
         if (mListener != null) {
             mListener.onCreate(savedInstanceState);
         }
@@ -142,7 +144,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends RxAppCompat
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        ActivityManage.removeActivity(this);
     }
     protected void getBarDistance(View view){
         //设置状态栏的高度

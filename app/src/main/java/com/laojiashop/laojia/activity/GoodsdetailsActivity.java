@@ -18,7 +18,7 @@ import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
 import com.laojiashop.laojia.utils.BarUtils;
-import com.laojiashop.laojia.utils.ScreenUtils;
+
 import com.laojiashop.laojia.utils.StatusBarUtil;
 import com.laojiashop.laojia.view.GoodsCustomScrollView;
 import com.stx.xhb.xbanner.XBanner;
@@ -247,8 +247,8 @@ public class GoodsdetailsActivity extends BaseActivity implements GoodsCustomScr
             public void onGlobalLayout() {
                 goods.getViewTreeObserver().removeGlobalOnLayoutListener(
                         this);
-                commentHeightQD = goods.getHeight() - ScreenUtils.getStatusHeight(c) - ScreenUtils
-                        .dip2px(mAt, 40);
+//                commentHeightQD = goods.getHeight() - ScreenUtils.getStatusHeight(c) - ScreenUtils
+//                        .dip2px(mAt, 40);
 
                 scrollview.setScrollViewListener(GoodsdetailsActivity.this);
             }

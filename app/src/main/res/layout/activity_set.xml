@@ -45,6 +45,7 @@
         android:layout_width="355dp"
         android:layout_height="1dp"/>
     <RelativeLayout
+        android:id="@+id/rl_nickname"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80">
@@ -143,6 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"/>
     <Button
+        android:id="@+id/btn_logout"
         android:layout_marginTop="@dimen/dp_100"
         android:text="退出登录"
         android:textColor="@color/white"

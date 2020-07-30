@@ -75,14 +75,6 @@ public class RegisteredActivity extends BaseActivity {
         return null;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-
     @OnClick({R.id.ck_sure, R.id.ly_gotologin, R.id.btn_getregistcode, R.id.btn_regist})
     public void onViewClicked(View view) {
         switch (view.getId()) {

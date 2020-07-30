@@ -8,5 +8,5 @@ public class User {
     public String token;
     public String id;
     public String openid;
-    public String avator;
+    public String headimgurl;
 }

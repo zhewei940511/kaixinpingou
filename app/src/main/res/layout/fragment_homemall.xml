@@ -41,7 +41,10 @@
 
 
     </RelativeLayout>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.core.widget.NestedScrollView
         android:layout_marginTop="@dimen/dp_20"
         android:layout_width="match_parent"
@@ -57,7 +60,7 @@
             android:paddingRight="@dimen/dp_12">
 
             <com.stx.xhb.xbanner.XBanner
-                android:id="@+id/bannertop"
+                android:id="@+id/homepagebannertop"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:AutoPlayTime="3000"
@@ -74,17 +77,25 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/gray" />
-
-            <cn.mtjsoft.www.gridviewpager_recycleview.GridViewPager
-                android:id="@+id/gridviewpager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:column_count="6"
-                app:img_height="@dimen/dp_40"
-                app:img_width="@dimen/dp_40"
-                app:point_is_show="false"
-                app:row_count="1"
-                app:verticalSpacing= "10dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:id="@+id/adnewrecyclerView"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+<!--            <cn.mtjsoft.www.gridviewpager_recycleview.GridViewPager-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/gridviewpager"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:column_count="6"-->
+<!--                app:img_height="@dimen/dp_40"-->
+<!--                app:img_width="@dimen/dp_40"-->
+<!--                app:point_is_show="false"-->
+<!--                app:row_count="1"-->
+<!--                app:verticalSpacing= "10dp" />-->
 
             <View
                 android:layout_width="match_parent"
@@ -93,6 +104,7 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center_vertical">
@@ -119,4 +131,5 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

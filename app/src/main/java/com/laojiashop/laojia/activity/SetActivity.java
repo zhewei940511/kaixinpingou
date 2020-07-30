@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,14 +16,18 @@ import androidx.annotation.Nullable;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.utils.ActivityManage;
 import com.laojiashop.laojia.utils.BitmapUtil;
 import com.laojiashop.laojia.utils.GlideEngine;
-import com.laojiashop.laojia.utils.ToastUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +48,10 @@ public class SetActivity extends BaseActivity {
     RelativeLayout rlBindphonenumber;
     @BindView(R.id.rl_changethepassword)
     RelativeLayout rlChangethepassword;
+    @BindView(R.id.rl_nickname)
+    RelativeLayout rlNickname;
+    @BindView(R.id.btn_logout)
+    Button btnLogout;
 
     @Override
     protected void setRootView() {
@@ -70,22 +79,35 @@ public class SetActivity extends BaseActivity {
         return null;
     }
 
-    @OnClick({R.id.iv_header_back, R.id.img_userinfo,R.id.rl_bindphonenumber,R.id.rl_changethepassword})
+    @OnClick({R.id.btn_logout,R.id.rl_nickname, R.id.iv_header_back, R.id.img_userinfo, R.id.rl_bindphonenumber, R.id.rl_changethepassword})
     public void onClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_logout:
+                HttpRxObservable.getObservable(ApiUtils.getApiService().logOut()).subscribe(new BaseObserver<Object>(mAt) {
+                    @Override
+                    public void onHandleSuccess(Object o) throws IOException {
+                       // jumpActivity(mAt,UsercodeloginActivity.class);
+                        UsercodeloginActivity.start(mAt);
+                        ActivityManage.finishAll();
+                    }
+                });
+                break;
+            //用户昵称
+            case R.id.rl_nickname:
+                break;
             //返回按钮
             case R.id.iv_header_back:
                 finish();
                 break;
-                //修改头像
+            //修改头像
             case R.id.img_userinfo:
                 startSelectPic(REQUEST_CODE_TOUXIANG_LOGO);
                 break;
-                //绑定手机号
+            //绑定手机号
             case R.id.rl_bindphonenumber:
                 jumpActivity(BindphonenumberActivity.class);
                 break;
-                //修改密码
+            //修改密码
             case R.id.rl_changethepassword:
                 jumpActivity(ChangethepasswordActivity.class);
                 break;
@@ -111,10 +133,9 @@ public class SetActivity extends BaseActivity {
         }
         ImageView imageView = null;
         //判断头像的返回
-        switch (requestCode)
-        {
-            case  REQUEST_CODE_TOUXIANG_LOGO:
-                imageView=imgUserinfo;
+        switch (requestCode) {
+            case REQUEST_CODE_TOUXIANG_LOGO:
+                imageView = imgUserinfo;
                 break;
         }
         File file = new File(path);
@@ -123,6 +144,13 @@ public class SetActivity extends BaseActivity {
         //这两部是网络请求里面操作的
         BitmapUtil.recycle(finalImageView);
         finalImageView.setImageBitmap(BitmapFactory.decodeFile(finalPath));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
 }

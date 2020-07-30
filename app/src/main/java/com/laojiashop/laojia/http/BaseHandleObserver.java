@@ -1,8 +1,12 @@
 package com.laojiashop.laojia.http;
 
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.google.gson.JsonParseException;
-import com.laojiashop.laojia.utils.ToastUtil;
+import com.laojiashop.laojia.activity.UsercodeloginActivity;
+import com.laojiashop.laojia.utils.LoginInfoUtil;
+import com.orhanobut.logger.Logger;
+
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -18,7 +22,7 @@ public abstract class BaseHandleObserver<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-         //Logger.e(TAG, e.getMessage() + "");
+        Logger.e(TAG, e.getMessage() + "");
         if (e instanceof ApiException) {
             onHandleError((ApiException) e);
         } else if (e instanceof SocketTimeoutException) { // 连接超时
@@ -38,8 +42,7 @@ public abstract class BaseHandleObserver<T> implements Observer<T> {
      * @param apiExc
      */
     public void onHandleError(ApiException apiExc) {
-            ToastUtil.showToast(apiExc.getMessage());
-
+        // ToastUtil.showToast(apiExc.getMessage());
         switch (apiExc.getErrorCode()) {
             case ApiException.TYPE_NETWORK_ERROR: // 没有网路哟
 
@@ -51,7 +54,12 @@ public abstract class BaseHandleObserver<T> implements Observer<T> {
 
                 break;
             case ApiException.TYPE_NOT_LOGIN:// 用户未登录
-
+                //    401code失效回到登录页面
+//                ActivityUtils.startActivity(UsercodeloginActivity.class);
+//                //移除所有activity
+//                // ActivityManage.finishAll();
+//                //清空登录信息
+//                LoginInfoUtil.saveLoginInfo("", "");
                 break;
         }
     }

@@ -13,9 +13,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.http.BaseHandleObserver;
+import com.laojiashop.laojia.http.BaseResult;
 import com.laojiashop.laojia.refresh.MySwipeRefreshLayout;
 import com.laojiashop.laojia.view.EmptyView;
-import com.zhuosongkj.android.library.model.BaseResult;
+
 
 import java.util.ArrayList;
 import java.util.List;

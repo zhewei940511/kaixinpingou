@@ -12,8 +12,6 @@ import com.laojiashop.laojia.adapter.SpellgroupFragmentAdapter;
 import com.laojiashop.laojia.base.BaseFragment;
 import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhuosongkj.android.library.app.BaseActivity;
-import com.zhuosongkj.android.library.util.PageLoadUtil;
 
 import java.util.ArrayList;
 
@@ -29,7 +27,7 @@ public class SpellgroupFragment extends BaseFragment {
     SmartRefreshLayout refreshLayout;
     //模拟数据
     private ArrayList<HotstyletorecommendBean> mDataList;
-    private PageLoadUtil pageLoadUtil;
+
     @Override
     protected int getContentViewRes() {
         return R.layout.fragment_spellgroup;

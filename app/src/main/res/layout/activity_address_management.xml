@@ -8,11 +8,18 @@
         android:background="#F5F5F5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_address"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:background="@color/white"
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginBottom="@dimen/dp_50"
+                android:id="@+id/rv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <Button
         android:id="@+id/btn_newaddress"
         android:textSize="@dimen/typeface15sp"

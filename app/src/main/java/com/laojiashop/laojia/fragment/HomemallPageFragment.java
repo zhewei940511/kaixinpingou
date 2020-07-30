@@ -3,12 +3,12 @@ package com.laojiashop.laojia.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,42 +16,54 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.activity.GotoSearchActivity;
+import com.laojiashop.laojia.activity.MallGoodsDetailsActivity;
 import com.laojiashop.laojia.activity.MallGoodsDetailsOtherActivity;
-import com.laojiashop.laojia.adapter.HomemallPageFragmentAdapter;
+import com.laojiashop.laojia.adapter.AdnewAdapter;
+import com.laojiashop.laojia.adapter.SpecialAdapter;
 import com.laojiashop.laojia.base.BaseFragment;
-import com.laojiashop.laojia.entity.HotstyletorecommendBean;
-import com.laojiashop.laojia.utils.ToastUtil;
+import com.laojiashop.laojia.entity.HomePageBean;
+import com.laojiashop.laojia.entity.SpecialCourseSectionBean;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.utils.ScreenUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.stx.xhb.xbanner.XBanner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.mtjsoft.www.gridviewpager_recycleview.GridViewPager;
 
 /**
  * 商城页面
  */
 public class HomemallPageFragment extends BaseFragment {
+    // 搜索框
     @BindView(R.id.search_edittext)
     TextView searchEdittext;
-    @BindView(R.id.gridviewpager)
-    GridViewPager gridviewpager;
+    //首页列表对象
     @BindView(R.id.rv_hotstyletorecommend)
     RecyclerView rvHotstyletorecommend;
     @BindView(R.id.rl_gosearch)
     RelativeLayout rlGosearch;
+    @BindView(R.id.adnewrecyclerView)
+    RecyclerView adnewrecyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private XBanner bannertops;
-    //    @BindView(R.id.root_view)
-//    LinearLayout mRootView;
-    @BindView(R.id.bannertop)
-    XBanner mBanner;
-    private Button btn_gotocheck;
-    private ArrayList<HotstyletorecommendBean> mDataList;
-    //定义测试数据
-    private String[] testString = {"食品生鲜", "个护清洁", "营养保健", "家居生活", "拼购商品"};
-    private int[] testicon = {R.drawable.icon_test, R.drawable.icon_test_one, R.drawable.icon_test_two, R.drawable.icon_test_three, R.drawable.icon_test_four};
+    //分类模块适配器
+    private AdnewAdapter adnewAdapter = new AdnewAdapter();
+    //底部模块适配器
+    private SpecialAdapter specialAdapter;
+    //数据
+    private List<SpecialCourseSectionBean> sectionBeansdata = new ArrayList<>();
 
     @Override
     protected int getContentViewRes() {
@@ -60,73 +72,124 @@ public class HomemallPageFragment extends BaseFragment {
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-//        int barHeight = StatusBarUtil.getStatusBarHeight(mAty);
-//        if (barHeight > 0) {
-//            //设置状态栏的高度
-//            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mRootView.getLayoutParams();
-//            layoutParams.topMargin = BarUtils.getStatusBarHeight(mAty) + layoutParams.topMargin;
-//            mRootView.setLayoutParams(layoutParams);
-//        }
-        bannertops = view.findViewById(R.id.bannertop);
-        rvHotstyletorecommend.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //模拟数据
-        List<String> imgesUrl = new ArrayList<>();
-        imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
-        imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
-        imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
-        bannertops.setData(imgesUrl, null);
-        bannertops.setmAdapter(new XBanner.XBannerAdapter() {
-            @Override
-            public void loadBanner(XBanner banner, Object model, View view, int position) {
-                Glide.with(mAty).load(imgesUrl.get(position)).into((ImageView) view);
-            }
-        });
-        gridviewpager.setDataAllCount(testString.length).setImageTextLoaderInterface(new GridViewPager.ImageTextLoaderInterface() {
-            @Override
-            public void displayImageText(ImageView imageView, TextView textView, int position) {
-                // 自己进行数据的绑定，灵活度更高，不受任何限制
-                imageView.setImageResource(testicon[position]);
-                textView.setText(testString[position]);
-            }
-        }).setGridItemClickListener(new GridViewPager.GridItemClickListener() {
-            @Override
-            public void click(int position) {
-                //点击事件
-                ToastUtil.showToast("你点击了" + testString[position]);
-            }
-        }).show();
+        //轮播图
+        bannertops = view.findViewById(R.id.homepagebannertop);
+        rvHotstyletorecommend.setLayoutManager(new LinearLayoutManager(mAty));
+        //初始化适配器  你看到你这个地方有错误没，还没呢
+        specialAdapter = new SpecialAdapter(R.layout.item_specialcontent, R.layout.item_specialhead, sectionBeansdata);
+        rvHotstyletorecommend.setAdapter(specialAdapter);
     }
 
     @Override
     protected void initData() {
-        mDataList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            HotstyletorecommendBean databean = new HotstyletorecommendBean();
-            mDataList.add(databean);
-        }
-        HomemallPageFragmentAdapter adapter = new HomemallPageFragmentAdapter(R.layout.item_hotstyletorecommend, mDataList);
-        adapter.openLoadAnimation();
-        rvHotstyletorecommend.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        rvHotstyletorecommend.setAdapter(adapter);
-        //点击时间
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //ToastUtil.showToast("你点击了"+adapter.getItem(position));
-                Intent intent = new Intent(getContext(), MallGoodsDetailsOtherActivity.class);
-                startActivity(intent);
-            }
-        });
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ScreenUtil.getScreenWidth(mAty) / 2);
+        bannertops.setLayoutParams(layoutParams);
+        initBanner(bannertops);
     }
 
     @Override
     protected void getDataFromServer() {
+        //获取数据   哪个是网络请求就是这里
+        HttpRxObservable.getObservable(ApiUtils.getApiService().gethomepageinfo("goodsType")).subscribe(new BaseObserver<HomePageBean>(mAty) {
+            @Override
+            public void onHandleSuccess(HomePageBean homePageBean) throws IOException {
+                //轮播图数据源
+                List<HomePageBean.BannerBean> banner = homePageBean.getBanner();
+                //刷新数据之后，需要重新设置是否支持自动轮播  哪里报错就是这个页面的问题
+                bannertops.setAutoPlayAble(banner.size() > 1);
+                bannertops.setIsClipChildrenMode(true);
+                bannertops.setBannerData(banner);
+                //获取adnew
+                List<HomePageBean.AdNewBean> adNewBeans = homePageBean.getAd_new();
+                adnewAdapter.setNewData(adNewBeans);
+                adnewrecyclerView.setAdapter(adnewAdapter);
+                //获取底部列表数据
+                List<HomePageBean.SpecialBean> special = homePageBean.getSpecial();
+                //循环数据
+                for (int i = 0; i < special.size(); i++) {
+                    List<HomePageBean.SpecialBean.GoodsListBean> goods_list = special.get(i).goods_list;
+                    sectionBeansdata.add(new SpecialCourseSectionBean(true, special.get(i).title));
+                    for (int j = 0; j < goods_list.size(); j++) {
+                        sectionBeansdata.add(new SpecialCourseSectionBean(goods_list.get(j)));
+                    }
+                }
+                //还是重复数据呢，没看你修改哪里呀?
+                //specialAdapter.addData(sectionBeansdata);
+                specialAdapter.setNewData(sectionBeansdata);
+                specialAdapter.notifyDataSetChanged();
+                //适配器点击事件
+                specialAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        HomePageBean.SpecialBean.GoodsListBean goodsListBean = sectionBeansdata.get(position).t;
+                        //商品详情
+                        // Intent intent=new Intent(mAty, MallGoodsDetailsOtherActivity.class);
+                        Intent intent = new Intent(mAty, MallGoodsDetailsActivity.class);
+                        intent.putExtra("goodid", goodsListBean.getId());
+                        // intent.setClass();
+                        startActivity(intent);
+                        //showToast("测试数据你点击了"+goodsListBean.getId());
+                        //ToastUtil.showToast("你点击了数据测试"+goodsListBean.getId());
 
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        });
+    }
+
+
+    private void initBanner(XBanner banner) {
+        //设置广告图片点击事件
+        banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
+            @Override
+            public void onItemClick(XBanner banner, Object model, View view, int position) {
+                //判断是点击了那个选项
+                switch (position) {
+                    case 0:
+                        break;
+                    case 1:
+//                        startActivity(new Intent(getContext(), HotelActivity.class));
+                        break;
+                    case 2:
+//                        startActivity(new Intent(getContext(),));
+                        break;
+                }
+
+            }
+        });
+        //加载广告图片
+        banner.loadImage(new XBanner.XBannerAdapter() {
+            @Override
+            public void loadBanner(XBanner banner, Object model, View view, int position) {
+                //就算不加载也会出问题
+                HomePageBean.BannerBean banners = (HomePageBean.BannerBean) model;
+                //一个占位图就够，不用写error。
+                Glide.with(mAty).load(banners.getPath()).into((ImageView) view);
+            }
+        });
     }
 
     @OnClick(R.id.rl_gosearch)
     public void onViewClicked() {
-        Intent intent=new Intent(mAty, GotoSearchActivity.class);
+        Intent intent = new Intent(mAty, GotoSearchActivity.class);
         startActivity(intent);
     }
+
+    //点击事件
+//    @Override
+//    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//        HomePageBean.SpecialBean.GoodsListBean goodsListBean= (HomePageBean.SpecialBean.GoodsListBean) adapter.getItem(position);
+//        ToastUtil.showToast("你点击了"+goodsListBean.getId());
+//    }
+
+    //    //页面刷新
+//    public void refresh() {
+//        getDataFromServer();
+//    }
+
 }

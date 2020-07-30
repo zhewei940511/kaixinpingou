@@ -12,7 +12,7 @@ public class ApiException extends Throwable {
     public static final String TYPE_USER_CANCEL = "0x50";//用户自己取消
     public static final String TYPE_SYSTEM = "0x60";//引起系统的错误
 
-    public static final String TYPE_NOT_LOGIN = "666666"; // 未登录
+    public static final String TYPE_NOT_LOGIN = "401"; // 未登录
     public static final String TYPE_REQUEST_ERROR = "-1"; // 数据请求错误
     public static final int TYPE_NONE = 0;
 

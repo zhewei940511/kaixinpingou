@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item"
+    android:id="@+id/checkitem"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/dp_20"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/dp_15">
+    android:paddingRight="@dimen/dp_15"
+    android:paddingLeft="@dimen/dp_15"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_checkmore"
@@ -95,7 +97,11 @@
         android:text="商品详情"
         android:textColor="@color/black_33"
         android:textSize="@dimen/typeface13sp" />
-
+        <!--这里应该是一个图片列表-->
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rv_goodsimg"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

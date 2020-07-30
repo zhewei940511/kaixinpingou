@@ -16,7 +16,6 @@ import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
 import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhuosongkj.android.library.util.PageLoadUtil;
 
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class WithdrawalRecordActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     //模拟数据
     private ArrayList<HotstyletorecommendBean> mDataList;
-    private PageLoadUtil pageLoadUtil;
+  //  private PageLoadUtil pageLoadUtil;
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_withdrawal_record);

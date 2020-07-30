@@ -83,9 +83,8 @@
 
         <CheckBox
             android:id="@+id/ck_sure"
-            android:layout_width="14dp"
-            android:layout_height="@dimen/dp_14"
-            android:background="@drawable/checkboxstyle" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -105,7 +104,7 @@
                 android:id="@+id/tv_registagreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="《注册服务协议》"
+                android:text="《用户服务协议》"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/typeface13sp" />
         </LinearLayout>

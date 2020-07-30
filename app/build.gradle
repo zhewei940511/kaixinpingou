@@ -3,26 +3,20 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
-//    signingConfigs {
+    signingConfigs {
 //        debugConfig {
-//            storeFile file('zdpingou.jks')
+//            storeFile file('/zdpingou.jks')
 //            storePassword "123456"
 //            keyAlias "zdpingou"
 //            keyPassword "123456"
 //        }
-//        release {
-//            storeFile file('zdpingou.jks')
-//            storePassword "123456"
-//            keyAlias "zdpingou"
-//            keyPassword "123456"
-//        }
-//        debug {
-//            storeFile file('D:\\Users\\Administrator\\AndroidStudioProjects\\laojia\\app\\zdpingou.jks')
-//            storePassword '123456'
-//            keyAlias = 'zdpingou'
-//            keyPassword '123456'
-//        }
-//    }
+        release {
+            storeFile file('/zdpingou.jks')
+            storePassword "123456"
+            keyAlias "zdpingou"
+            keyPassword "123456"
+        }
+    }
     defaultConfig {
         applicationId "com.laojiashop.laojia"
         minSdkVersion 21
@@ -30,16 +24,20 @@ android {
         versionCode 1
         versionName "1.0"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
-       buildConfigField "String", "API_HOST", "\"http://andou.zhuosongkj.com/index.php/\""
-       // buildConfigField "String", "API_HOST", "\"http://base.test.laojia99.com/\""
-      //  buildConfigField "String", "API_HOST", "\"https://test.cangbaopai.com/\""
+       // buildConfigField "String", "API_HOST", "\"http://andou.zhuosongkj.com/index.php/\""
+      // buildConfigField "String", "API_HOST", "\"http://sys.demo.laojia99.com/appApi/v1/\""
+        buildConfigField "String", "API_HOST", "\"http://192.168.1.19:88/appApi/v1/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     allprojects {
@@ -61,6 +59,7 @@ android {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
+
     }
 }
 
@@ -118,27 +117,19 @@ dependencies {
     implementation 'com.github.arcadefire:nice-spinner:1.3.1'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
     //弹窗
-    implementation 'cn.yhq:android-dialog:2.0.0'
-    //视频播放
+    //implementation 'cn.yhq:android-dialog:2.0.0'
+   // implementation project(path: ':library')
+   // //头像
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+//    //视频播放
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
-    //选择框架 PickerView
-    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
     //屏幕适配 AutoSize
     implementation 'me.jessyan:autosize:1.1.2'
-    //高德地图api
-    //定位功能
-    implementation 'com.amap.api:location:latest.integration'
-    //搜索功能
-    implementation 'com.amap.api:search:latest.integration'
-
-    implementation 'com.amap.api:map2d:latest.integration'
 
     //旋转木马相册
     implementation 'com.chenlittleping:recyclercoverflow:1.0.6'
-    //城市定位
-    //implementation 'com.zaaach:citypicker:2.0.3'	//必选
-   // implementation project(':citypicker')
     //RatingBar
     implementation 'com.github.ome450901:SimpleRatingBar:1.4.3'
 
@@ -146,7 +137,7 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
 
     implementation 'com.blankj:utilcodex:1.26.0'
-
+    //微信登录
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     //二维码扫描
@@ -154,7 +145,7 @@ dependencies {
 
     //图片选择
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
-    implementation project(path: ':library')
+
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     //bug日志收集
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
@@ -183,8 +174,15 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
-    //侧滑效果
+    //侧滑效果f
     implementation 'com.lxj:xpopup:1.8.10-x'
-    //地址选择器
-    implementation 'com.github.chihane:JDAddressSelector:1.1.4'
+    implementation 'liji.library.dev:citypickerview:5.2.0'
+    //网络请求拦截器(网络请求封装，逐步代替之前的封装请求)
+    implementation 'com.zhouyou:rxeasyhttp:2.1.5'
+    //大图浏览
+    implementation 'com.github.Hitomis:transferee:1.6.1'
+    //分类页导航
+    implementation 'q.rorbin:VerticalTabLayout:1.2.5'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }
+

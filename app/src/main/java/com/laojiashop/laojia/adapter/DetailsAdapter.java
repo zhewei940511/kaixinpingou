@@ -58,7 +58,7 @@ public class DetailsAdapter extends ListBaseAdapter<DetailsBean> {
             getMeasureHeight(item,type);
         }
         if (type == 1002) {
-            final LinearLayout item = holder.getView(R.id.item);
+            final LinearLayout item = holder.getView(R.id.checkitem);
             getMeasureHeight(item,type);
             RelativeLayout checkmore=holder.getView(R.id.rl_checkmore);
             checkmore.setOnClickListener(new View.OnClickListener() {

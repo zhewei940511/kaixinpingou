@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ly_topbanner"
+        android:layout_gravity="center"
+        android:layout_width="252dp"
+        android:layout_height="90dp">
+        <com.stx.xhb.xbanner.XBanner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/bannertop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isAutoPlay="false"
+            app:isHandLoop="true"
+            app:pointNormal="@drawable/shape_noraml"
+            app:pointSelect="@drawable/shape_selected"
+            app:isShowNumberIndicator="true"
+            app:isShowIndicatorOnlyOne="true"
+            app:pointsPosition="CENTER"
+            app:pointsVisibility="true" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_classifica"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

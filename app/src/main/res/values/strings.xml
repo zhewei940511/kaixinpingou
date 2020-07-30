@@ -4,8 +4,10 @@
     <string name="regist_txt">注册</string>
     <string name="login_phonenum">请输入有效手机号码</string>
     <string name="login_phonepwd">请输入密码</string>
+    <string name="login_code">请输入验证码</string>
     <string name="login_forgpwd">忘记密码?</string>
     <string name="login_usercode">使用验证码登录?</string>
+    <string name="login_userpwd">使用密码登录</string>
     <string name="login_userthrid">使用第三方登录</string>
     <string name="regist_getcode">请输入验证码</string>
     <string name="registered_input_yanzhenma">请输入收到的验证码</string>
@@ -13,4 +15,9 @@
     <string name="login_txtweixin">微信快捷登录</string>
     <string name="nick_name">用户名</string>
     <string name="chihewanle">输入要查找的商品</string>
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unsupported">不支持错误</string>
+    <string name="errcode_unknown">发送返回</string>
 </resources>

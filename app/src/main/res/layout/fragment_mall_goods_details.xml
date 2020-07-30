@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none">
-    <Button
-        android:textColor="@color/black_33"
-        android:background="@drawable/shape_abulk_gradient_button"
-        android:text="测试"
-        android:layout_width="@dimen/dp_115"
-        android:layout_height="38dp"/>
-<!--    <WebView-->
-<!--        android:id="@+id/wv_details"-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_marginBottom="@dimen/dp_50"-->
+<!--        android:id="@+id/rl_goddsdetailsimg"-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_marginBottom="@dimen/dp_10"-->
-<!--        android:layout_height="wrap_content"/>-->
+<!--        android:layout_height="match_parent"/>-->
+    <WebView
+        android:id="@+id/wv_details"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_height="match_parent"/>
 </androidx.core.widget.NestedScrollView>

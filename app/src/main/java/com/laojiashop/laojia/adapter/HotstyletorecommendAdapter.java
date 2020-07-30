@@ -17,6 +17,9 @@ import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 商品评价适配器
+ */
 public class HotstyletorecommendAdapter extends BaseQuickAdapter<HotstyletorecommendBean, BaseViewHolder> {
     //模拟数据
     private ArrayList<HotstyletorecommendBean> mDataList;

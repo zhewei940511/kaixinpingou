@@ -20,7 +20,7 @@ import com.laojiashop.laojia.fragment.MeShopFragment;
 import com.shizhefei.view.indicator.FixedIndicatorView;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
-import com.zhuosongkj.android.library.util.ActionBarUtil;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,16 +59,20 @@ public class ShoporderActivity extends BaseActivity {
         indicator = (FixedIndicatorView) findViewById(R.id.indicator);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         list = new ArrayList<Fragment>();
-        Fragment meShopFragment1 = new MeShopFragment("");
-        Fragment meShopFragment2 = new MeShopFragment("10");
-        Fragment meShopFragment3 = new MeShopFragment("20");
-        Fragment meShopFragment4 = new MeShopFragment("40");
-        Fragment meShopFragment5 = new MeShopFragment("50");
+        Fragment meShopFragment1 = new MeShopFragment("0");
+        Fragment meShopFragment2 = new MeShopFragment("1");
+        Fragment meShopFragment3 = new MeShopFragment("2");
+        Fragment meShopFragment4 = new MeShopFragment("3");
+        Fragment meShopFragment5 = new MeShopFragment("4");
+//        Fragment meShopFragment6 = new MeShopFragment("90");
+//        Fragment meShopFragment7 = new MeShopFragment("92");
         list.add(meShopFragment1);
         list.add(meShopFragment2);
         list.add(meShopFragment3);
         list.add(meShopFragment4);
         list.add(meShopFragment5);
+//        list.add(meShopFragment6);
+//        list.add(meShopFragment7);
         indicatorViewPager = new IndicatorViewPager(indicator, viewPager);
         indicatorViewPager.setAdapter(adapter);
         //设置滑动时的那一项的图形和颜色变化，ColorBar对应的是下划线的形状。
@@ -100,8 +104,7 @@ public class ShoporderActivity extends BaseActivity {
 
                         break;
                     case 4:
-                        tvHeaderTitle.setText("待评价");
-
+                        tvHeaderTitle.setText("已签收");
                         break;
                 }
             }
@@ -122,22 +125,29 @@ public class ShoporderActivity extends BaseActivity {
             case "1":
                 viewPager.setCurrentItem(0, true);
                 break;
-                //待付款
+            //待付款
             case "2":
                 viewPager.setCurrentItem(1, true);
                 break;
-                //待发货
+            //待发货
             case "3":
                 viewPager.setCurrentItem(2, true);
                 break;
-                //待收货
+            //待收货
             case "4":
                 viewPager.setCurrentItem(3, true);
                 break;
-                //已签收
+            //已签收
             case "5":
                 viewPager.setCurrentItem(4, true);
                 break;
+            //已取消
+//            case "6":
+//                viewPager.setCurrentItem(5, true);
+//                break;
+//            case "7":
+//                viewPager.setCurrentItem(6, true);
+//                break;
         }
 
     }
@@ -156,7 +166,7 @@ public class ShoporderActivity extends BaseActivity {
      * 指示器适配器对形象
      */
     public IndicatorViewPager.IndicatorFragmentPagerAdapter adapter = new IndicatorViewPager.IndicatorFragmentPagerAdapter(getSupportFragmentManager()) {
-        private String[] tabNames = {"全部订单", "待付款", "待发货", "待收货", "待评价"};
+        private String[] tabNames = {"全部订单", "待付款", "待发货", "待收货", "已签收"};
 
         @Override
         public int getCount() {

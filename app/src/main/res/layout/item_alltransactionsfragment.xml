@@ -8,27 +8,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_typetxt"
             android:layout_marginLeft="@dimen/dp_22"
             android:textSize="@dimen/typeface15sp"
             android:textColor="@color/black_33"
             android:text="拼团奖励"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
+        <LinearLayout
             android:layout_marginRight="@dimen/dp_27"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/dp_22"
-            android:textSize="@dimen/typeface15sp"
-            android:textColor="#FF666C"
-            android:text="+3.96"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="@dimen/typeface15sp"
+                android:textColor="#FF666C"
+                android:id="@+id/tv_tagstr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_score"
+                android:textSize="@dimen/typeface15sp"
+                android:textColor="#FF666C"
+                android:text="3.96"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_ordernum"
             android:layout_marginLeft="@dimen/dp_22"
             android:textSize="@dimen/typeface13sp"
             android:textColor="@color/black_66"
@@ -36,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tv_createtime"
             android:layout_marginRight="@dimen/dp_27"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/dp_22"

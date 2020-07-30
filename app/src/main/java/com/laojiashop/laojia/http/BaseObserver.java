@@ -1,11 +1,15 @@
 package com.laojiashop.laojia.http;
 
 import android.app.Activity;
+import android.app.Dialog;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.stream.MalformedJsonException;
-import com.zhuosongkj.android.library.model.BaseResult;
-
+import com.laojiashop.laojia.activity.UsercodeloginActivity;
+import com.laojiashop.laojia.utils.ActivityManage;
+import com.laojiashop.laojia.utils.BindPhoneDialogUtil;
+import com.laojiashop.laojia.utils.LoginInfoUtil;
 
 import java.io.IOException;
 
@@ -18,6 +22,7 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
     private Activity context;
     private Disposable d;
     private BaseResult<T> mData;
+    private Dialog dialog;
 
     public BaseObserver(Activity aty) {
         this(aty, true);
@@ -55,14 +60,24 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
     public void onNext(BaseResult<T> t) {
         mData = t;
         try {
-            if (t.code.equals("200")||t.code.equals("203")) {
+            //在这里做判断返回的0还是401并不是指定一个接口
+            if (t.code.equals("0")) {
                 onHandleSuccess(t.data);
+               // ToastUtil.showToast(t.msg);
+            }else if (t.code.equals("2000")) {
+                //401code失效回到登录页面
+//                ActivityUtils.startActivity(UsercodeloginActivity.class);
+//                //移除所有activity
+//              // ActivityManage.finishAll();
+//                //清空登录信息
+                UsercodeloginActivity.start(context);
+               /// LoginInfoUtil.saveLoginInfo("","");
+            }else if (t.code.equals("2001"))
+            {
+                //绑定手机号
+                dialog=BindPhoneDialogUtil.showProtocolDialogNoBtns(context);
             }
-//            //else if (t.code.equals("202")) {
-////                LoginActivity.start(context);
-////                LoginInfoUtil.saveLoginInfo("","");
-//            }
-        else {
+            else {
                 onError(new ApiException(t.code, t.msg));
             }
         } catch (Exception e) {
@@ -101,6 +116,7 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
     public abstract void onHandleSuccess(T t) throws IOException;
 
     public void onHandleSuccess(BaseResult<T> t) {
+        ToastUtils.showShort(t.msg);
     }
 
 
@@ -117,7 +133,7 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
         super.onError(e);
         dismissProgressDialog();
         if (e instanceof ApiException) {
-            onFailure(((ApiException) e).getErrorCode() + " " + e.getMessage());
+         //   onFailure(((ApiException) e).getErrorCode() + " " + e.getMessage());
         } else if (e instanceof MalformedJsonException) {
             onFailure("500 服务器数据格式错误");
         } else {

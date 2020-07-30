@@ -1,6 +1,8 @@
 package com.laojiashop.laojia.http;
 
 
+import com.laojiashop.laojia.interceptor.CommonParamsInterceptor;
+import com.laojiashop.laojia.utils.LoginInfoUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,27 +39,33 @@ public class RetrofitUtils {
         /**
          * token验证的方式
          */
-//        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-//                .connectTimeout(OUT_TIME, TimeUnit.SECONDS)
-//                .writeTimeout(READ_WRITE_TIME, TimeUnit.SECONDS)
-//                .readTimeout(READ_WRITE_TIME, TimeUnit.SECONDS)
-//                .addInterceptor(chain -> {
-//                    Request request = chain.request()
-//                            .newBuilder()
-//                            .addHeader("token", LoginInfoUtil.getToken())
-//                            .build();
-//                    return chain.proceed(request);
-//                })
-//                .addInterceptor(new HttpLoggingInterceptor(
-//                        new HttpLogger()).setLevel(HttpLoggingInterceptor.Level.BODY));
-//        return builder.build();
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(OUT_TIME, TimeUnit.SECONDS)
                 .writeTimeout(READ_WRITE_TIME, TimeUnit.SECONDS)
                 .readTimeout(READ_WRITE_TIME, TimeUnit.SECONDS)
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .addInterceptor(new HeaderInterceptors());
+                .addInterceptor(chain -> {
+                    Request request = chain.request()
+                            .newBuilder()
+                            .addHeader("token", LoginInfoUtil.getToken())
+                            .addHeader("device","3")
+                            .build();
+                    return chain.proceed(request);
+                })
+               .addInterceptor(new CommonParamsInterceptor())
+           //     .addInterceptor(new CommonInterceptor())
+                .addInterceptor(new HttpLoggingInterceptor(
+                        new HttpLogger()).setLevel(HttpLoggingInterceptor.Level.BODY));
         return builder.build();
+        /**
+         * 非token验证方式
+         */
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+//                .connectTimeout(OUT_TIME, TimeUnit.SECONDS)
+//                .writeTimeout(READ_WRITE_TIME, TimeUnit.SECONDS)
+//                .readTimeout(READ_WRITE_TIME, TimeUnit.SECONDS)
+//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+//                .addInterceptor(new HeaderInterceptors());
+//        return builder.build();
     }
 
     /**

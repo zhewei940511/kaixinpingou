@@ -56,7 +56,6 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <TextView
-
         android:textSize="@dimen/typeface14sp"
         android:textColor="@color/black_33"
         android:layout_marginLeft="@dimen/dp_12"
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"/>
     <co.lujun.androidtagview.TagContainerLayout
         android:layout_marginTop="@dimen/dp_14"
-        android:id="@+id/tga_recentsearch"
+        android:id="@+id/tga_usersearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_12"
@@ -92,7 +91,7 @@
         android:layout_height="wrap_content"/>
     <co.lujun.androidtagview.TagContainerLayout
         android:layout_marginTop="@dimen/dp_14"
-        android:id="@+id/tga_topsearch"
+        android:id="@+id/tga_hotsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_12"

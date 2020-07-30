@@ -28,28 +28,34 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
-        android:name=".base.BaseApplication"
+        android:name=".base.BaseAllApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity">
+        <meta-data android:name="android.notch_support" android:value="true"/>
+        <activity android:name=".activity.WelcomeGuideActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/><!--登录界面-->
+        <activity android:name=".activity.UsercodeloginActivity"/><!--登录-->
+<!--        <activity android:name=".activity.LoginActivity"/>-->
+        <activity android:name=".activity.MainActivity"/><!--主页-->
         <activity android:name=".activity.RegisteredActivity"/><!--注册界面-->
         <activity android:name=".activity.MallGoodsDetailsOtherActivity"/><!--商品详情页面-->
+        <activity android:name=".activity.MallGoodsDetailsActivity"/><!--商品详情页-->
         <activity android:name=".activity.MyaddressActivity"/><!--我的地址界面-->
         <activity android:name=".activity.NewaddressActivity"/><!--新增地址界面-->
-        <activity android:name=".activity.SelectLocationActivity"/><!--定位界面-->
+<!--        <activity android:name=".activity.SelectLocationActivity"/>&lt;!&ndash;定位界面&ndash;&gt;-->
         <activity android:name=".activity.SearchActivity"/><!--地址搜索界面-->
-        <activity android:name=".activity.ModifyfeedbackActivity"/><!--意见反馈-->
+<!--        <activity android:name=".activity.ModifyfeedbackActivity"/>&lt;!&ndash;意见反馈&ndash;&gt;-->
         <activity android:name=".activity.MorecommentsActivity"/><!--查看更多评价-->
         <activity android:name=".activity.BuyNowActivity"/><!--立即购买-->
         <activity android:name=".activity.SetActivity"/><!--设置界面-->
@@ -69,6 +75,10 @@
         <activity android:name=".activity.SearchdetailspageActivity"/><!--搜索详细页面-->
         <activity android:name=".activity.AddressmanagementActivity"/><!--地址管理-->
         <activity android:name=".activity.MyTeamActivity"/><!--我的团队-->
+        <activity android:name=".activity.RecruittoActivity"/><!--招募令-->
+        <activity android:name=".activity.UploaddocumentsActivity"/><!--立即申请-->
+        <activity android:name=".activity.MeHappybeanOtherActivity"/><!--开心豆-->
+        <activity android:name=".activity.ClassificationDetailsActivity"/><!--分类详情页-->
         <!--今日头条的适配-->
         <meta-data
             android:name="design_width_in_dp"
@@ -77,12 +87,22 @@
             android:name="design_height_in_dp"
             android:value="667" />
         <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
+        <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" /> <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e952ff401b2d39a42c3c87b11a3d8fd7" /> <!-- 高德地图定位 -->
         <service android:name="com.amap.api.location.APSService" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent" /> <!-- 微信登录 -->
     </application>
 
 

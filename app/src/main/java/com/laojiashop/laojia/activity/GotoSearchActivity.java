@@ -1,5 +1,6 @@
 package com.laojiashop.laojia.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +11,12 @@ import android.widget.TextView;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.SearchKeywordsBean;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +37,16 @@ public class GotoSearchActivity extends BaseActivity {
     EditText searchEdittext;
     @BindView(R.id.tv_searchcancle)
     TextView tvSearchcancle;
-    @BindView(R.id.tga_recentsearch)
-    TagContainerLayout tgaRecentsearch;
-    @BindView(R.id.tga_topsearch)
-    TagContainerLayout tgaTopsearch;
-    //模拟测试数据
-    private List<String> searchtag;
-
+    @BindView(R.id.tga_usersearch)
+    TagContainerLayout tgaUsersearch;
+    @BindView(R.id.tga_hotsearch)
+    TagContainerLayout tgahotosearch;
+    //最近搜索数据
+    private List<String> searchtaghot=new ArrayList<>();
+    //热门搜索数据
+    private List<String> searchtaguse=new ArrayList<>();
+    //定义关键词
+    private String keyword;
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_gotosearch);
@@ -46,17 +55,18 @@ public class GotoSearchActivity extends BaseActivity {
     @Override
     protected void initViews() {
         //设置历史搜索标签主题
-        tgaRecentsearch.setTheme(ColorFactory.NONE);
-        tgaRecentsearch.setTagBackgroundColor(Color.parseColor("#F2F2F2"));
+        tgaUsersearch.setTheme(ColorFactory.NONE);
+        tgaUsersearch.setTagBackgroundColor(Color.parseColor("#F2F2F2"));
         //设置热门搜索标签主题
-        tgaTopsearch.setTheme(ColorFactory.NONE);
-        tgaTopsearch.setTagBackgroundColor(Color.parseColor("#F2F2F2"));
+        tgahotosearch.setTheme(ColorFactory.NONE);
+        tgahotosearch.setTagBackgroundColor(Color.parseColor("#F2F2F2"));
         //历史搜索点击事件
-        tgaRecentsearch.setOnTagClickListener(new TagView.OnTagClickListener() {
+        tgaUsersearch.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(int position, String text) {
                 searchEdittext.setText(text);
                 searchEdittext.setSelection(text.length());
+                keyword=text;
             }
 
             @Override
@@ -75,11 +85,12 @@ public class GotoSearchActivity extends BaseActivity {
             }
         });
         //热门搜索点击事件
-        tgaTopsearch.setOnTagClickListener(new TagView.OnTagClickListener() {
+        tgahotosearch.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(int position, String text) {
                 searchEdittext.setText(text);
                 searchEdittext.setSelection(text.length());
+                keyword=text;
             }
 
             @Override
@@ -101,19 +112,29 @@ public class GotoSearchActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        searchtag=new ArrayList<>();
-        searchtag.add("抽纸");
-        searchtag.add("洗衣液");
-        searchtag.add("植物保罗洗发水");
-        searchtag.add("洗衣液");
-        searchtag.add("抽纸");
-        tgaRecentsearch.setTags(searchtag);
-        tgaTopsearch.setTags(searchtag);
     }
 
     @Override
     public void getDataFromServer() {
+        HttpRxObservable.getObservable(ApiUtils.getApiService().goodskeyword()).subscribe(new BaseObserver<SearchKeywordsBean>(mAt) {
+            @Override
+            public void onHandleSuccess(SearchKeywordsBean searchKeywordsBean) throws IOException {
+                List<SearchKeywordsBean.HotWordBean> hotWordBeans=searchKeywordsBean.getHot_word();
+                List<SearchKeywordsBean.UserWordBean> userWordBeans=searchKeywordsBean.getUser_word();
+                for (int i=0;i<hotWordBeans.size();i++)
+                {
+                    searchtaghot.add(hotWordBeans.get(i).getWord());
 
+                }
+                for (int i=0;i<userWordBeans.size();i++)
+                {
+                    searchtaguse.add(userWordBeans.get(i).getWord());
+                }
+                tgahotosearch.setTags(searchtaghot);
+                tgaUsersearch.setTags(searchtaguse);
+            }
+
+        });
     }
 
     @Override
@@ -125,7 +146,11 @@ public class GotoSearchActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_suresearch:
-                jumpActivity(SearchdetailspageActivity.class);
+               // jumpActivity(SearchdetailspageActivity.class);
+                Intent intent=new Intent(mAt,SearchdetailspageActivity.class);
+                intent.putExtra("keyword",keyword);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.tv_searchcancle:
                 finish();

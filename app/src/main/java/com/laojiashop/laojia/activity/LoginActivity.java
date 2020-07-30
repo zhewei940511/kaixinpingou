@@ -9,22 +9,34 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.GsonConverterFactory;
 import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.model.User;
 import com.laojiashop.laojia.utils.BarUtils;
 import com.laojiashop.laojia.utils.LogUtil;
+import com.laojiashop.laojia.utils.LoginInfoUtil;
+import com.laojiashop.laojia.utils.SharedPreferencesManager;
 import com.laojiashop.laojia.utils.StatusBarUtil;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.request.CustomRequest;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +56,11 @@ public class LoginActivity extends BaseActivity {
     Button btnLogin;
     @BindView(R.id.img_loginweixin)
     ImageView imgLoginweixin;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    SharedPreferencesManager sharedPreferencesManager;
+    @BindView(R.id.tv_usecodelogin)
+    TextView tvUsecodelogin;
 
     @Override
     protected void setRootView() {
@@ -60,7 +77,7 @@ public class LoginActivity extends BaseActivity {
             mRootView.setLayoutParams(layoutParams);
         }
         StatusBarUtil.setStatusBarDarkTheme(mAt, true);
-
+        sharedPreferencesManager = new SharedPreferencesManager(mAt);
     }
 
     @Override
@@ -71,7 +88,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void getDataFromServer() {
-
+//            HttpRxObservable.getObservable(ApiUtils.getApiService().login("18888888888","123","3")).subscribe(new BaseObserver<User>(mAt) {
+//                @Override
+//                public void onHandleSuccess(User user) throws IOException {
+//
+//                }
+//            });
     }
 
     @Override
@@ -148,34 +170,53 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
-    @OnClick({R.id.ly_jumregistered, R.id.tv_forgetpwd, R.id.btn_login, R.id.img_loginweixin})
+    @OnClick({R.id.tv_usecodelogin,R.id.ly_jumregistered, R.id.tv_forgetpwd, R.id.btn_login, R.id.img_loginweixin})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //使用验证码登录
+            case R.id.tv_usecodelogin:
+                jumpActivity(UsercodeloginActivity.class);
+                finish();
+                break;
+                //注册
             case R.id.ly_jumregistered:
                 jumpActivity(RegisteredActivity.class);
-                finish();
+                //finish();
                 break;
+                //忘记密码
             case R.id.tv_forgetpwd:
                 break;
+            //登录
             case R.id.btn_login:
-                jumpActivity(MainActivity.class);
-                finish();
-              //HttpRxObservable.getObservable()
+                String account = etLoginphonenum.getText().toString().trim();
+                String pwd = etPassword.getText().toString().trim();
+                if (account.isEmpty()) {
+                    Toast.makeText(mAt, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(mAt, "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                HttpRxObservable.getObservable(ApiUtils.getApiService().login(account, pwd, "account")).subscribe(new BaseObserver<User>(mAt) {
+//                    @Override
+//                    public void onHandleSuccess(User user) throws IOException {
+//                        //缓存数据
+//                        LoginInfoUtil.saveLoginInfo(user.id, user.token);
+//                        sharedPreferencesManager.put("headimgurl", user.headimgurl);
+//                        sharedPreferencesManager.put("name", user.name);
+//                        jumpActivity(MainActivity.class);
+//                        finish();
+//                    }
+//                });
+
+//                jumpActivity(MainActivity.class);
+//                finish();
                 break;
             case R.id.img_loginweixin:
                 break;
         }
     }
-    /**
-     * 手机号码验证正则表达式
-     */
-
 
 }
