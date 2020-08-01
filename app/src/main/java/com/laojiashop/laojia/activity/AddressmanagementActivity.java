@@ -11,9 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemDragListener;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.AddressmanagementAdapter;
 import com.laojiashop.laojia.adapter.MycollectionAdapter;
@@ -22,6 +27,7 @@ import com.laojiashop.laojia.base.BasePresenter;
 import com.laojiashop.laojia.entity.AddressmanagementBean;
 import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 import com.laojiashop.laojia.entity.MycollectionBean;
+import com.laojiashop.laojia.entity.OrderBean;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
@@ -57,10 +63,11 @@ public class AddressmanagementActivity extends BaseActivity {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     //适配器
-    private  AddressmanagementAdapter addressmanagementAdapter;
+    private AddressmanagementAdapter addressmanagementAdapter;
     //模拟数据
-    private List<AddressmanagementBean.DataBean> mDataList=new ArrayList<>();
+    private List<AddressmanagementBean.DataBean> mDataList = new ArrayList<>();
     private int page = 1;
+
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_address_management);
@@ -71,11 +78,52 @@ public class AddressmanagementActivity extends BaseActivity {
         getBarDistance(headerTitleView);
         tvHeaderTitle.setText("收货地址");
         rvAddress.setLayoutManager(new LinearLayoutManager(mAt));
-        addressmanagementAdapter=new AddressmanagementAdapter(mDataList);
+        addressmanagementAdapter = new AddressmanagementAdapter(mDataList);
         //无数据显示空
         addressmanagementAdapter.setEmptyView(LayoutInflater.from(mAt).inflate(R.layout.layout_empty_view, rvAddress, false));
+        //设置滑动删除
+        OnItemDragListener itemDragListener=new OnItemDragListener() {
+            @Override
+            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+
+            @Override
+            public void onItemDragMoving(RecyclerView.ViewHolder viewHolder, int i, RecyclerView.ViewHolder viewHolder1, int i1) {
+
+            }
+
+            @Override
+            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+        };
+
+        ItemDragAndSwipeCallback itemDragAndSwipeCallback=new ItemDragAndSwipeCallback(addressmanagementAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+        itemTouchHelper.attachToRecyclerView(rvAddress);
+        // 开启滑动删除
+        addressmanagementAdapter.enableSwipeItem();
+       // addressmanagementAdapter.setOnItemSwipeListener(onItemSwipeListener);
         //绑定适配器
         rvAddress.setAdapter(addressmanagementAdapter);
+        //设置点击事件
+        addressmanagementAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                //标记是这个吗嗯，对头
+                switch (view.getId()) {
+                    //编辑地址事件
+                    case R.id.img_editaddress:
+                        AddressmanagementBean.DataBean item = addressmanagementAdapter.getItem(position);
+                        //跳哪个界面，需要哪些参数名字，电话是否是默认地址
+                        NewaddressActivity.invoke(mAt, 1, item);
+                        break;
+                }
+            }
+        });
+
+
         //设置头
         refreshLayout.setRefreshFooter(new BallPulseFooter(mAt).setSpinnerStyle(SpinnerStyle.Scale));
         //开启下拉刷新
@@ -120,7 +168,7 @@ public class AddressmanagementActivity extends BaseActivity {
 
     @Override
     public void getDataFromServer() {
-        HttpRxObservable.getObservable(ApiUtils.getApiService().getaddressgetList("mg_address",page)).subscribe(new BaseObserver<AddressmanagementBean>(mAt) {
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getaddressgetList("mg_address", page)).subscribe(new BaseObserver<AddressmanagementBean>(mAt) {
             @Override
             public void onHandleSuccess(AddressmanagementBean addressmanagementBean) throws IOException {
                 //成功  你的adapter呢
@@ -148,7 +196,9 @@ public class AddressmanagementActivity extends BaseActivity {
                 break;
             //新增地址
             case R.id.btn_newaddress:
-                jumpActivity(NewaddressActivity.class);
+                // 跳转地址界面
+                //jumpActivity(NewaddressActivity.class);
+                NewaddressActivity.invoke(mAt, 0, null);//这个地方可以不需要动，动也可以
                 break;
         }
     }
@@ -159,6 +209,7 @@ public class AddressmanagementActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
     //返回回调
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

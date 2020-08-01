@@ -185,7 +185,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("Base/Address/addRecord")
-    Observable<BaseResult<Object>> addressaddrecord(@Field("name") String name,
+    Observable<BaseResult<Object>> addressaddrecord(@Field("id") String id,@Field("name") String name,
                                                        @Field("phone") String phone,
                                                        @Field("province") String province,
                                                        @Field("city") String city,
@@ -273,19 +273,19 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST("Base/Address/addRecord")
-    Observable<BaseResult<Object>> createorder(@Field("type") String type,
+    @POST("MallOrder/createOrder")
+    Observable<BaseResult<Object>> createorder(@Field("type") int type,
                                                @Field("goodsId") String goodsId,
                                                @Field("configIdx") String configIdx,
-                                                    @Field("coin") String coin,
-                                                    @Field("score") String score,
-                                                    @Field("pay") String pay,
+                                                    @Field("coin") int coin,
+                                                    @Field("score") int score,
+                                                    @Field("pay") float pay,
                                                     @Field("number") String number,
                                                     @Field("skuCombination") String skuCombination,
-                                                    @Field("addressId") String addressId,
+                                                    @Field("addressId") int addressId,
                                                     @Field("name") String name,
                                                     @Field("identificationNumber") String identificationNumber,
-                                                    @Field("remark") int remark,
+                                                    @Field("remark") String remark,
                                                     @Field("liveUid") String liveUid);
 
 //    /**

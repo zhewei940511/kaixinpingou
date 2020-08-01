@@ -79,6 +79,7 @@
         <activity android:name=".activity.UploaddocumentsActivity"/><!--立即申请-->
         <activity android:name=".activity.MeHappybeanOtherActivity"/><!--开心豆-->
         <activity android:name=".activity.ClassificationDetailsActivity"/><!--分类详情页-->
+        <activity android:name=".test.TestActivity"/>
         <!--今日头条的适配-->
         <meta-data
             android:name="design_width_in_dp"

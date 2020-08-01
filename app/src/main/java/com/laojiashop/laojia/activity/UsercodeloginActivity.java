@@ -242,7 +242,7 @@ public class UsercodeloginActivity extends BaseActivity {
             HttpRxObservable.getObservable(ApiUtils.getApiService().weilogin(code, "wechat", "6")).subscribe(new BaseObserver<User>(mAt) {
                 @Override
                 public void onHandleSuccess(User user) throws IOException {
-                    ToastUtil.showToast("登录成功！");
+                    showToast("登录成功！");
                     //授权类信息存入缓存
                     LoginInfoUtil.saveLoginInfo(user.id, user.token);
                     jumpActivity(MainActivity.class);

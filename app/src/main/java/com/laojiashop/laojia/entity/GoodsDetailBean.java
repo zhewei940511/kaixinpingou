@@ -3,6 +3,7 @@ package com.laojiashop.laojia.entity;
 import com.google.gson.annotations.SerializedName;
 import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -1183,7 +1184,7 @@ public class GoodsDetailBean {
         }
 
     }
-    public static class FreightListBean {
+    public static class FreightListBean implements Serializable {
         /**
          * id : 460000
          * name : 海南省

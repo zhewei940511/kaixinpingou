@@ -1,8 +1,9 @@
 package com.laojiashop.laojia.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AddressmanagementBean {
+public class AddressmanagementBean implements Serializable{
 
     /**
      * total : 2
@@ -58,7 +59,7 @@ public class AddressmanagementBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * id : 317
          * user_id : 59461

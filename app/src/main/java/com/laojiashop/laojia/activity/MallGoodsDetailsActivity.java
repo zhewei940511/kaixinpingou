@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +17,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.google.gson.Gson;
 import com.laojiashop.laojia.R;
 
 import com.laojiashop.laojia.adapter.MallBuyAdapter;
@@ -36,7 +44,10 @@ import com.laojiashop.laojia.fragment.MallGoodsDetailFragment;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.test.TestActivity;
 import com.laojiashop.laojia.utils.ScreenUtil;
+import com.laojiashop.laojia.utils.ToastUtil;
+import com.orhanobut.logger.Logger;
 import com.shizhefei.view.indicator.FixedIndicatorView;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -46,7 +57,10 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -99,7 +113,12 @@ public class MallGoodsDetailsActivity extends BaseActivity {
     //订单图片
     private String orderImg;
     //规格数据源
-    private List<GoodsDetailBean.SkuBean.TreeBean> treeBeanList;
+    private List<GoodsDetailBean.SkuBean.ListBean> listBeanList = new ArrayList<>();
+    private List<GoodsDetailBean.SkuBean.TreeBean> treeBeanList = new ArrayList<>();
+
+    //选中的文字拼接
+    private ArrayList<String> strings;
+    private HashMap<Object, Object> map;
     //团购数据源
     private List<GoodsDetailBean.TuangouBean> tuangouBeanList;
     //是否收藏
@@ -111,8 +130,20 @@ public class MallGoodsDetailsActivity extends BaseActivity {
     private int isonebuy;
     //拼团人数
     private int configIdx;
+    //定义对象接收用户选中的价格和
+    private TextView ordername, showprice,mNum;
+    private String pirce,skuname,goodtitle;
+    //积分
+    private  int freeze_coin;
+    //运费末班string
+//    private String freightListBeansstr;
+    //运费模板
+    private List<GoodsDetailBean.FreightListBean> freightListBeans=new ArrayList<>();
+    //定义num数量（购买数量）
+    private  String number;
     LayoutInflater mInflater;
-   private ArrayList<GoodsDetailBean.SkuBean.TreeBean.VBean> res=new ArrayList<>();
+    private ArrayList<GoodsDetailBean.SkuBean.ListBean> res = new ArrayList<>();
+
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_mall_goods_details);
@@ -139,6 +170,10 @@ public class MallGoodsDetailsActivity extends BaseActivity {
                 finish();
             }
         });
+//        //添加数据源
+//        treeBeanList = new ArrayList<>();
+//        listBeanList=new ArrayList<>();
+
         mIndicator = findViewById(R.id.indicator);
         bannertops = findViewById(R.id.bannertop);
         mViewPager = findViewById(R.id.viewPager);
@@ -212,13 +247,27 @@ public class MallGoodsDetailsActivity extends BaseActivity {
 
         //数据请求
         HttpRxObservable.getObservable(ApiUtils.getApiService().getgooddetailinfo(goodsid)).subscribe(new BaseObserver<GoodsDetailBean>(mAt) {
+
             @Override
             public void onHandleSuccess(GoodsDetailBean goodsDetailBean) throws IOException {
+                //这个地方的是规格数据
+                listBeanList = goodsDetailBean.getSku().getList();
+                treeBeanList = goodsDetailBean.getSku().getTree();
+                //存入运费模板
+                freightListBeans=goodsDetailBean.getFreight_list();
+                //转换成String
+//                Gson gson=new Gson();
+//                freightListBeansstr=gson.toJson(freightListBeans);
+                //System.out.println("信息"+freightListBeansstr);
+                map = new HashMap<>();
+                strings = new ArrayList<>();
+                for (int i = 0; i < treeBeanList.size(); i++) {
+                    strings.add(i, "");
+                }
                 //轮播图数据源
                 List<GoodsDetailBean.ImgsBean> imgBeans = goodsDetailBean.getImgs();
-                for (int i=0;i<goodsDetailBean.getSku().getTree().size();i++)
-                {
-                    res.addAll(goodsDetailBean.getSku().getTree().get(i).getV());
+                for (int i = 0; i < goodsDetailBean.getSku().getTree().size(); i++) {
+                    res.addAll(goodsDetailBean.getSku().getList());
                 }
                 //刷新数据之后，需要重新设置是否支持自动轮播  哪里报错就是这个页面的问题
                 bannertops.setAutoPlayAble(imgBeans.size() > 1);
@@ -235,16 +284,19 @@ public class MallGoodsDetailsActivity extends BaseActivity {
                 }
                 tvMarketPrice.getPaint().setAntiAlias(true);//抗锯齿
                 tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-                tvGoodstitle.setText(goodsDetailBean.getTitle());//标题
+                goodtitle=goodsDetailBean.getTitle();
+                tvGoodstitle.setText(goodtitle);//标题
                 tvGoodsubtitletitle.setText(goodsDetailBean.getStitle());//副标题
                 tvFreightTips.setText("运费:" + goodsDetailBean.getFreight_tips());//运费
+                freeze_coin=goodsDetailBean.getFreeze_coin();
                 orderImg = goodsDetailBean.getPath();
-                //添加数据源
-                treeBeanList = new ArrayList<>();
-                //这个地方的是规格数据
-                for (GoodsDetailBean.SkuBean.TreeBean treeBean : goodsDetailBean.getSku().getTree()) {
-                    treeBeanList.add(treeBean);
-                }
+//                for (GoodsDetailBean.SkuBean.TreeBean treeBean : goodsDetailBean.getSku().getTree()) {
+//                    treeBeanList.add(treeBean);
+//                }
+//                for (GoodsDetailBean.SkuBean.ListBean listBean:goodsDetailBean.getSku().getList())
+//                {
+//                    listBeanList.add(listBean);
+//                }
                 //循环添加团购模块
                 tuangouBeanList = new ArrayList<>();
                 for (GoodsDetailBean.TuangouBean tuangouBean : goodsDetailBean.getTuangou()) {
@@ -268,16 +320,7 @@ public class MallGoodsDetailsActivity extends BaseActivity {
                     type = 2;
                 } else {
                     btnBuynow.setText("立即购买");
-                    switch (isonebuy) {
-                        //非直购type为1
-                        case 0:
-                            type = 1;
-                            break;
-                        //是直购设置type类型为3
-                        case 1:
-                            type = 3;
-                            break;
-                    }
+
                 }
             }
 
@@ -386,8 +429,8 @@ public class MallGoodsDetailsActivity extends BaseActivity {
         //判断是否是团购产品
         View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_buy_now, null);
         ImageView mOrderImg = contentView.findViewById(R.id.iv_online_order_image);
-        TextView ordername = contentView.findViewById(R.id.tv_ordername);
-        TextView showprice = contentView.findViewById(R.id.tv_showprice);
+        ordername = contentView.findViewById(R.id.tv_ordername);
+        showprice = contentView.findViewById(R.id.tv_showprice);
         Glide.with(mOrderImg.getContext()).load(orderImg).apply(new RequestOptions()
                 .placeholder(R.drawable.default_image)).into(mOrderImg);
         ImageView mCancle = contentView.findViewById(R.id.iv_cancle);
@@ -398,26 +441,15 @@ public class MallGoodsDetailsActivity extends BaseActivity {
             }
         });
         Button mbuynow = contentView.findViewById(R.id.btn_buynow);
-        mbuynow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //jumpActivity(BuyNowActivity.class);
-                //传值跳转
-                Intent intent = new Intent(mAt, BuyNowActivity.class);
-                intent.putExtra("type", type);
-                startActivity(intent);
-                bottomDialog.dismiss();
-            }
-        });
         //减
         ImageView mSub = contentView.findViewById(R.id.btn_sub);
         //加
         ImageView mAdd = contentView.findViewById(R.id.btn_add);
-        TextView mNum = contentView.findViewById(R.id.tv_num);
+        mNum= contentView.findViewById(R.id.tv_num);
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String number = mNum.getText().toString();
+                number= mNum.getText().toString();
                 int i = Integer.parseInt(number);
                 i += 1;
                 String addNumber = Integer.toString(i);
@@ -428,7 +460,7 @@ public class MallGoodsDetailsActivity extends BaseActivity {
         mSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String number = mNum.getText().toString();
+                number = mNum.getText().toString();
                 int i = Integer.parseInt(number);
                 if (i > 1) {
                     i -= 1;
@@ -443,33 +475,92 @@ public class MallGoodsDetailsActivity extends BaseActivity {
         mBuyRecycler.setLayoutManager(new LinearLayoutManager(mBuyRecycler.getContext()));
         MallBuyAdapter buyAdapter = new MallBuyAdapter(R.layout.mall_buy_item, treeBeanList);
         mBuyRecycler.setAdapter(buyAdapter);
-        //点击事件
         buyAdapter.setItemClickKind(new MallBuyAdapter.ItemClickKind() {
             @Override
             public void getItemKind(String spec) {
-               // System.out.println("信息"+spec);
-                ordername.setText("已选择:" + spec);
-                for (GoodsDetailBean.SkuBean.TreeBean.VBean re : MallGoodsDetailsActivity.this.res) {
-                    if (re.getName().equals(spec)) {
-                        if (spec != null) {
-                            re.getName();
+//                //System.out.println("信息显示" + spec);
+//                String skuid=spec;
+                for (GoodsDetailBean.SkuBean.ListBean specPrice : listBeanList) {
+                    if (spec.equals(specPrice.getSku())) {
+                        pirce=specPrice.getPrice();
+                        skuname=specPrice.getSku_name();
+                        showprice.setText("￥"+pirce);
+                        ordername.setText("规格:" + skuname);
+                    }
+                }
+                mbuynow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (ordername.getText().length()==0)
+                        {
+                            showToast("请选择规格");
+                            return;
                         }
+                        if (showprice.getText().length()==0)
+                        {
+                            showToast("请选择规格");
+                            return;
+                        }
+                        switch (isonebuy) {
+                            //普通商品type为1
+                            case 0:
+                                type = 1;
+                                break;
+                            //一人直购设置type类型为3
+                            case 1:
+                                type = 3;
+                                break;
+                        }
+                        Intent intent=new Intent(mAt,BuyNowActivity.class);
+                        Bundle bundle = new Bundle();
+//                        intent.putExtra("goodid",goodsid);
+//                        intent.putExtra("type",type);
+//                        intent.putExtra("freeze_coin",freeze_coin);
+//                        intent.putExtra("number",mNum.getText().toString());
+//                        intent.putExtra("pirce",pirce);
+//                        intent.putExtra("skuname",skuname);
+//                        intent.putExtra("goodtitle",goodtitle);
+//                        intent.putExtra("orderImg",orderImg);
+                        bundle.putString("goodid",goodsid);
+                        bundle.putInt("type",type);
+                        bundle.putInt("freeze_coin",freeze_coin);
+                        bundle.putString("number",mNum.getText().toString());
+                        bundle.putString("pirce",pirce);
+                        bundle.putString("skuname",skuname);
+                        bundle.putString("goodtitle",goodtitle);
+                        bundle.putString("skuCombination",spec);
+                        bundle.putString("orderImg",orderImg);
+                        bundle.putSerializable("freightListBeans", (Serializable) freightListBeans);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        bottomDialog.dismiss();
+//                        jumpActivity(this,BuyNowActivity.class);
                     }
-                }
-                StringBuffer buffer = new StringBuffer();
-                for (int i = 0; i < MallGoodsDetailsActivity.this.res.size(); i++) {
-                    GoodsDetailBean.SkuBean.TreeBean.VBean vBean = MallGoodsDetailsActivity.this.res.get(i);
-                    if (vBean.getName().length() <= 0) {
-                        showToast("请选择" + vBean.getName());
-                        return;
-                    } else {
-                        buffer.append(vBean.getName()).append("-");
-                    }
-                }
-                String selectKind = buffer.substring(0, buffer.length() - 1);
-                System.out.println("信息获取"+selectKind);
+                });
             }
         });
+        // mBuyRecycler.setAdapter(new SkuAdapter(R.layout.mall_buy_item, treeBeanList));
+        //点击事件
+//        buyAdapter.setItemClickKind(new MallBuyAdapter.ItemClickKind() {
+//            @Override
+//            public void getItemKind(String spec) {
+//               // System.out.println("信息"+spec);
+//                ordername.setText("已选择:" + spec);
+//                StringBuffer buffer = new StringBuffer();
+//                for (int i = 0; i < MallGoodsDetailsActivity.this.res.size(); i++) {
+//                    GoodsDetailBean.SkuBean.ListBean info = MallGoodsDetailsActivity.this.res.get(i);
+//                    if (res.size() <= 0) {
+//                        showToast("请选择" + info.getSku_name());
+//                        return;
+//                    } else {
+//                        buffer.append(info.getSku_name()).append("-");
+//                    }
+//                }
+//                String selectKind = buffer.substring(0, buffer.length() - 1);
+//                System.out.println("信息获取"+selectKind);
+//            }
+//        });
         //dialog弹窗相关
         bottomDialog.setContentView(contentView);
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -495,8 +586,8 @@ public class MallGoodsDetailsActivity extends BaseActivity {
         //判断是否是团购产品
         View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_buy_tg, null);
         ImageView mOrderImg = contentView.findViewById(R.id.iv_online_order_image);
-        TextView ordername = contentView.findViewById(R.id.tv_ordername);
-        TextView showprice = contentView.findViewById(R.id.tv_showprice);
+        ordername = contentView.findViewById(R.id.tv_ordername);
+        showprice = contentView.findViewById(R.id.tv_showprice);
         Glide.with(mOrderImg.getContext()).load(orderImg).apply(new RequestOptions()
                 .placeholder(R.drawable.default_image)).into(mOrderImg);
         ImageView mCancle = contentView.findViewById(R.id.iv_cancle);
@@ -539,7 +630,6 @@ public class MallGoodsDetailsActivity extends BaseActivity {
         mbuynow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //jumpActivity(BuyNowActivity.class);
                 //传值
                 Intent intent = new Intent(mAt, BuyNowActivity.class);
                 //毕传参数
@@ -556,6 +646,71 @@ public class MallGoodsDetailsActivity extends BaseActivity {
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         bottomDialog.show();
     }
+    //创建适配器对象
+//    public class SkuAdapter extends BaseQuickAdapter<GoodsDetailBean.SkuBean.TreeBean, BaseViewHolder> {
+//
+//
+//        public SkuAdapter(int layoutResId, @Nullable List<GoodsDetailBean.SkuBean.TreeBean> data) {
+//            super(layoutResId, data);
+//        }
+//
+//        @Override
+//        protected void convert(@NonNull BaseViewHolder helper, GoodsDetailBean.SkuBean.TreeBean item) {
+//            final TagFlowLayout rlShopColor = helper.getView(R.id.id_flowlayout);
+//            TextView tv_xueduan = helper.getView(R.id.tv_specification);
+//            rlShopColor.setMaxSelectCount(1);
+//            final ArrayList<String> mVals = new ArrayList<>();
+//            final List<GoodsDetailBean.SkuBean.TreeBean.VBean> items = item.getV();
+//            //循环外层拿到treebean数据
+//            for (GoodsDetailBean.SkuBean.TreeBean.VBean info : items) {
+//                mVals.add(info.getName());
+//            }
+//            tv_xueduan.setText(item.getK());
+//            rlShopColor.setAdapter(new TagAdapter<String>(mVals) {
+//                @Override
+//                public View getView(FlowLayout parent, int position, String s) {
+//                    TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tv, rlShopColor, false);
+//                    textView.setText(s);
+//                    return textView;
+//                }
+//            });
+//            rlShopColor.setOnSelectListener(selectPosSet -> {
+//                if (selectPosSet.isEmpty()) {
+//                    Logger.i("------没选----");
+//                } else {
+//                    for (Integer in : selectPosSet) {
+//                        attributeView(in, item);
+//                    }
+//                }
+//            });
+//        }
+//    }
+//    private void attributeView(int in, GoodsDetailBean.SkuBean.TreeBean item) {
+//        Collection<Object> values = map.values();
+//        List<Object> valueList = new ArrayList<Object>(values);
+//        for (int i = 0; i < treeBeanList.size(); i++) {
+//            if (item.getV().get(i).getId() == treeBeanList.get(i).getV().get(i).getId()) {
+//                strings.set(i, String.valueOf(item.getV().get(in).getId()));
+//            }
+//        }
+//        Logger.i("------111----" + valueList.toString());
+//        Logger.i("------选择的名称----" + strings.toString());
+//        StringBuilder mystr = new StringBuilder();
+//        for (String s : strings) {
+//            if (!s.equals("")) {
+//                mystr.append(s).append("-");
+//            }
+//        }
+//        String selectKind = mystr.substring(0, mystr.length() - 1);
+//        //循环拿到价格集合
+//        for (GoodsDetailBean.SkuBean.ListBean specPrice : listBeanList) {
+//            if (selectKind.equals(specPrice.getSku())) {
+//                showprice.setText(specPrice.getPrice());
+//                ordername.setText("规格:" + specPrice.getSku_name());
+//            }
+//        }
+//
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

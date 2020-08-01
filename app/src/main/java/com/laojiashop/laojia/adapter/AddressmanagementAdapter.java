@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.laojiashop.laojia.R;
@@ -13,7 +14,7 @@ import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 
 import java.util.List;
 
-public class AddressmanagementAdapter extends BaseQuickAdapter<AddressmanagementBean.DataBean, BaseViewHolder> {
+public class AddressmanagementAdapter extends BaseItemDraggableAdapter<AddressmanagementBean.DataBean, BaseViewHolder> {
 
     //    public AddressmanagementAdapter(int layoutResId, @Nullable List<HotstyletorecommendBean> data) {
 //        super(layoutResId, data);
@@ -29,6 +30,7 @@ public class AddressmanagementAdapter extends BaseQuickAdapter<Addressmanagement
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, AddressmanagementBean.DataBean item) {
+        helper.addOnClickListener(R.id.img_editaddress);
         helper.setText(R.id.tv_addressusername,item.getName())
                 .setText(R.id.tv_addressuserphone,item.getPhone())
                 .setText(R.id.tv_addressusercontent,item.getSsq());
@@ -41,4 +43,5 @@ public class AddressmanagementAdapter extends BaseQuickAdapter<Addressmanagement
         }
 
     }
+
 }

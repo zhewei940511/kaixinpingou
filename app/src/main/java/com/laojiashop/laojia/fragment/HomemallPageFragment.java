@@ -26,6 +26,7 @@ import com.laojiashop.laojia.entity.SpecialCourseSectionBean;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.test.TestActivity;
 import com.laojiashop.laojia.utils.ScreenUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -123,7 +124,7 @@ public class HomemallPageFragment extends BaseFragment {
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         HomePageBean.SpecialBean.GoodsListBean goodsListBean = sectionBeansdata.get(position).t;
                         //商品详情
-                        // Intent intent=new Intent(mAty, MallGoodsDetailsOtherActivity.class);
+                         //Intent intent=new Intent(mAty, TestActivity.class);
                         Intent intent = new Intent(mAty, MallGoodsDetailsActivity.class);
                         intent.putExtra("goodid", goodsListBean.getId());
                         // intent.setClass();

@@ -1,8 +1,8 @@
 package com.laojiashop.laojia.utils;
 
 public class ComParamContact {
-    public static final String APP_ID = "wxa94cafa40673b13d";
-    public static final String AppSecret = "0bab415b416fb4c4fd598055fcf211fb";
+    public static final String APP_ID = "wx2219207eed9eb5a8";
+    public static final String AppSecret = "d5eeb1ce2ebf7d9b0b819c0d6a845bd0";
     public final static class Common {
         public final static String APPID = "appId";
         public final static String ACCESSTOKEN = "accessToken";
