@@ -1,20 +1,22 @@
 package com.laojiashop.laojia.activity;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
@@ -22,7 +24,13 @@ import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.GridImageAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.FeedbackconditionsBean;
+import com.laojiashop.laojia.entity.FlieUploadBean;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.utils.GlideEngine;
+import com.laojiashop.laojia.utils.ToastUtil;
 import com.laojiashop.laojia.view.FullyGridLayoutManager;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -32,13 +40,20 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.luck.picture.lib.tools.ScreenUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 意见反馈
@@ -56,15 +71,34 @@ public class FeedbackActivity extends BaseActivity {
     TextView tvShowchoosetype;
     @BindView(R.id.rl_choosetype)
     RelativeLayout rlChoosetype;
+    @BindView(R.id.tv_header_right)
+    TextView tvHeaderRight;
+    @BindView(R.id.ly_ordernum)
+    LinearLayout lyOrdernum;
+    @BindView(R.id.et_feedbackphone)
+    EditText etFeedbackphone;
+    @BindView(R.id.et_feedbackordernum)
+    EditText etFeedbackordernum;
+    @BindView(R.id.et_feedbackcontext)
+    EditText etFeedbackcontext;
+    @BindView(R.id.btn_Submitfeedback)
+    Button btnSubmitfeedback;
     private int maxSelectNum = 3;
     private FullyGridLayoutManager fullyGridLayoutManager;
     private GridImageAdapter gridImageAdapter;
     //选择器
     private OptionsPickerView optionsPickerView;
+    //选择的id
+    private int typeid = 0;
+    //类型名字
+    private String typename;
     /**
      * 模拟数据显示
      */
     private List<String> choosetype;
+    //图片集合
+    private List<String> urllist = new ArrayList<>();
+
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_feedback);
@@ -74,6 +108,8 @@ public class FeedbackActivity extends BaseActivity {
     protected void initViews() {
         getBarDistance(headerTitleView);
         tvHeaderTitle.setText("意见反馈");
+        tvHeaderRight.setVisibility(View.VISIBLE);
+        tvHeaderRight.setText("我的反馈");
         fullyGridLayoutManager = new FullyGridLayoutManager(this,
                 3, GridLayoutManager.VERTICAL, false);
         gridImageAdapter = new GridImageAdapter(mAt, onAddPicClickListener);
@@ -123,16 +159,22 @@ public class FeedbackActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        choosetype=new ArrayList<>();
-        choosetype.add("订单");
-        choosetype.add("咨询");
-        choosetype.add("合作");
-        choosetype.add("服务");
+
+
     }
 
     @Override
     public void getDataFromServer() {
-
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getBaFeedbackTypeList("mg_feedbacktype_list", 1)).subscribe(new BaseObserver<FeedbackconditionsBean>(mAt) {
+            @Override
+            public void onHandleSuccess(FeedbackconditionsBean feedbackconditionsBean) throws IOException {
+                choosetype = new ArrayList<>();
+                for (int i = 0; i < feedbackconditionsBean.getData().size(); i++) {
+                    choosetype.add(feedbackconditionsBean.getData().get(i).getTypename());
+                    // typeid=feedbackconditionsBean.getData().get(i).getId();
+                }
+            }
+        });
     }
 
     @Override
@@ -174,14 +216,17 @@ public class FeedbackActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.iv_header_back, R.id.rl_choosetype})
+    @OnClick({R.id.iv_header_back, R.id.rl_choosetype, R.id.tv_header_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_header_back:
                 finish();
                 break;
             case R.id.rl_choosetype:
-                    showpick();
+                showpick();
+                break;
+            case R.id.tv_header_right:
+                jumpActivity(FeedbackallActivity.class);
                 break;
         }
     }
@@ -189,12 +234,39 @@ public class FeedbackActivity extends BaseActivity {
     /**
      * 弹窗
      */
-    private void showpick()
-    {
-        optionsPickerView=new OptionsPickerBuilder(mAt, new OnOptionsSelectListener() {
+    private void showpick() {
+        optionsPickerView = new OptionsPickerBuilder(mAt, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                String tx=choosetype.get(options1);
+                String tx = choosetype.get(options1);
+                //typeid=options1;
+                switch (options1) {
+                    //订单反馈
+                    case 0:
+                        lyOrdernum.setVisibility(View.VISIBLE);
+                        typeid = 1;
+                        break;
+                    //咨询反馈
+                    case 1:
+                        lyOrdernum.setVisibility(View.GONE);
+                        typeid = 2;
+                        break;
+                    //合作反馈
+                    case 2:
+                        lyOrdernum.setVisibility(View.GONE);
+                        typeid = 3;
+                        break;
+                    //建议反馈
+                    case 3:
+                        lyOrdernum.setVisibility(View.GONE);
+                        typeid = 4;
+                        break;
+                    default:
+                        break;
+                }
+                typename = choosetype.get(options1);
+                System.out.println("typeid" + typeid);
+//                System.out.println("id1-----"+options1+"id2========="+options2+"id3++++++++++"+options3+"view++++++++"+v);
                 tvShowchoosetype.setText(tx);
             }
         }).setTitleText("")//设置标题
@@ -207,10 +279,80 @@ public class FeedbackActivity extends BaseActivity {
         optionsPickerView.setPicker(choosetype);
         optionsPickerView.show();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    /**
+     * 意见反馈按钮
+     */
+    @OnClick(R.id.btn_Submitfeedback)
+    public void onViewClicked() {
+        String phone = etFeedbackphone.getText().toString().trim();
+        String context = etFeedbackcontext.getText().toString().trim();
+        String ordernum = etFeedbackordernum.getText().toString().trim();
+        switch (typeid) {
+            case 0:
+                ToastUtil.showToast("请选择反馈类型");
+                break;
+            case 1:
+                if (TextUtils.isEmpty(ordernum)) {
+                    ToastUtil.showToast("请输入订单号");
+                    return;
+                }
+                break;
+        }
+        //typeid这个是选中类型的id,1.2.3.4.5.6.有几个，分别标一下
+//        if (typeid == 0) {
+//            ToastUtil.showToast("请选择反馈类型");
+//            return;
+//        }
+        //        if (TextUtils.isEmpty(ordernum)) {
+//            ToastUtil.showToast("请输入订单号");
+//            return;
+//        }
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showToast("请输入手机号码");
+            return;
+        }
+        if (TextUtils.isEmpty(context)) {
+            ToastUtil.showToast("请输入反馈信息");
+            return;
+        }
+        List<Map<String, String>> list = new ArrayList<>();
+        for (int i = 0; i < urllist.size(); i++) {
+            //循环遍历所有
+            Map<String, String> map = new HashMap<>();
+            map.put("url", urllist.get(i));
+            list.add(map);
+        }
+        System.out.println("list显示" + list);
+        String s = JSON.toJSONString(list);
+        System.out.println("数据显示" + s);
+        HttpRxObservable.getObservable(ApiUtils.getApiService().Fankuiapply("FeedBack", typeid, typename, phone, context, ordernum, s)).subscribe(new BaseObserver<Object>(mAt) {
+            @Override
+            public void onHandleSuccess(Object o) throws IOException {
+                ToastUtil.showToast("意见反馈成功");
+                jumpActivity(FeedbackallActivity.class);
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                ToastUtil.showToast(e.getMessage());
+            }
+        });
+    }
+
     /**
      * 返回结果回调
      */
-    private static class MyResultCallback implements OnResultCallbackListener<LocalMedia> {
+    private class MyResultCallback implements OnResultCallbackListener<LocalMedia> {
         private WeakReference<GridImageAdapter> mAdapterWeakReference;
 
         public MyResultCallback(GridImageAdapter adapter) {
@@ -220,20 +362,41 @@ public class FeedbackActivity extends BaseActivity {
 
         @Override
         public void onResult(List<LocalMedia> result) {
-            for (LocalMedia media : result) {
-                Log.i(TAG, "是否压缩:" + media.isCompressed());
-                Log.i(TAG, "压缩:" + media.getCompressPath());
-                Log.i(TAG, "原图:" + media.getPath());
-                Log.i(TAG, "是否裁剪:" + media.isCut());
-                Log.i(TAG, "裁剪:" + media.getCutPath());
-                Log.i(TAG, "是否开启原图:" + media.isOriginal());
-                Log.i(TAG, "原图路径:" + media.getOriginalPath());
-                Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
-                Log.i(TAG, "Size: " + media.getSize());
-                // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
-            }
+//            for (LocalMedia media : result) {
+//                Log.i(TAG, "是否压缩:" + media.isCompressed());
+//                Log.i(TAG, "压缩:" + media.getCompressPath());
+//                Log.i(TAG, "原图:" + media.getPath());
+//                Log.i(TAG, "是否裁剪:" + media.isCut());
+//                Log.i(TAG, "裁剪:" + media.getCutPath());
+//                Log.i(TAG, "是否开启原图:" + media.isOriginal());
+//                Log.i(TAG, "原图路径:" + media.getOriginalPath());
+//                Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
+//                Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
+//                Log.i(TAG, "Size: " + media.getSize());
+//                // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
+//            }
             if (mAdapterWeakReference.get() != null) {
+                for (int i = 0; i < result.size(); i++) {
+                    // String pathone=result.get(i).getAndroidQToPath();
+                    String pathone = result.get(i).getPath();
+                    File file = new File(pathone);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file_data", file.getName(), requestFile);
+                    HttpRxObservable.getObservable(ApiUtils.getApiService().uploadtosave(body)).subscribe(new BaseObserver<FlieUploadBean>(mAt) {
+                        @Override
+                        public void onHandleSuccess(FlieUploadBean flieUploadBean) throws IOException {
+                            ToastUtil.showToast("上传成功");
+                            urllist.add(flieUploadBean.getPath());
+                            System.out.println("图片集合" + urllist);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            ToastUtil.showToast("上传失败");
+                        }
+                    });
+                }
                 mAdapterWeakReference.get().setList(result);
                 mAdapterWeakReference.get().notifyDataSetChanged();
             }
@@ -242,43 +405,6 @@ public class FeedbackActivity extends BaseActivity {
         @Override
         public void onCancel() {
             Log.i(TAG, "PictureSelector Cancel");
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case PictureConfig.CHOOSE_REQUEST:
-                    // 图片选择结果回调
-                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    // 例如 LocalMedia 里面返回五种path
-                    // 1.media.getPath(); 原图path
-                    // 2.media.getCutPath();裁剪后path，需判断media.isCut();切勿直接使用
-                    // 3.media.getCompressPath();压缩后path，需判断media.isCompressed();切勿直接使用
-                    // 4.media.getOriginalPath()); media.isOriginal());为true时此字段才有值
-                    // 5.media.getAndroidQToPath();Android Q版本特有返回的字段，但如果开启了压缩或裁剪还是取裁剪或压缩路径；注意：.isAndroidQTransform 为false 此字段将返回空
-                    // 如果同时开启裁剪和压缩，则取压缩路径为准因为是先裁剪后压缩
-                    for (LocalMedia media : selectList) {
-                        Log.i(TAG, "是否压缩:" + media.isCompressed());
-                        Log.i(TAG, "压缩:" + media.getCompressPath());
-                        Log.i(TAG, "原图:" + media.getPath());
-                        Log.i(TAG, "是否裁剪:" + media.isCut());
-                        Log.i(TAG, "裁剪:" + media.getCutPath());
-                        Log.i(TAG, "是否开启原图:" + media.isOriginal());
-                        Log.i(TAG, "原图路径:" + media.getOriginalPath());
-                        Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                        Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
-                        Log.i(TAG, "Size: " + media.getSize());
-
-                        // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
-                    }
-                    gridImageAdapter.setList(selectList);
-                    gridImageAdapter.notifyDataSetChanged();
-                    break;
-
-            }
         }
     }
 }

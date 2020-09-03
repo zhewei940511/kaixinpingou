@@ -39,7 +39,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="@dimen/dp_22"
-                android:text="二维码"
+                android:text="推广码"
                 android:textColor="@color/white"
                 android:textSize="@dimen/typeface13sp" />
         </RelativeLayout>

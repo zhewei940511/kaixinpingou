@@ -23,7 +23,9 @@ import com.laojiashop.laojia.base.BasePresenter;
 
 import com.laojiashop.laojia.fragment.ClassificationPageFragment;
 import com.laojiashop.laojia.fragment.HappybeanPageFragment;
+import com.laojiashop.laojia.fragment.HomePageTestFragment;
 import com.laojiashop.laojia.fragment.HomemallPageFragment;
+import com.laojiashop.laojia.fragment.LiveFragment;
 import com.laojiashop.laojia.fragment.MePageFragment;
 import com.laojiashop.laojia.fragment.MyspellingPageFragment;
 import com.laojiashop.laojia.utils.ActivityManage;
@@ -44,13 +46,20 @@ public class MainActivity extends BaseActivity {
     //定义字体颜色
     private int normalTextColor = Color.parseColor("#333333");
     private int selectTextColor = Color.parseColor("#FF666C");
-    private String[] tabText = {"商城", "分类","我的拼团", "我的"};
+    private String[] tabText = {"商城", "分类","直播", "我的拼团", "我的"};
     //未选中icon
-    private int[] normalIcon = {R.mipmap.home_icon_uncheck,R.mipmap.classification_icon_uncheck, R.mipmap.merchants_icon_uncheck, R.mipmap.me_icon_uncheck};
+    private int[] normalIcon = {R.mipmap.home_icon_uncheck, R.mipmap.classification_icon_uncheck, R.mipmap.live_icon_uncheck,R.mipmap.merchants_icon_uncheck, R.mipmap.me_icon_uncheck};
     //选中时icon
-    private int[] selectIcon = {R.mipmap.home_icon_check, R.mipmap.classification_icon_check,R.mipmap.merchants_icon_check, R.mipmap.me_icon_check};
+    private int[] selectIcon = {R.mipmap.home_icon_check, R.mipmap.classification_icon_check, R.mipmap.live_icon_check,R.mipmap.merchants_icon_check, R.mipmap.me_icon_check};
 
     private List<Fragment> fragments = new ArrayList<>();
+    private int showTag;
+
+    public static void invoke(Activity mAt, int i) {
+        Intent intent = new Intent(mAt, MainActivity.class);
+        intent.putExtra("showTag", i);
+        mAt.startActivity(intent);
+    }
 
     @Override
     protected void setRootView() {
@@ -61,16 +70,20 @@ public class MainActivity extends BaseActivity {
     protected void initViews() {
 //        //StatusBarUtil.setTranslucentStatus(mActivity);
 //        initViews();
+        showTag = getIntent().getIntExtra("showTag", 0);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         navigationBar = findViewById(R.id.navigationBar);
         fragments.add(new HomemallPageFragment());
+        //fragments.add(new HomePageTestFragment());
         fragments.add(new ClassificationPageFragment());
-        fragments.add(new MyspellingPageFragment());
+        fragments.add(new LiveFragment());
+        fragments.add(new MyspellingPageFragment(showTag));
 //        fragments.add(new HappybeanPageFragment());
         fragments.add(new MePageFragment());
+
         navigationBar.titleItems(tabText)
                 .normalIconItems(normalIcon)
                 .selectIconItems(selectIcon)
@@ -79,26 +92,37 @@ public class MainActivity extends BaseActivity {
                 .fragmentList(fragments)
                 .fragmentManager(getSupportFragmentManager())
                 //刷新页面
-//                .onTabClickListener(new EasyNavigationBar.OnTabClickListener() {
-//                    @Override
-//                    public boolean onTabClickEvent(View view, int position) {
-//                        if (position==3)
-//                        {
-//                            HomemallPageFragment homemallPageFragment = (HomemallPageFragment) fragments.get(0);
-//                            homemallPageFragment.refresh();
-//                        }
-//                        return false;
-//                    }
-//                })
+                .onTabClickListener
+                        (new EasyNavigationBar.OnTabClickListener() {
+                    @Override
+
+                    public boolean onTabClickEvent(View view, int position) {
+                        if (position==4)
+                        {
+                            MePageFragment mePageFragment = (MePageFragment) fragments.get(4);
+                            mePageFragment.refresh();
+                        }
+                        return false;
+                    }
+                })
                 .build();
         navigationBar.selectTab(0);
         checkRxPermission();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (showTag == 1) {
+            navigationBar.selectTab(3);
+        }
+    }
+
+    @Override
     public void getDataFromServer() {
 
     }
+
     /**
      * 按键执行操作，连点两次退出程序
      *
@@ -120,12 +144,12 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(), "再按一次返回键退出", Toast.LENGTH_SHORT).show();
                 firstTime = System.currentTimeMillis();
             }
-
             return true;
         }
 
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     protected BasePresenter createPresenter() {
         return null;
@@ -171,6 +195,7 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
+
     /**
      * 用户拒绝，并且选择不再提示,可以引导用户进入权限设置界面开启权限
      * 弹窗是否显示根据需求选择调用

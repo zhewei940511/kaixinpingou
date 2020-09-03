@@ -33,6 +33,7 @@
                 android:textSize="@dimen/typeface14sp" />
 
             <TextView
+                android:id="@+id/tv_levelStr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -65,6 +66,7 @@
                 android:textSize="@dimen/typeface14sp" />
 
             <TextView
+                android:id="@+id/tv_cycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -97,6 +99,7 @@
                 android:textSize="@dimen/typeface14sp" />
 
             <TextView
+                android:id="@+id/tv_performance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -150,6 +153,7 @@
     </LinearLayout>
     </ScrollView>
     <Button
+        android:id="@+id/btn_upload"
         android:layout_width="340dp"
         android:layout_height="@dimen/dp_45"
         android:layout_gravity="center"

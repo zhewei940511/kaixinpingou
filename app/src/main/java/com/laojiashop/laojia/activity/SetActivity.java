@@ -13,15 +13,21 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.FlieUploadBean;
+import com.laojiashop.laojia.entity.UserInfoBean;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.utils.ActivityManage;
 import com.laojiashop.laojia.utils.BitmapUtil;
 import com.laojiashop.laojia.utils.GlideEngine;
+import com.laojiashop.laojia.utils.ToastUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -32,6 +38,9 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 设置界面
@@ -52,6 +61,10 @@ public class SetActivity extends BaseActivity {
     RelativeLayout rlNickname;
     @BindView(R.id.btn_logout)
     Button btnLogout;
+    @BindView(R.id.tv_username)
+    TextView tvUsername;
+    @BindView(R.id.tv_phonetxt)
+    TextView tvPhonetxt;
 
     @Override
     protected void setRootView() {
@@ -71,7 +84,20 @@ public class SetActivity extends BaseActivity {
 
     @Override
     public void getDataFromServer() {
-
+        //获取用户信息
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getuserinfo()).subscribe(new BaseObserver<UserInfoBean>(mAt) {
+            @Override
+            public void onHandleSuccess(UserInfoBean userInfoBean) throws IOException {
+                Glide.with(mAt).load(userInfoBean.getHeadimgurl()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imgUserinfo);
+                tvUsername.setText(userInfoBean.getName());
+                if (TextUtils.isEmpty(userInfoBean.getPhone()))
+                {
+                    tvPhonetxt.setText("立即绑定");
+                }else {
+                    tvPhonetxt.setText(userInfoBean.getPhone());
+                }
+            }
+        });
     }
 
     @Override
@@ -79,14 +105,14 @@ public class SetActivity extends BaseActivity {
         return null;
     }
 
-    @OnClick({R.id.btn_logout,R.id.rl_nickname, R.id.iv_header_back, R.id.img_userinfo, R.id.rl_bindphonenumber, R.id.rl_changethepassword})
+    @OnClick({R.id.btn_logout, R.id.rl_nickname, R.id.iv_header_back, R.id.img_userinfo, R.id.rl_bindphonenumber, R.id.rl_changethepassword})
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_logout:
                 HttpRxObservable.getObservable(ApiUtils.getApiService().logOut()).subscribe(new BaseObserver<Object>(mAt) {
                     @Override
                     public void onHandleSuccess(Object o) throws IOException {
-                       // jumpActivity(mAt,UsercodeloginActivity.class);
+                        // jumpActivity(mAt,UsercodeloginActivity.class);
                         UsercodeloginActivity.start(mAt);
                         ActivityManage.finishAll();
                     }
@@ -139,11 +165,36 @@ public class SetActivity extends BaseActivity {
                 break;
         }
         File file = new File(path);
-        ImageView finalImageView = imageView;
-        String finalPath = path;
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file_data", file.getName(), requestFile);
+         //请求上传接口
+        HttpRxObservable.getObservable(ApiUtils.getApiService().uploadtosave(body)).subscribe(new BaseObserver<FlieUploadBean>(mAt) {
+            @Override
+            public void onHandleSuccess(FlieUploadBean flieUploadBean) throws IOException {
+                //上传成功调用修改用户信息接口
+                HttpRxObservable.getObservable(ApiUtils.getApiService().saveUserInfo(flieUploadBean.getPath(),"")).subscribe(new BaseObserver<Object>(mAt) {
+                    @Override
+                    public void onHandleSuccess(Object o) throws IOException {
+                        //成功加载头像
+                        Glide.with(mAt).load(flieUploadBean.getPath()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imgUserinfo);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        ToastUtil.showToast("修改头像失败"+e.getMessage());
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                ToastUtil.showToast("上传失败"+e.getMessage());
+            }
+        });
         //这两部是网络请求里面操作的
-        BitmapUtil.recycle(finalImageView);
-        finalImageView.setImageBitmap(BitmapFactory.decodeFile(finalPath));
+//        BitmapUtil.recycle(finalImageView);
+//        finalImageView.setImageBitmap(BitmapFactory.decodeFile(finalPath));
     }
 
     @Override
@@ -152,5 +203,10 @@ public class SetActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-
+    //回调
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataFromServer();
+    }
 }

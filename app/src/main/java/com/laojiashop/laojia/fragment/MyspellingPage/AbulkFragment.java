@@ -7,7 +7,7 @@ import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseFragment;
 
 /**
- * 我的拼团团购碎片
+ * 我参与的团购
  */
 public class AbulkFragment extends BaseFragment {
     @Override

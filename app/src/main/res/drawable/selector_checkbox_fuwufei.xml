@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 选中状态 -->
+    <item android:drawable="@mipmap/icon_checksure" android:state_selected="true" />
+ <!-- 选中状态 -->
+    <item android:drawable="@mipmap/icon_checksure" android:state_checked="true" />
+
+    <!-- 未选状态 -->
+<!--    <item android:drawable="@drawable/ic_checkbox_disable" android:state_enabled="false" />-->
+    <item android:drawable="@color/app_fuwufei" android:state_enabled="false" />
+    <!-- 默认状态-->
+<!--    <item android:drawable="@drawable/ic_checkbox_normal" />-->
+    <item android:drawable="@color/app_fuwufei" />
+
+</selector>

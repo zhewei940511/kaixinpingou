@@ -280,6 +280,6 @@ public class MallGoodsDetailsOtherActivity extends BaseActivity {
     }
     @OnClick(R.id.btn_buynow)
     public void onViewClicked() {
-        jumpActivity(BuyNowActivity.class);
+       // jumpActivity(BuyNowActivity.class);
     }
 }

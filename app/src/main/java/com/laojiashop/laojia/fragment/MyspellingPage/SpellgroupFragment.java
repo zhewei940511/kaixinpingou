@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 /**
- * 我的拼团模块拼团碎片
+ * 我发起的团购
  */
 public class SpellgroupFragment extends BaseFragment {
     @BindView(R.id.rv_recycler)

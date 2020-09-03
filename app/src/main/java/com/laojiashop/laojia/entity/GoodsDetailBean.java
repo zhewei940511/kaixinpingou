@@ -751,6 +751,8 @@ public class GoodsDetailBean {
             }
 
             public static class VBean {
+
+
                 /**
                  * id : 1661
                  * name : 1000ml*2瓶
@@ -760,7 +762,7 @@ public class GoodsDetailBean {
                  * price_in_cents : 5090
                  * inventory : 100421
                  */
-
+                private boolean isselect;
                 private int id;
                 private String name;
                 private String imgUrl;
@@ -768,7 +770,13 @@ public class GoodsDetailBean {
                 private String price;
                 private int price_in_cents;
                 private int inventory;
+                public boolean isIsselect() {
+                    return isselect;
+                }
 
+                public void setIsselect(boolean isselect) {
+                    this.isselect = isselect;
+                }
                 public int getId() {
                     return id;
                 }

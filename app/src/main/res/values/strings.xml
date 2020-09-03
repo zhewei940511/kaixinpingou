@@ -20,4 +20,12 @@
     <string name="errcode_deny">发送被拒绝</string>
     <string name="errcode_unsupported">不支持错误</string>
     <string name="errcode_unknown">发送返回</string>
+    <string name="pay_success">Payment success:</string>
+    <string name="auth_success">Authentication success:</string>
+    <string name="auth_failed">Authentication failed:</string>
+    <string name="pay_failed">Payment failed:</string>
+    <string name="product_detail">商品详情</string>
+    <string name="product_detail_sku_quantity">购买数量</string>
+    <string name="product_detail_sku_confirm">确定</string>
+    <string name="product_detail_sku_recommend_price">价格：¥%1$s/%2$s</string>
 </resources>

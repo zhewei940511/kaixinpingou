@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_5"
+    app:ignore="NamespaceTypo">
+
+
+    <TextView
+        android:id="@+id/tv_specification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="规格:"
+        android:textColor="#323232"
+        android:textSize="@dimen/typeface13sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/dp_5"
+        android:id="@+id/img_rvs"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

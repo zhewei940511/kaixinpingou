@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/btn_levelStr"
+        android:layout_width="73dp"
+        android:layout_height="35dp"
+        android:background="#F5D187"
+        android:gravity="center"
+        android:text="代理商"
+        android:textColor="#1F1F1F"
+        android:textSize="@dimen/typeface11sp" />
+
+    <TextView
+        android:id="@+id/btn_margintxt"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#FFD694"
+        android:gravity="center"
+        android:text="￥100000"
+        android:textColor="#1F1F1F"
+        android:textSize="@dimen/typeface11sp" />
+
+    <TextView
+        android:id="@+id/btn_performancetxt"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#FFD694"
+        android:gravity="center"
+        android:text="￥200W"
+        android:textColor="#1F1F1F"
+        android:textSize="@dimen/typeface11sp" />
+
+    <TextView
+        android:id="@+id/btn_cycletxt"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#FFD694"
+        android:gravity="center"
+        android:text="4个月"
+        android:textColor="#1F1F1F"
+        android:textSize="@dimen/typeface11sp" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cb_balance_fuwufei"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:background="#FFD694"
+        android:button="@drawable/selector_checkbox_fuwufei" />
+
+</LinearLayout>

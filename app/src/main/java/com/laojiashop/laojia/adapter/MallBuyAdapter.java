@@ -30,7 +30,6 @@ import static com.laojiashop.laojia.utils.ToastUtil.showToast;
  * 商品详情规格适配器
  */
 public class MallBuyAdapter extends BaseQuickAdapter<GoodsDetailBean.SkuBean.TreeBean, BaseViewHolder> {
-//    private List<GoodsDetailBean.SkuBean.ListBean> listBeans;
     private List<GoodsDetailBean.SkuBean.TreeBean> treeBeanList=new ArrayList<>();
     private HashMap<Object, Object> map;
     private ArrayList<String> strings;
@@ -45,14 +44,11 @@ public class MallBuyAdapter extends BaseQuickAdapter<GoodsDetailBean.SkuBean.Tre
         TagFlowLayout flowLayout = helper.getView(R.id.id_flowlayout);
         final LayoutInflater mInflater = LayoutInflater.from(mContext);
         treeBeanList.add(item);
-        //添加的数据
-        //final List<GoodsDetailBean.SkuBean.TreeBean.VBean> items = item.getV();
         map = new HashMap<>();
         strings = new ArrayList<>();
         for (int i = 0; i < treeBeanList.size(); i++) {
             strings.add(i, "");
         }
-        // vBeans = item.getV();
         //流式布局适配器加载
         flowLayout.setAdapter(new TagAdapter<GoodsDetailBean.SkuBean.TreeBean.VBean>(item.getV()) {
             @Override
@@ -72,72 +68,27 @@ public class MallBuyAdapter extends BaseQuickAdapter<GoodsDetailBean.SkuBean.Tre
         flowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
             public void onSelected(Set<Integer> selectPosSet) {
-                for (Integer in : selectPosSet) {
-
-//                    int pId = item.getV().get(in).getId();
-//                    int id = items.get(in).getId();
-//                    map.put(pId, pId + "-" + id);
-                    attributeView(in, item);
-
-//                    if (itemClickKind != null) {
-//                        itemClickKind.getItemKind(item.getV().get(in).getName());
-//                    }
-                    // Logger.i("------类型选择学段----" + pId + "-" + id);
+                if (selectPosSet.isEmpty())
+                {
+                    Logger.i("------没选----");
                 }
-//                if (selectPosSet.size() > 0) {
-//                    Integer next = selectPosSet.iterator().next();
-//                    if (itemClickKind != null) {
-//                        itemClickKind.getItemKind(item.getV().get(next).getName());
-//                    }
-//                }
+                for (Integer in : selectPosSet) {
+                    attributeView(in, item);
+                }
             }
         });
     }
-//
-//        private void attributeView(int in, GoodsDetailBean.S kuBean.TreeBean item) {
-//        Collection<Object> values = map.values();
-//        List<Object> valueList = new ArrayList<Object>(values);
-//        for (int i = 0; i < treeBeanList.size(); i++) {
-//            if (item.getV().get(i).getId() == treeBeanList.get(i).getV().get(i).getId()) {
-//                strings.set(i, item.getV().get(in).getName());
-//            }
-//        }
-//        Logger.i("------111----" + valueList.toString());
-//        Logger.i("------选择的名称----" + strings.toString());
-//        StringBuilder mystr = new StringBuilder();
-//        for (String s : strings) {
-//            if (!s.equals("")) {
-//                mystr.append(s).append(" ");
-//            }
-//        }
-//        //tv_shop_attr.setText(mystr);
-//        Logger.i("------要显示的东西----" + mystr);
-//        if (treeBeanList.size() == valueList.size()) {
-//            for (GoodsDetailBean.SkuBean.ListBean specPrice : listBeans) {
-//                String[] specIdArray = specPrice.getCost_price().split(",");
-//                List<String> specIdList = Arrays.asList(specIdArray);
-//                Logger.i("------222----" + specIdList.toString());
-//                //500-502, 491-493, 503-505, 497-499, 494-495, 506-507]
-//                if (specIdList.size() == valueList.size() && specIdList.containsAll(valueList)) {
-//                    String price = specPrice.getPrice();
-//                   // tv_shop_price.setText(price);
-//                    // goInput.setBackgroundResource(R.drawable.default_button_background_selector2);
-//                    Logger.i("------最终选择----" + valueList.toString());
-//                    Logger.i("------最终id----" + specPrice.getSku());
-//                }
-//            }
-//        }
-//    }
     private void attributeView(int in, GoodsDetailBean.SkuBean.TreeBean item) {
         Collection<Object> values = map.values();
+        System.out.println("信息"+item.getK());
         List<Object> valueList = new ArrayList<Object>(values);
         for (int i = 0; i < treeBeanList.size(); i++) {
-            if (item.getV().get(i).getId() == treeBeanList.get(i).getV().get(i).getId()) {
+           if (item.getV().get(i).getId() == treeBeanList.get(i).getV().get(i).getId()) {
                 strings.set(i, String.valueOf(item.getV().get(in).getId()));
             }
         }
-        Logger.i("------111----" + valueList.toString());
-        Logger.i("------选择的名称----" + strings.toString());
+//        Logger.i("------111----" + valueList.toString());
+//        Logger.i("------选择的名称----" + strings.toString());
         StringBuilder mystr = new StringBuilder();
         for (String s : strings) {
             if (!s.equals("")) {
@@ -148,34 +99,13 @@ public class MallBuyAdapter extends BaseQuickAdapter<GoodsDetailBean.SkuBean.Tre
         if (itemClickKind != null) {
             itemClickKind.getItemKind(selectKind);
         }
-//        tv_shop_attr.setText(mystr);
         Logger.i("------要显示的东西----" + selectKind);
-//    if (treeBeanList.size() == valueList.size()) {
-//        for (GoodsDetailBean.SkuBean.ListBean specPrice : listBeans) {
-//            String[] specIdArray = specPrice.getCost_price().split(",");
-//            List<String> specIdList = Arrays.asList(specIdArray);
-//            Logger.i("------222----" + specIdList.toString());
-//            //500-502, 491-493, 503-505, 497-499, 494-495, 506-507]
-//            if (specIdList.size() == valueList.size() && specIdList.containsAll(valueList)) {
-//                String price = specPrice.getPrice();
-//                tv_shop_price.setText(price);
-//                // goInput.setBackgroundResource(R.drawable.default_button_background_selector2);
-//                Logger.i("------最终选择----" + valueList.toString());
-//                Logger.i("------最终id----" + specPrice.getSku());
-//            }
-//        }
-//    }
     }
 
     //定义一个适配器的点击事件的接口
     public interface ItemClickKind {
         void getItemKind(String spec);
     }
-
-//    public interface ItemClickKind {
-//        void getItemKind(String spec, String kind);
-//    }
-
     private ItemClickKind itemClickKind;
 
     public void setItemClickKind(ItemClickKind itemClickKind) {

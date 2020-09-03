@@ -39,6 +39,7 @@ public class ShoporderActivity extends BaseActivity {
     TextView tvHeaderTitle;
     @BindView(R.id.header_title_view)
     RelativeLayout headerTitleView;
+
     private FixedIndicatorView indicator;
     //碎片集合
     private List<Fragment> list;

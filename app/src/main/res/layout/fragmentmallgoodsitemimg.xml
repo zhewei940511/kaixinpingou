@@ -5,8 +5,8 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imgbgall"
-        android:layout_width="135dp"
-        android:layout_height="130dp"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
         android:scaleType="centerCrop"
         android:src="@mipmap/hotel_details"/>
 

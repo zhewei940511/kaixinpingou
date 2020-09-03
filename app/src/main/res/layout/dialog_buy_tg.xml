@@ -194,7 +194,7 @@
                 android:layout_width="351dp"
                 android:layout_height="@dimen/dp_40"
                 android:background="@drawable/shape_red_gradient_button"
-                android:text="直接购买"
+                android:text="确认拼团"
                 android:textColor="@color/white" />
         </LinearLayout>
 

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="@dimen/dp_12"
+    android:layout_marginTop="@dimen/dp_9"
+    android:layout_marginRight="@dimen/dp_12"
+    android:background="@drawable/shape_layout_5"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:paddingLeft="@dimen/dp_10">
+
+        <FrameLayout
+            android:id="@+id/fl_img"
+            android:layout_width="@dimen/dp_95"
+            android:layout_height="@dimen/dp_95"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/test_one" />
+
+            <Button
+                android:layout_width="42dp"
+                android:layout_height="@dimen/dp_17"
+                android:background="@mipmap/icon_liveing"
+                android:text="直播中"
+                android:textColor="@color/white"
+                android:textSize="@dimen/typeface10sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/fl_img"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="最新日系穿搭分享教学和日式护肤品选择"
+                android:textColor="@color/black_33"
+                android:textSize="@dimen/typeface14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="2020-07-24"
+                android:textColor="@color/black_99"
+                android:textSize="@dimen/typeface11sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:paddingLeft="31dp"
+                android:paddingBottom="@dimen/dp_21">
+
+                <Button
+                    android:layout_width="53dp"
+                    android:layout_height="@dimen/dp_28"
+                    android:background="@drawable/shape_button_wcc"
+                    android:text="分享"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/typeface12sp" />
+
+                <Button
+                    android:layout_width="53dp"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:background="@drawable/shape_button_wcc"
+                    android:text="分享"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/typeface12sp" />
+
+                <Button
+                    android:layout_width="78dp"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:background="@drawable/shape_button_gotolive"
+                    android:text="进入房间"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/typeface12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -51,13 +51,13 @@
         <activity android:name=".activity.RegisteredActivity"/><!--注册界面-->
         <activity android:name=".activity.MallGoodsDetailsOtherActivity"/><!--商品详情页面-->
         <activity android:name=".activity.MallGoodsDetailsActivity"/><!--商品详情页-->
-        <activity android:name=".activity.MyaddressActivity"/><!--我的地址界面-->
+<!--        <activity android:name=".activity.MyaddressActivity"/>&lt;!&ndash;我的地址界面&ndash;&gt;-->
         <activity android:name=".activity.NewaddressActivity"/><!--新增地址界面-->
 <!--        <activity android:name=".activity.SelectLocationActivity"/>&lt;!&ndash;定位界面&ndash;&gt;-->
         <activity android:name=".activity.SearchActivity"/><!--地址搜索界面-->
 <!--        <activity android:name=".activity.ModifyfeedbackActivity"/>&lt;!&ndash;意见反馈&ndash;&gt;-->
         <activity android:name=".activity.MorecommentsActivity"/><!--查看更多评价-->
-        <activity android:name=".activity.BuyNowActivity"/><!--立即购买-->
+<!--        <activity android:name=".activity.BuyNowActivity"/>&lt;!&ndash;立即购买&ndash;&gt;-->
         <activity android:name=".activity.SetActivity"/><!--设置界面-->
         <activity android:name=".activity.ChangethepasswordActivity"/><!--修改密碼-->
         <activity android:name=".activity.BindphonenumberActivity"/><!--绑定手机号-->
@@ -79,7 +79,20 @@
         <activity android:name=".activity.UploaddocumentsActivity"/><!--立即申请-->
         <activity android:name=".activity.MeHappybeanOtherActivity"/><!--开心豆-->
         <activity android:name=".activity.ClassificationDetailsActivity"/><!--分类详情页-->
-        <activity android:name=".test.TestActivity"/>
+        <activity android:name=".activity.GotoToconfirmorderActivity"/><!--确认订单-->
+        <activity android:name=".activity.MyPromotioncodeActivity"/><!--我的推广码-->
+        <activity android:name=".activity.ApplyforaftersalesActivity"/><!--申请售后-->
+        <activity android:name=".activity.ProcessingresultsActivity"/><!--售后处理结果-->
+        <activity android:name=".activity.ExchangeActivity"/><!--兑换界面-->
+        <activity android:name=".activity.SpellgroupdetailsActivity"/><!--拼团详情页面-->
+<!--        <activity android:name=".test.TestFuwufeiActivity"/>&lt;!&ndash;测试服务费&ndash;&gt;-->
+        <activity android:name=".activity.LiveeventsActivity"/><!-- 直播场次-->
+        <activity android:name=".activity.RecruittoauditfailureActivity"/><!--审核失败-->
+        <activity android:name=".activity.RecruittoInthereviewActivity"/><!--审核中-->
+        <activity android:name=".activity.RecruittoviewthetaskActivity"/><!--查看任务-->
+        <activity android:name=".activity.SpellgroupGotoToconfirmorderActivity"/><!--拼一单确认订单-->
+        <activity android:name=".activity.FeedbackallActivity"/><!--意见反馈-->
+        <activity android:name=".activity.FeedbackDetailActivity"/><!--意见反馈详情-->
         <!--今日头条的适配-->
         <meta-data
             android:name="design_width_in_dp"
@@ -103,7 +116,20 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:theme="@android:style/Theme.Translucent" /> <!-- 微信登录 -->
+            android:theme="@android:style/Theme.Translucent" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="sdksample"/>
+            </intent-filter>
+        </activity> <!-- 微信登录 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.laojiashop.laojia"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 

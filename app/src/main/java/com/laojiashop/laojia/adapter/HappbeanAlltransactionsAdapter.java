@@ -21,7 +21,7 @@ public class HappbeanAlltransactionsAdapter extends BaseQuickAdapter<MeHappyList
         helper.setText(R.id.tv_typetxt, item.getType_txt());
         helper.setText(R.id.tv_tagstr,item.getTag_str());
         helper.setText(R.id.tv_score,item.getScore());
-        helper.setText(R.id.tv_ordernum,item.getOrder_no());
+        helper.setText(R.id.tv_createtime,item.getOrder_no());
         helper.setText(R.id.tv_createtime,item.getCreate_time());
     }
 }

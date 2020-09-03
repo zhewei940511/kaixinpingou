@@ -670,57 +670,6 @@
             </LinearLayout>
 
         </ScrollView>
-
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/dp_50"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:background="@color/white">-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btn_detailcancle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="@dimen/dp_30"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginRight="107dp"-->
-<!--                android:background="@drawable/shape_button_black_cc"-->
-<!--                android:text="取消订单"-->
-<!--                android:textColor="@color/black_66"-->
-<!--                android:textSize="@dimen/typeface14sp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btn_detailgotopay"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="@dimen/dp_30"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginRight="@dimen/dp_12"-->
-<!--                android:background="@drawable/shape_button_red_66"-->
-<!--                android:text="去支付"-->
-<!--                android:textColor="#FF666C"-->
-<!--                android:textSize="@dimen/typeface14sp" />-->
-<!--            <Button-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="@dimen/dp_30"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginRight="@dimen/dp_12"-->
-<!--                android:background="@drawable/shape_button_red_66"-->
-<!--                android:text="退换货"-->
-<!--                android:textColor="#FF666C"-->
-<!--                android:textSize="@dimen/typeface14sp" />-->
-<!--            <Button-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="@dimen/dp_30"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginRight="@dimen/dp_12"-->
-<!--                android:background="@drawable/shape_button_red_66"-->
-<!--                android:text="去支付"-->
-<!--                android:textColor="#FF666C"-->
-<!--                android:textSize="@dimen/typeface14sp" />-->
-<!--        </RelativeLayout>-->
         <LinearLayout
             android:background="@color/white"
             android:layout_alignParentBottom="true"

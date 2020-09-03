@@ -28,7 +28,7 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/typeface14sp"
+        android:textSize="@dimen/typeface12sp"
         android:textColor="@color/black_33"
         android:text="右边标题内容"/>
 <!--    <ImageView-->

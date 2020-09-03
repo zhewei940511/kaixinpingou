@@ -96,7 +96,7 @@ public class SpellgrouprewardsFragment extends BaseFragment {
     @Override
     protected void getDataFromServer() {
         Map<String,Object> map=new HashMap<String,Object>();
-        map.put("typeid",2);
+        map.put("typeid",1);
 //        JSONObject jsonObj=new JSONObject(map);
         String s = JSON.toJSONString(map);
         HttpRxObservable.getObservable(ApiUtils.getApiService().gethappylistinfo("mg_score", page, s)).subscribe(new BaseObserver<MeHappyListBean>(mAty) {
@@ -109,7 +109,6 @@ public class SpellgrouprewardsFragment extends BaseFragment {
                 }
                 dataList.addAll(data);
                 happbeanAlltransactionsAdapter.notifyDataSetChanged();
-
             }
         });
     }

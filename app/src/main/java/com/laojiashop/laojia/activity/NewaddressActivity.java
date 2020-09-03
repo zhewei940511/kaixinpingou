@@ -234,8 +234,7 @@ public class NewaddressActivity extends BaseActivity {
                 break;
         }
     }
-
-    //我先给你举个例子，你需要啥自己加
+    //参数跳转
     public static void invoke(Activity activity, int flag,  AddressmanagementBean.DataBean item) {
         Intent intent = new Intent(activity, NewaddressActivity.class);
         //cao.//

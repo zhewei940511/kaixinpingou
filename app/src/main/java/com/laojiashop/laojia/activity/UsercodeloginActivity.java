@@ -167,7 +167,6 @@ public class UsercodeloginActivity extends BaseActivity {
                 if (!api.isWXAppInstalled()) {
                     showToast("您手机尚未安装微信，请安装后再登录");
                     return;
-
                 }
                 api.registerApp(ComParamContact.APP_ID);
                 SendAuth.Req req = new SendAuth.Req();

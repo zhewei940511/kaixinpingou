@@ -13,12 +13,16 @@ import com.laojiashop.laojia.entity.HomePageBean;
 import com.laojiashop.laojia.entity.SpecialCourseSectionBean;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
+import co.lujun.androidtagview.TagContainerLayout;
 
 /**
  * 专题适配器
  */
 public class SpecialAdapter extends BaseSectionQuickAdapter<SpecialCourseSectionBean, BaseViewHolder> {
+    private List<String> tag=new ArrayList<>();
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -42,11 +46,12 @@ public class SpecialAdapter extends BaseSectionQuickAdapter<SpecialCourseSection
         HomePageBean.SpecialBean.GoodsListBean goodsListBean=item.t;
         helper.setText(R.id.tv_specialtitle,goodsListBean.getTitle())
         .setText(R.id.tv_specialcontent,goodsListBean.getStitle())
-        .setText(R.id.tv_special_old_price,goodsListBean.getMarket_price())
+        .setText(R.id.tv_special_old_price,"￥"+goodsListBean.getMarket_price())
         .setText(R.id.tv_price,goodsListBean.getPrice())
-        .setText(R.id.tv_special_group_price,goodsListBean.getShow_price().min);
+        .setText(R.id.tv_special_group_price,goodsListBean.getShow_price().getMin());
          Glide.with(mContext).load(goodsListBean.getPath()).apply(new RequestOptions().placeholder(R.drawable.default_image)).into((ImageView) helper.getView(R.id.img_specialimg));
-
-
+         tag=goodsListBean.getTags();
+        TagContainerLayout tagContainerLayout=helper.getView(R.id.tga_myhomepage);
+        tagContainerLayout.setTags(tag);
     }
 }

@@ -31,6 +31,7 @@ import com.laojiashop.laojia.entity.OrderBean;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -39,6 +40,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,43 +83,41 @@ public class AddressmanagementActivity extends BaseActivity {
         addressmanagementAdapter = new AddressmanagementAdapter(mDataList);
         //无数据显示空
         addressmanagementAdapter.setEmptyView(LayoutInflater.from(mAt).inflate(R.layout.layout_empty_view, rvAddress, false));
-        //设置滑动删除
-        OnItemDragListener itemDragListener=new OnItemDragListener() {
-            @Override
-            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int i) {
-
-            }
-
-            @Override
-            public void onItemDragMoving(RecyclerView.ViewHolder viewHolder, int i, RecyclerView.ViewHolder viewHolder1, int i1) {
-
-            }
-
-            @Override
-            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int i) {
-
-            }
-        };
-
-        ItemDragAndSwipeCallback itemDragAndSwipeCallback=new ItemDragAndSwipeCallback(addressmanagementAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
-        itemTouchHelper.attachToRecyclerView(rvAddress);
-        // 开启滑动删除
-        addressmanagementAdapter.enableSwipeItem();
-       // addressmanagementAdapter.setOnItemSwipeListener(onItemSwipeListener);
         //绑定适配器
         rvAddress.setAdapter(addressmanagementAdapter);
         //设置点击事件
         addressmanagementAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                AddressmanagementBean.DataBean item = addressmanagementAdapter.getItem(position);
                 //标记是这个吗嗯，对头
                 switch (view.getId()) {
                     //编辑地址事件
                     case R.id.img_editaddress:
-                        AddressmanagementBean.DataBean item = addressmanagementAdapter.getItem(position);
                         //跳哪个界面，需要哪些参数名字，电话是否是默认地址
                         NewaddressActivity.invoke(mAt, 1, item);
+                        break;
+                        //删除
+                    case R.id.tv_delectaddress:
+                        //调用删除地址的接口
+                        HttpRxObservable.getObservable(ApiUtils.getApiService().addressdelete(item.getId())).subscribe(new BaseObserver<Object>(mAt) {
+                            @Override
+                            public void onHandleSuccess(Object o) throws IOException {
+                                ToastUtil.showToast("删除成功");
+                                getDataFromServer();
+                            }
+                        });
+                        break;
+                    case R.id.content:
+                        Intent intent=new Intent();
+                        intent.putExtra("data",(Serializable) item);
+//                        intent.putExtra("name",item.getName());
+//                        intent.putExtra("ssq",item.getSsq());
+//                        intent.putExtra("tel",item.getPhone());
+//                        intent.putExtra("pcode",item.getP_code());
+//                        intent.putExtra("address",item.getAddress());
+                        setResult(RESULT_OK,intent);
+                        finish();
                         break;
                 }
             }

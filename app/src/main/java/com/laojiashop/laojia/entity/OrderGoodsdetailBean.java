@@ -1,11 +1,12 @@
 package com.laojiashop.laojia.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 订单详情
  */
-public class OrderGoodsdetailBean {
+public class OrderGoodsdetailBean implements Serializable {
 
     /**
      * id : 22266
@@ -441,7 +442,7 @@ public class OrderGoodsdetailBean {
         this.log = log;
     }
 
-    public static class AddressBean {
+    public static class AddressBean implements Serializable{
         /**
          * id : 319
          * user_id : 59461
@@ -607,7 +608,7 @@ public class OrderGoodsdetailBean {
         }
     }
 
-    public static class GoodsInfoBean {
+    public static class GoodsInfoBean implements Serializable{
         /**
          * goods_id : 380
          * supplier_id : 17
@@ -733,7 +734,7 @@ public class OrderGoodsdetailBean {
         }
     }
 
-    public static class LogBean {
+    public static class LogBean implements Serializable{
         /**
          * id : 38033
          * user_info : {"id":59461,"name":"测试会员"}
@@ -828,7 +829,7 @@ public class OrderGoodsdetailBean {
             this.user_name = user_name;
         }
 
-        public static class UserInfoBean {
+        public static class UserInfoBean implements Serializable{
             /**
              * id : 59461
              * name : 测试会员

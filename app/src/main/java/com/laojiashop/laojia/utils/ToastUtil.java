@@ -5,7 +5,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.laojiashop.laojia.base.BaseApplication;
+import com.laojiashop.laojia.base.BaseAllApplication;
 
 import io.reactivex.annotations.NonNull;
 
@@ -19,7 +19,7 @@ public class ToastUtil {
             switch (msg.what) {
                 case 0x110:
                     if (toast == null) {
-                        toast = Toast.makeText(BaseApplication.getInstance(), (String) msg.obj, Toast.LENGTH_SHORT);
+                        toast = Toast.makeText(BaseAllApplication.getInstance(), (String) msg.obj, Toast.LENGTH_SHORT);
                     } else {
                         toast.setText(msg.obj.toString());
                     }

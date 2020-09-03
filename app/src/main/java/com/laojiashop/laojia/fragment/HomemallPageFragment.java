@@ -17,7 +17,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.activity.GotoSearchActivity;
 import com.laojiashop.laojia.activity.MallGoodsDetailsActivity;
-import com.laojiashop.laojia.activity.MallGoodsDetailsOtherActivity;
 import com.laojiashop.laojia.adapter.AdnewAdapter;
 import com.laojiashop.laojia.adapter.SpecialAdapter;
 import com.laojiashop.laojia.base.BaseFragment;
@@ -26,13 +25,8 @@ import com.laojiashop.laojia.entity.SpecialCourseSectionBean;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
-import com.laojiashop.laojia.test.TestActivity;
 import com.laojiashop.laojia.utils.ScreenUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.stx.xhb.xbanner.XBanner;
 
 import java.io.IOException;
@@ -108,14 +102,13 @@ public class HomemallPageFragment extends BaseFragment {
                 List<HomePageBean.SpecialBean> special = homePageBean.getSpecial();
                 //循环数据
                 for (int i = 0; i < special.size(); i++) {
-                    List<HomePageBean.SpecialBean.GoodsListBean> goods_list = special.get(i).goods_list;
-                    sectionBeansdata.add(new SpecialCourseSectionBean(true, special.get(i).title));
+                    List<HomePageBean.SpecialBean.GoodsListBean> goods_list = special.get(i).getGoods_list();
+                    sectionBeansdata.add(new SpecialCourseSectionBean(true, special.get(i).getTitle()));
                     for (int j = 0; j < goods_list.size(); j++) {
                         sectionBeansdata.add(new SpecialCourseSectionBean(goods_list.get(j)));
                     }
                 }
                 //还是重复数据呢，没看你修改哪里呀?
-                //specialAdapter.addData(sectionBeansdata);
                 specialAdapter.setNewData(sectionBeansdata);
                 specialAdapter.notifyDataSetChanged();
                 //适配器点击事件
@@ -180,17 +173,5 @@ public class HomemallPageFragment extends BaseFragment {
         Intent intent = new Intent(mAty, GotoSearchActivity.class);
         startActivity(intent);
     }
-
-    //点击事件
-//    @Override
-//    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//        HomePageBean.SpecialBean.GoodsListBean goodsListBean= (HomePageBean.SpecialBean.GoodsListBean) adapter.getItem(position);
-//        ToastUtil.showToast("你点击了"+goodsListBean.getId());
-//    }
-
-    //    //页面刷新
-//    public void refresh() {
-//        getDataFromServer();
-//    }
 
 }

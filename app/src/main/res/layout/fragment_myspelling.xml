@@ -32,6 +32,7 @@
                 app:tl_textsize="13sp" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_sorting_way"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

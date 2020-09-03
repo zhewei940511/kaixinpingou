@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="307.5dp"
+    android:id="@+id/ly_spellgroupdetails"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingTop="@dimen/dp_3">
     <RelativeLayout
@@ -9,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_spellno"
             android:layout_marginLeft="@dimen/dp_17"
             android:textSize="@dimen/typeface14sp"
             android:textColor="@color/black_33"
@@ -16,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tv_spellstatus"
             android:layout_marginRight="18.5dp"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/sp_14"
@@ -25,63 +29,55 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <LinearLayout
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="36dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
         <ImageView
-            android:layout_width="118dp"
-            android:layout_height="118dp"
+            android:id="@+id/img_spellpic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@mipmap/test_one" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="118dp"
             android:layout_marginLeft="@dimen/dp_18"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_spelltitle"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="益普利生牌维生素C咀嚼片30片 *2"
                 android:textColor="@color/black_33"
                 android:textSize="@dimen/typeface15sp" />
-
-            <Button
-                android:layout_width="55dp"
-                android:layout_height="@dimen/dp_17"
-                android:layout_marginTop="@dimen/dp_8"
-                android:background="@mipmap/label_bg"
-                android:text="增强体质"
-                android:textColor="#FF4B42"
-                android:textSize="@dimen/typeface9sp" />
-
             <TextView
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/tv_spellstitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_7"
+                android:layout_marginTop="@dimen/dp_10"
                 android:text="增强体质，预防感冒的作用"
                 android:textColor="@color/black_66"
                 android:textSize="@dimen/typeface11sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_7"
-                android:text="$79.5零售价"
-                android:textColor="#B3B3B3"
-                android:textSize="@dimen/typeface11sp" />
 
             <LinearLayout
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_spellgroupprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥73.9"
@@ -92,11 +88,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_3"
-                    android:text="商城价"
+                    android:text="拼团价"
                     android:textColor="@color/black_33"
                     android:textSize="11sp" />
 
                 <TextView
+                    android:id="@+id/tv_retailprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_25"
@@ -108,12 +105,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="拼购价"
+                    android:text="零售价"
                     android:textColor="@color/black_33"
                     android:textSize="11sp" />
             </LinearLayout>
 
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/dp_11"
@@ -121,34 +119,40 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="36dp"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/btn_toafriend"
             android:textColor="@color/colorNavy"
             android:text="转发给朋友"
+            android:layout_marginRight="@dimen/dp_10"
             android:background="@drawable/shape_button_red_66"
-            android:layout_marginLeft="73dp"
             android:layout_width="90dp"
             android:layout_height="@dimen/dp_30"/>
         <Button
+            android:id="@+id/btn_statistical"
             android:textColor="#3D9FD0"
             android:text="统计"
             android:background="@drawable/shape_button_blue_d0"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_width="90dp"
             android:layout_height="@dimen/dp_30"/>
         <Button
+            android:id="@+id/btn_shutdown"
             android:textColor="#3D9FD0"
             android:text="关闭"
             android:background="@drawable/shape_button_blue_d0"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_width="90dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_height="@dimen/dp_30"/>
     </LinearLayout>
     <View
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="#F5F5F5"
         android:layout_width="match_parent"
         android:layout_height="8dp"/>

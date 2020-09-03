@@ -13,6 +13,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include layout="@layout/base_title_view" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -23,22 +25,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:src="@mipmap/icon_recruittobgtop" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_22"
-                    android:layout_marginTop="34dp"
-                    android:src="@mipmap/back_icon" />
             </FrameLayout>
 
             <FrameLayout
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
                 android:background="@mipmap/icon_contentbg">
 
                 <TextView
@@ -61,16 +56,15 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_10"
                 android:background="@mipmap/icon_contentbg">
 
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -89,15 +83,95 @@
                     android:textSize="@dimen/typeface13sp" />
             </FrameLayout>
 
-            <FrameLayout
-                android:layout_marginRight="@dimen/dp_10"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_100"
+                android:background="@mipmap/icon_contentbg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_9"
+                    android:text="活动说明"
+                    android:textColor="#8E5900"
+                    android:textSize="@dimen/typeface16sp" />
+
+                <TableLayout
+                    android:id="@+id/tb_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_60"
+                    android:layout_marginRight="@dimen/dp_10">
+
+                    <TableRow>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="#FFE8BC"
+                            android:text="用户身份" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="#ECCB87"
+                            android:text="服务费" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="#ECCB87"
+                            android:text="业绩目标" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="#ECCB87"
+                            android:text="考核周期" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="#ECCB87"
+                            android:text="选择" />
+                    </TableRow>
+                </TableLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_fuwufeilist"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_105"
+                    android:layout_below="@+id/tb_top"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_5" />
+
+            </RelativeLayout>
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_100"
-                android:background="@mipmap/icon_contentbg">
+                android:background="@mipmap/icon_contentbg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,20 +181,30 @@
                     android:text="会员等级"
                     android:textColor="#8E5900"
                     android:textSize="@dimen/typeface16sp" />
+
                 <TableLayout
-                    android:layout_marginTop="@dimen/dp_30"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical">
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10">
+
+                </TableLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginRight="@dimen/dp_10">
 
                     <TableRow>
 
                         <Button
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
+                            android:layout_weight="1"
                             android:background="#FFE8BC"
                             android:text="用户身份" />
 
@@ -183,14 +267,15 @@
                             android:text="一个月" />
 
                         <ImageButton
-                            android:src="@mipmap/icon_checksure"
                             android:id="@+id/btn_checkshoppers"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_weight="1"
                             android:background="#FFD694"
-                            android:checked="true" />
+                            android:checked="true"
+                            android:src="@mipmap/icon_checksure" />
                     </TableRow>
+
                     <TableRow>
 
                         <Button
@@ -222,13 +307,14 @@
 
                         <ImageButton
                             android:id="@+id/btn_checkdealers"
-                            android:src="@mipmap/icon_checksure"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_weight="1"
                             android:background="#FFD694"
-                            android:checked="true" />
+                            android:checked="true"
+                            android:src="@mipmap/icon_checksure" />
                     </TableRow>
+
                     <TableRow>
 
                         <Button
@@ -261,12 +347,12 @@
 
                         <ImageButton
                             android:id="@+id/btn_checkagent"
-                            android:src="@mipmap/icon_checksure"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_weight="1"
                             android:background="#FFD694"
-                            android:checked="true" />
+                            android:checked="true"
+                            android:src="@mipmap/icon_checksure" />
                     </TableRow>
                 </TableLayout>
 
@@ -280,12 +366,24 @@
         android:layout_alignParentBottom="true"
         android:background="@mipmap/icon_buttonbg">
 
-        <RadioButton
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/rd_Useragreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_17"
-            android:text="用户升级协议" />
+            android:background="@null"
+            android:button="@drawable/selector_checkboxagreement" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/rd_Useragreement"
+            android:text="用户升级协议"
+            android:textColor="#0A0300"
+            android:textSize="@dimen/typeface15sp" />
 
         <TextView
             android:id="@+id/tv_uploaddocuments"

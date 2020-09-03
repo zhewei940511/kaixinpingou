@@ -2,6 +2,7 @@ package com.laojiashop.laojia.activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.MycollectionAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
@@ -18,6 +20,7 @@ import com.laojiashop.laojia.entity.MycollectionBean;
 import com.laojiashop.laojia.http.ApiUtils;
 import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
+import com.laojiashop.laojia.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -93,32 +96,35 @@ public class MycollectionActivity extends BaseActivity {
                 refreshLayout.finishLoadMore(true);
             }
         });
+        //设置点击事件
+        mycollectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                MycollectionBean.DataBean dataBean= (MycollectionBean.DataBean) adapter.getItem(position);
+                switch (view.getId())
+                {
+                    //取消收藏
+                    case R.id.btn_delectcollection:
+                        cancleCollection(String.valueOf(dataBean.getGoods_id()));
+                        break;
+                }
+            }
+        });
+    }
+
+    private void cancleCollection(String item_id) {
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getaddcollect("Collect",item_id)).subscribe(new BaseObserver<Object>(mAt) {
+            @Override
+            public void onHandleSuccess(Object o) throws IOException {
+                ToastUtil.showToast("取消成功");
+                // 刷新数据
+                getDataFromServer();
+            }
+        });
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        mDataList = new ArrayList<>();
-//        mycollectionAdapter = new MycollectionAdapter();
-//        for (int i = 0; i < 4; i++) {
-//            HotstyletorecommendBean databean = new HotstyletorecommendBean();
-//            mDataList.add(databean);
-//        }
-//        mycollectionAdapter.addData(mDataList);
-//        mycollectionAdapter.openLoadAnimation();
-//        mycollectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//
-//                switch (view.getId())
-//                {
-//                    case R.id.btn_delectcollection:
-//                        ToastUtil.showToast("你点击了"+adapter.getItem(position)+"正在删除请稍后.....");
-//                        break;
-//                }
-//            }
-//        });
-//        rvRecycler.addItemDecoration(new DividerItemDecoration(mAt, DividerItemDecoration.VERTICAL));
-//        rvRecycler.setAdapter(mycollectionAdapter);
     }
 
     @Override
@@ -126,7 +132,7 @@ public class MycollectionActivity extends BaseActivity {
         HttpRxObservable.getObservable(ApiUtils.getApiService().getcollectgetList("mg_collect_list",page)).subscribe(new BaseObserver<MycollectionBean>(mAt) {
             @Override
             public void onHandleSuccess(MycollectionBean mycollectionBean) throws IOException {
-                //成功  你的adapter呢
+                //成功
                 List<MycollectionBean.DataBean> data = mycollectionBean.getData();
                 if (page == 1) {
                     mDataList.clear();
@@ -148,10 +154,4 @@ public class MycollectionActivity extends BaseActivity {
         finish();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

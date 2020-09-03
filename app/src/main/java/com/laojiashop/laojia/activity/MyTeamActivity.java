@@ -2,11 +2,15 @@ package com.laojiashop.laojia.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +18,7 @@ import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.MyTeamAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.GoldcoinsBean;
 import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 import com.laojiashop.laojia.entity.MyteamBean;
 import com.laojiashop.laojia.entity.MyteamListBean;
@@ -23,6 +28,11 @@ import com.laojiashop.laojia.http.BaseObserver;
 import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.utils.LoginInfoUtil;;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -52,7 +62,11 @@ public class MyTeamActivity extends BaseActivity {
     TextView tvMyteamperformance;
     @BindView(R.id.tv_teamnewperformancetoday)
     TextView tvTeamnewperformancetoday;
-    MyTeamAdapter myTeamAdapter=new MyTeamAdapter();
+    private int page = 1;
+    //适配器
+    private MyTeamAdapter myTeamAdapter;
+    //数据源
+    private List<MyteamListBean.ListBean> listBeans = new ArrayList<>();
 
     @Override
     protected void setRootView() {
@@ -66,68 +80,73 @@ public class MyTeamActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        //你的RV呢，走个几把毛
-//        mDataList = new ArrayList<>();
-//        for (int i = 0; i < 4; i++) {
-//            HotstyletorecommendBean databean = new HotstyletorecommendBean();
-//            mDataList.add(databean);
-//        }
-//        myTeamAdapter = new MyTeamAdapter(R.layout.item_mytem, mDataList);
+        rvRecycler.setLayoutManager(new LinearLayoutManager(mAt));
+        myTeamAdapter = new MyTeamAdapter(listBeans);
+        //无数据显示空
+        myTeamAdapter.setEmptyView(LayoutInflater.from(mAt).inflate(R.layout.layout_empty_view, rvRecycler, false));
+        //绑定适配器
         rvRecycler.setAdapter(myTeamAdapter);
+        //设置头
+        refreshLayout.setRefreshFooter(new BallPulseFooter(mAt).setSpinnerStyle(SpinnerStyle.Scale));
+        //开启下拉刷新
+        refreshLayout.setEnableRefresh(true);
+        //开启上拉加载
+        refreshLayout.setEnableLoadMore(true);
+        refreshLayout.setEnableScrollContentWhenLoaded(true);
+        //取消内容不满一页时开启上拉加载功能
+        refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
+        refreshLayout.setEnableOverScrollBounce(true);
+        //下拉刷新监听
+        //下拉刷新监听
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                loaddata();
+                refreshLayout.finishRefresh(true);
+            }
+        });
+        //上拉加载
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                loaddata();
+                refreshLayout.finishLoadMore(true);
+            }
+        });
     }
 
     @Override
     public void getDataFromServer() {
-        /**
-         * 团队信息接口
-         */
-//        HttpRxObservable.getObservable(ApiUtils.getApiService().myteam()).subscribe(new BaseObserver<MyteamBean.DataBean>(mAt) {
-//            @Override
-//            public void onHandleSuccess(MyteamBean.DataBean myteamBean) throws IOException {
-//                tvMyteamperformance.setText(myteamBean.getMyTeamPerformance()+"W");
-//                tvNumberteamaddedtoday.setText(myteamBean.getNumberTeamAddedToday()+"");
-//                tvTeamnewperformancetoday.setText(myteamBean.getTeamNewPerformanceToday()+"W");
-//                tvTotalnumberteams.setText(myteamBean.getTotalNumberTeams()+"");
-//            }
-//        });
-//        IProgressDialog mProgressDialog = new IProgressDialog() {
-//            @Override
-//            public Dialog getDialog() {
-//                ProgressDialog dialog = new ProgressDialog(mAt);
-//                dialog.setMessage("请稍后...");
-//                return dialog;
-//            }
-//        };
-//                EasyHttp.get("/appApi/v1/MyTeam/index").headers("token", LoginInfoUtil.getToken())
-//                .execute(new ProgressDialogCallBack<MyteamBean>(mProgressDialog, true, true) {
-//
-//                    @Override
-//                    public void onError(ApiException e) {
-//                        super.onError(e);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(MyteamBean myteamBean) {
-//                        showToast(""+myteamBean.getTotalNumberTeams());
-//                       // ToastUtil.showToast(""+myteamBean.getTotalNumberTeams());
-//                    }
-//                });
+        //加载团队业绩列表
+        loaddata();
+        //请求团队业绩页面
+        HttpRxObservable.getObservable(ApiUtils.getApiService().MyTeamIndex()).subscribe(new BaseObserver<MyteamBean>(mAt) {
+            @Override
+            public void onHandleSuccess(MyteamBean myteamBean) throws IOException {
+                tvTotalnumberteams.setText(String.valueOf(myteamBean.getTotalNumberTeams()));
+                tvNumberteamaddedtoday.setText(String.valueOf(myteamBean.getNumberTeamAddedToday()));
+                tvMyteamperformance.setText(myteamBean.getMyTeamPerformance());
+                tvTeamnewperformancetoday.setText(myteamBean.getTeamNewPerformanceToday());
+            }
+        });
+    }
 
-//        });
-        //就是这里，下面这个是吧嗯 让你后台改一下这个吧
-       // 这个data默认返回的的是“”，你是用list接收的，要么，返回null，要么返回【】，只能这样。
-//            HttpRxObservable.getObservable(ApiUtils.getApiService().MyTeamList(1)).subscribe(new BaseObserver<MyteamListBean>(mAt) {
-//                @Override
-//                public void onHandleSuccess(MyteamListBean listBeans) throws IOException {
-//                             myTeamAdapter.addData(listBeans);
-//                             //我这边太卡了，你初始化的RV呢，你说不需要啊我是黄油刀操作的
-//                }
-//
-//                @Override
-//                public void onHandleError(ApiException apiExc) {
-//                    super.onHandleError(apiExc);
-//                }
-//            });
+    //加载团队列表
+    private void loaddata() {
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getMyTeamList(page)).subscribe(new BaseObserver<MyteamListBean>(mAt) {
+            @Override
+            public void onHandleSuccess(MyteamListBean myteamListBean) throws IOException {
+                //成功
+                List<MyteamListBean.ListBean> data = myteamListBean.getList();
+                if (page == 1) {
+                    listBeans.clear();
+                }
+                listBeans.addAll(data);
+                myTeamAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -144,29 +163,26 @@ public class MyTeamActivity extends BaseActivity {
                 break;
             //二维码
             case R.id.tv_header_erweimacode:
-//                    HttpRxObservable.getObservable(ApiUtils.getApiService().makerelationbycode("18888888880")).subscribe(new BaseObserver<Object>(mAt) {
-//                        @Override
-//                        public void onHandleSuccess(Object o) throws IOException {
-//
-//                        }
-//
-//                        @Override
-//                        public void onHandleError(ApiException apiExc) {
-//                            super.onHandleError(apiExc);
-//                        }
-//                    });
-//                HttpRxObservable.getObservable(ApiUtils.getApiService().happybean(200)).subscribe(new BaseObserver<Object>(mAt) {
-//                    @Override
-//                    public void onHandleSuccess(Object o) throws IOException {
-//
-//                    }
-//
-//                    @Override
-//                    public void onHandleError(ApiException apiExc) {
-//                        super.onHandleError(apiExc);
-//                    }
-//                });
+                jumpActivity(MyPromotioncodeActivity.class);
+//                finish();
                 break;
         }
     }
+
+    /**
+     * 生成二維碼
+     */
+    private void createQRCode(String content) {
+//        new Thread(() -> {
+//            //生成二维码相关放在子线程里面
+//            Bitmap logo = BitmapFactory.decodeResource(getResources(),R.drawable.icon_test);
+//            Bitmap bitmap =  CodeUtils.createQRCode(content,600,logo);
+//            runOnUiThread(()->{
+//                //显示二维码
+//                ivCode.setImageBitmap(bitmap);
+//            });
+//        }).start();
+
+    }
+
 }

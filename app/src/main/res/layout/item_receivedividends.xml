@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_receivedividends_orderid"
             android:layout_marginLeft="@dimen/dp_25"
             android:textSize="@dimen/typeface13sp"
             android:textColor="@color/black_33"
@@ -24,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tv_receivedividends_orderstatustxt"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/dp_25"
@@ -34,6 +36,7 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <TextView
+        android:id="@+id/tv_receivedividends_ordernum"
         android:text="数量：1个"
         android:textSize="@dimen/typeface13sp"
         android:textColor="@color/black_33"
@@ -42,7 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:text="数量：1个"
+        android:id="@+id/tv_receivedividends_orderscore"
+        android:text="消耗开心豆"
         android:textSize="@dimen/typeface13sp"
         android:textColor="@color/black_33"
         android:layout_marginLeft="@dimen/dp_25"
@@ -50,7 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:text="数量：1个"
+        android:id="@+id/tv_receivedividends_ordernexttime"
+        android:text="下次分红时间"
         android:textSize="@dimen/typeface13sp"
         android:textColor="@color/black_33"
         android:layout_marginLeft="@dimen/dp_25"
@@ -58,7 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:text="数量：1个"
+        android:id="@+id/tv_receivedividends_ordercreatetime"
+        android:text="兑换时间"
         android:textSize="@dimen/typeface13sp"
         android:textColor="@color/black_33"
         android:layout_marginLeft="@dimen/dp_25"
@@ -73,6 +79,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <Button
+
+        android:id="@+id/btn_bonusexitbonuss"
         android:textSize="@dimen/typeface13sp"
         android:text="退出分红权"
         android:textColor="@color/white"

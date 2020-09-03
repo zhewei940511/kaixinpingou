@@ -40,6 +40,9 @@ public class BaseAllApplication extends Application {
 
         api = retrofit.create(ApiService.class);
     }
+    public static BaseAllApplication getInstance() {
+        return application;
+    }
     public ApiService API() {
         return api;
     }

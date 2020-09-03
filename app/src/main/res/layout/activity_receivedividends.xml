@@ -6,13 +6,6 @@
     android:orientation="vertical">
 
     <include layout="@layout/base_title_view" />
-    <!--    <ScrollView android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-    <!--        <LinearLayout-->
-    <!--            android:orientation="vertical"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-
     <FrameLayout
         android:layout_width="330dp"
         android:layout_height="160dp"
@@ -36,6 +29,7 @@
             android:layout_marginTop="55dp">
 
             <TextView
+                android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -44,6 +38,7 @@
                 android:textSize="@dimen/dp_22" />
 
             <Button
+                android:id="@+id/btm_exchange"
                 android:layout_width="@dimen/dp_72"
                 android:layout_height="@dimen/dp_28"
                 android:layout_alignParentRight="true"
@@ -63,6 +58,7 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:id="@+id/tv_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_11"
@@ -81,6 +77,7 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:id="@+id/tv_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="124dp"
@@ -99,10 +96,15 @@
         android:textColor="@color/black_33"
         android:textSize="@dimen/typeface16sp" />
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <!--        </LinearLayout>-->
     <!--    </ScrollView>-->
 </LinearLayout>

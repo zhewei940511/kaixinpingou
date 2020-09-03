@@ -17,6 +17,8 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.base.BaseFragment;
 import com.laojiashop.laojia.fragment.MyspellingPage.AbulkFragment;
+import com.laojiashop.laojia.fragment.MyspellingPage.IparticipateinSpellingFragment;
+import com.laojiashop.laojia.fragment.MyspellingPage.IstartedSpellingFragment;
 import com.laojiashop.laojia.fragment.MyspellingPage.SpellgroupFragment;
 import com.laojiashop.laojia.utils.BarUtils;
 import com.laojiashop.laojia.utils.StatusBarUtil;
@@ -36,12 +38,12 @@ public class MyspellingPageFragment extends BaseFragment {
     FrameLayout mTitleView;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.tv_screen)
-    TextView tvScreen;
-    @BindView(R.id.ll_sorting_way)
-    LinearLayout llSortingWay;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    private PopupWindow mPopWindow;
+    private int showTag;
+
+    public MyspellingPageFragment(int showTag) {
+        this.showTag = showTag;
+    }
 
     @Override
     protected int getContentViewRes() {
@@ -57,9 +59,14 @@ public class MyspellingPageFragment extends BaseFragment {
             layoutParams.topMargin = BarUtils.getStatusBarHeight(mAty) + layoutParams.topMargin;
             mTitleView.setLayoutParams(layoutParams);
         }
-        fragments.add(new SpellgroupFragment());
-        fragments.add(new AbulkFragment());
-        tabLayout.setViewPager(viewPager, new String[]{"拼团", "团购"}, getActivity(), fragments);
+        fragments.add(new IparticipateinSpellingFragment());
+        fragments.add(new IstartedSpellingFragment());
+        tabLayout.setViewPager(viewPager, new String[]{"我参与的", "我发起的"}, getActivity(), fragments);
+        if (showTag == 1) {
+            viewPager.setCurrentItem(1);
+        }else {
+            viewPager.setCurrentItem(0);
+        }
     }
 
     @Override
@@ -70,46 +77,5 @@ public class MyspellingPageFragment extends BaseFragment {
     @Override
     protected void getDataFromServer() {
 
-    }
-
-    @OnClick({R.id.tv_screen, R.id.ll_sorting_way})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_screen:
-                break;
-            case R.id.ll_sorting_way:
-                if (mPopWindow != null && !mPopWindow.isShowing()) {
-                    mPopWindow.showAsDropDown(llSortingWay, 0, 0);
-                }
-                break;
-        }
-    }
-    //初始化popuwindow
-    private void initPopuWindow(View contentView, TextView textView) {
-        mPopWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        mPopWindow.setContentView(contentView);
-
-        //设置背景色
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 0.8f;
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        getActivity().getWindow().setAttributes(lp);
-
-        //popupWindow获取焦点
-        mPopWindow.setFocusable(true);
-        mPopWindow.setAnimationStyle(R.style.popmenu_animation); //动画
-        mPopWindow.setOutsideTouchable(true);
-        mPopWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        //设置popupWindow消失时的监听
-        mPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            //在dismiss中恢复透明度
-            public void onDismiss() {
-                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
-                textView.setTextColor(getResources().getColor(R.color.color_common_font));
-            }
-        });
     }
 }

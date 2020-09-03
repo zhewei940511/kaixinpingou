@@ -61,7 +61,8 @@ public class MallGoodsCommentAdapter extends BaseQuickAdapter<MallGoodsCommentBe
         recyclerView.setAdapter(mallGoodsCommentImgAdapter);
 
         List<String> urlList = new ArrayList<>();
-        List<MallGoodsCommentBean.DataBean.ImgsBean> imgs = item.getImgs();//是这个，我嵌套了一个rv
+        List<MallGoodsCommentBean.DataBean.ImgsBean> imgs = item.getImgs();
+        //是这个，我嵌套了一个rv
         for (MallGoodsCommentBean.DataBean.ImgsBean bean : imgs) {
             urlList.add(bean.getUrl());
         }

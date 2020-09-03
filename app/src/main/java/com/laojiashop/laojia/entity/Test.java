@@ -1,7 +1,5 @@
 package com.laojiashop.laojia.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -11,55 +9,60 @@ public class Test {
 
 
     /**
-     * id : 423
-     * typeid : 60
-     * title : 苹果Apple iPhone11手机
+     * id : 352
+     * typeid : 32
+     * title : 大宝SOD蜜乳液男女面霜100ml*3
      * content :
-     * sort : 1
+     * sort : 50
      * status : 1
-     * create_time : 2020-07-16 14:08:37
-     * update_time : 2020-07-17 15:54:21
-     * path : http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg
-     * total : 1499982
+     * create_time : 2020-03-19 14:40:11
+     * update_time : 2020-08-29 17:25:52
+     * path : http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg
+     * total : 200125
      * score : 0
-     * imgs : [{"name":"6cfef7bda0565be3.jpg","ext":"jpg","url":"http://static.laojia99.com/Uploads/image/20200716/77fa25943a190bf45140b07fefe23526.jpg","uid":1594879190248,"status":"success"},{"name":"c2b0fe85a500cfcb.jpg","ext":"jpg","url":"http://static.laojia99.com/Uploads/image/20200716/fd1e8e21b8160e23b93f4f119a0cdfb0.jpg","uid":1594879190274,"status":"success"},{"name":"7dc495daad4958bb.jpg","ext":"jpg","url":"http://static.laojia99.com/Uploads/image/20200716/d955c99feb3edefcccd66f16f255dd43.jpg","uid":1594879190296,"status":"success"},{"name":"d8c779d94f3f5827.jpg","ext":"jpg","url":"http://static.laojia99.com/Uploads/image/20200716/072fab80269fa800b3d6e7d5b0d329f4.jpg","uid":1594879190328,"status":"success"}]
+     * imgs : [{"name":"L (3).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/691e2316626ae653e9935dfcc053c86e.jpg","uid":1584599874882,"status":"success"},{"name":"L (1).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/b33b2d11382570126cfc4c060a867cdb.jpg","uid":1584599876364,"status":"success"},{"name":"L (2).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/1a8f7e54cafedcd8e618c77aa8ed07b2.jpg","uid":1584599876597,"status":"success"}]
      * desc :
-     * stitle : 移动联通电信4G手机 双卡双待
-     * price : 5999.00
-     * market_price : 6199.00
+     * stitle : 30年口碑之选 SOD抗氧化 长效滋润 补水保湿
+     * price : 33.90
+     * market_price : 69.90
      * quota : 0
-     * tags : ["4g","双卡双待","A13处理器"]
-     * supplier_id : 1
-     * cost_price : 4000.00
+     * tags : []
+     * supplier_id : 17
+     * cost_price : 32.90
      * subject : [56]
-     * tuangou : [{"title":"","price_id":0,"number":"3","price":"4399","sku":[],"max":"1","numberStr":"3人团"},{"title":"","price_id":1,"number":"6","price":"4799","sku":[],"max":"1","numberStr":"6人团"},{"title":"","price_id":2,"number":"11","price":"5599","sku":[],"max":"1","numberStr":"11人团"},{"title":"","price_id":6,"number":"3","price":"4399","sku":[],"max":"1","numberStr":"3人团"},{"title":"","price_id":7,"number":"6","price":"4799","sku":[],"max":"1","numberStr":"6人团"},{"title":"","price_id":8,"number":"11","price":"5599","sku":[],"max":"1","numberStr":"11人团"}]
-     * intro : [{"name":"af0a3a0ac16b6bb2.png","url":"http://static.laojia99.com/Uploads/image/20200716/07b2fff586b2e53872a843dc9e407b7d.png","uid":1594883595909,"status":"success"},{"name":"efc8083197de5b21.jpg","url":"http://static.laojia99.com/Uploads/image/20200716/6a4cc09594c957341cc95aecfd672ecf.jpg","uid":1594883599006,"status":"success"},{"url":"http://static.laojia99.com/Uploads/image/20200316/397bd2f1390730c52ea4ed8df44e1e04.jpeg"}]
-     * shequ : []
-     * has_tg : 1
-     * has_sq : 2
-     * relation : [58,59,60]
-     * sales : 1
-     * virtual_sales : 100
+     * tuangou : []
+     * intro : [{"name":"L (2).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/1bdd6b49c003429b244e984160971f8e.jpg","uid":1584599993195,"status":"success"},{"name":"L (3).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/db504cc56327adc595386747e889b3a0.jpg","uid":1584599978504,"status":"success"},{"name":"L (4).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/2adbde6d61cb18b09007fd69bd2002e2.jpg","uid":1584599991122,"status":"success"},{"name":"L (5).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/74817fa2566b183b03ee38d5c028c870.jpg","uid":1584599989743,"status":"success"},{"name":"L (6).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/fedb2542223f3b104cce6f513de705e2.jpg","uid":1584599987538,"status":"success"},{"name":"L (7).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/c6dc0883688f8a478b65baa2667a6b09.jpg","uid":1584599984996,"status":"success"},{"name":"L (8).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/83566964100ffca44950b6953f995fe5.jpg","uid":1584599980248,"status":"success"},{"name":"L (9).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/219e681bc7a023e43d3dd1c9b6fdd6b6.jpg","uid":1584599987863,"status":"success"},{"name":"L (10).jpg","url":"http://static.laojia99.com/Uploads/image/20200319/606c36ed6d58d387008c93c75605f7b9.jpg","uid":1584599989303,"status":"success"},{"url":"http://static.laojia99.com/Uploads/image/20200316/397bd2f1390730c52ea4ed8df44e1e04.jpeg"}]
+     * shequ : false
+     * has_tg : 0
+     * has_sq : 0
+     * relation : []
+     * sales : 8
+     * virtual_sales : 0
      * is_del : 0
      * is_cross_border : 0
      * is_one_buy : 0
      * freeze_coin : 0
-     * images : ["http://static.laojia99.com/Uploads/image/20200716/77fa25943a190bf45140b07fefe23526.jpg","http://static.laojia99.com/Uploads/image/20200716/fd1e8e21b8160e23b93f4f119a0cdfb0.jpg","http://static.laojia99.com/Uploads/image/20200716/d955c99feb3edefcccd66f16f255dd43.jpg","http://static.laojia99.com/Uploads/image/20200716/072fab80269fa800b3d6e7d5b0d329f4.jpg"]
-     * freight_list : []
-     * show_price : {"min":"4399","max":"5599","priceTypeStr":"拼团价"}
-     * applyTuangou : true
-     * showButton : true
-     * sku : {"tree":[{"k":"颜色","v":[{"id":1598,"name":"白色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1599,"name":"红色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1600,"name":"紫色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1602,"name":"黑色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1693,"name":"绿色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"}],"k_s":"s1"},{"k":"储存容量","v":[{"id":1695,"name":"64g","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1697,"name":"128g","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1698,"name":"256g","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"}],"k_s":"s2"}],"list":[{"sku":"1598-1695","sku_name":"白色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"白色","title2":"64g","s1":"1598","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1598-1697","sku_name":"白色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"白色","title2":"128g","s1":"1598","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1598-1698","sku_name":"白色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"白色","title2":"256g","s1":"1598","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1599-1695","sku_name":"红色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"红色","title2":"64g","s1":"1599","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1599-1697","sku_name":"红色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"红色","title2":"128g","s1":"1599","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1599-1698","sku_name":"红色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"红色","title2":"256g","s1":"1599","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1600-1695","sku_name":"紫色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"紫色","title2":"64g","s1":"1600","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1600-1697","sku_name":"紫色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"紫色","title2":"128g","s1":"1600","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1600-1698","sku_name":"紫色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"紫色","title2":"256g","s1":"1600","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1602-1695","sku_name":"黑色-64g","inventory":99998,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"黑色","title2":"64g","s1":"1602","s2":"1695","s3":0,"supplier_id":1,"stock_num":99998,"quota":0,"quota_used":0},{"sku":"1602-1697","sku_name":"黑色-128g","inventory":99998,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"黑色","title2":"128g","s1":"1602","s2":"1697","s3":0,"supplier_id":1,"stock_num":99998,"quota":0,"quota_used":0},{"sku":"1602-1698","sku_name":"黑色-256g","inventory":99998,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"黑色","title2":"256g","s1":"1602","s2":"1698","s3":0,"supplier_id":1,"stock_num":99998,"quota":0,"quota_used":0},{"sku":"1693-1695","sku_name":"绿色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"绿色","title2":"64g","s1":"1693","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1693-1697","sku_name":"绿色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"绿色","title2":"128g","s1":"1693","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1693-1698","sku_name":"绿色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"绿色","title2":"256g","s1":"1693","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0}],"stock_num":1499982,"collection_id":"423","none_sku":false,"hide_stock":false,"start-sale-num":2,"messages":[],"price":"5999.00","market_price":"6199.00"}
+     * is_grab : 0
+     * grab_path : http://static.laojia99.com/Uploads/image/20200326/7efffaa1621bacc070c89d3306eda9a9.jpg
+     * grab_price : 122.00
+     * images : ["http://static.laojia99.com/Uploads/image/20200319/691e2316626ae653e9935dfcc053c86e.jpg","http://static.laojia99.com/Uploads/image/20200319/b33b2d11382570126cfc4c060a867cdb.jpg","http://static.laojia99.com/Uploads/image/20200319/1a8f7e54cafedcd8e618c77aa8ed07b2.jpg"]
+     * freight_list : [{"id":460000,"name":"海南省","freight":7,"freight_price":700},{"id":540000,"name":"西藏自治区","freight":7,"freight_price":700},{"id":630000,"name":"青海省","freight":7,"freight_price":700},{"id":650000,"name":"新疆维吾尔自治区","freight":7,"freight_price":700}]
+     * show_price : {"min":"35.5","max":"55.5","priceTypeStr":"商城价"}
+     * share_url : http://weixin.demo.laojia99.com/mall/detail/352
+     * applyTuangou : false
+     * showButton : false
+     * sku : {"tree":[{"k":"重量","v":[{"id":1589,"name":"150g","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"},{"id":1590,"name":"250g","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}],"k_s":"s1"},{"k":"颜色","v":[{"id":1598,"name":"白色","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}],"k_s":"s2"},{"k":"瓶","v":[{"id":1645,"name":"100ml*3瓶","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"},{"id":1646,"name":"200ml*3瓶","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}],"k_s":"s3"}],"list":[{"sku":"1589-1598-1645","sku_name":"150g-白色-100ml*3瓶","inventory":99999,"price":"35.5","market_price":"","cost_price":"30","score":0,"max":0,"path":"","goods_num":"","title1":"150g","title2":"白色","title3":"100ml*3瓶","s1":"1589","s2":"1598","s3":"1645","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1589-1598-1646","sku_name":"150g-白色-200ml*3瓶","inventory":99999,"price":"55.5","market_price":"","cost_price":"50","score":0,"max":0,"path":"","goods_num":"","title1":"150g","title2":"白色","title3":"200ml*3瓶","s1":"1589","s2":"1598","s3":"1646","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1590-1598-1645","sku_name":"250g-白色-100ml*3瓶","inventory":99999,"price":"35.5","market_price":"","cost_price":"30","score":0,"max":0,"path":"","goods_num":"","title1":"250g","title2":"白色","title3":"100ml*3瓶","s1":"1590","s2":"1598","s3":"1645","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1590-1598-1646","sku_name":"250g-白色-200ml*3瓶","inventory":99999,"price":"55.5","market_price":"","cost_price":"50","score":0,"max":0,"path":"","goods_num":"","title1":"250g","title2":"白色","title3":"200ml*3瓶","s1":"1590","s2":"1598","s3":"1646","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0}],"stock_num":399996,"collection_id":"352","none_sku":false,"hide_stock":false,"start_sale_num":2,"messages":[],"price":"33.90","market_price":"69.90"}
      * quota_use : 0
-     * picture : http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg
+     * picture : http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg
      * is_act : false
      * cartNum :
      * date : false
-     * freight_tips : 全国包邮，偏远地区除外
+     * freight_tips : 最低7元起
      * showCart : false
-     * goodsComemnt : {"headimgurl":"http://himg.bdimg.com/sys/portrait/item/a6607a617a69353233363233000f.jpg","name":"11","star":5,"content":"这个真的很棒棒哦","sku_name":"黑色-256g"}
-     * goodsActivityType : 1
-     * goodsContentUrl : http://sys.demo.laojia99.com/viewgoods/423.html
+     * goodsComemnt : {}
+     * goodsActivityType : 0
+     * goodsContentUrl : http://sys.demo.laojia99.com/viewgoods/352.html
+     * defaultAddress : []
      */
 
     private int id;
@@ -80,6 +83,7 @@ public class Test {
     private int quota;
     private int supplier_id;
     private String cost_price;
+    private boolean shequ;
     private int has_tg;
     private int has_sq;
     private int sales;
@@ -88,7 +92,11 @@ public class Test {
     private int is_cross_border;
     private int is_one_buy;
     private int freeze_coin;
+    private int is_grab;
+    private String grab_path;
+    private String grab_price;
     private ShowPriceBean show_price;
+    private String share_url;
     private boolean applyTuangou;
     private boolean showButton;
     private SkuBean sku;
@@ -103,14 +111,14 @@ public class Test {
     private int goodsActivityType;
     private String goodsContentUrl;
     private List<ImgsBean> imgs;
-    private List<String> tags;
+    private List<?> tags;
     private List<Integer> subject;
-    private List<TuangouBean> tuangou;
+    private List<?> tuangou;
     private List<IntroBean> intro;
-    private List<?> shequ;
-    private List<Integer> relation;
+    private List<?> relation;
     private List<String> images;
-    private List<?> freight_list;
+    private List<FreightListBean> freight_list;
+    private List<?> defaultAddress;
 
     public int getId() {
         return id;
@@ -256,6 +264,14 @@ public class Test {
         this.cost_price = cost_price;
     }
 
+    public boolean isShequ() {
+        return shequ;
+    }
+
+    public void setShequ(boolean shequ) {
+        this.shequ = shequ;
+    }
+
     public int getHas_tg() {
         return has_tg;
     }
@@ -320,12 +336,44 @@ public class Test {
         this.freeze_coin = freeze_coin;
     }
 
+    public int getIs_grab() {
+        return is_grab;
+    }
+
+    public void setIs_grab(int is_grab) {
+        this.is_grab = is_grab;
+    }
+
+    public String getGrab_path() {
+        return grab_path;
+    }
+
+    public void setGrab_path(String grab_path) {
+        this.grab_path = grab_path;
+    }
+
+    public String getGrab_price() {
+        return grab_price;
+    }
+
+    public void setGrab_price(String grab_price) {
+        this.grab_price = grab_price;
+    }
+
     public ShowPriceBean getShow_price() {
         return show_price;
     }
 
     public void setShow_price(ShowPriceBean show_price) {
         this.show_price = show_price;
+    }
+
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
     }
 
     public boolean isApplyTuangou() {
@@ -440,11 +488,11 @@ public class Test {
         this.imgs = imgs;
     }
 
-    public List<String> getTags() {
+    public List<?> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<?> tags) {
         this.tags = tags;
     }
 
@@ -456,11 +504,11 @@ public class Test {
         this.subject = subject;
     }
 
-    public List<TuangouBean> getTuangou() {
+    public List<?> getTuangou() {
         return tuangou;
     }
 
-    public void setTuangou(List<TuangouBean> tuangou) {
+    public void setTuangou(List<?> tuangou) {
         this.tuangou = tuangou;
     }
 
@@ -472,19 +520,11 @@ public class Test {
         this.intro = intro;
     }
 
-    public List<?> getShequ() {
-        return shequ;
-    }
-
-    public void setShequ(List<?> shequ) {
-        this.shequ = shequ;
-    }
-
-    public List<Integer> getRelation() {
+    public List<?> getRelation() {
         return relation;
     }
 
-    public void setRelation(List<Integer> relation) {
+    public void setRelation(List<?> relation) {
         this.relation = relation;
     }
 
@@ -496,19 +536,27 @@ public class Test {
         this.images = images;
     }
 
-    public List<?> getFreight_list() {
+    public List<FreightListBean> getFreight_list() {
         return freight_list;
     }
 
-    public void setFreight_list(List<?> freight_list) {
+    public void setFreight_list(List<FreightListBean> freight_list) {
         this.freight_list = freight_list;
+    }
+
+    public List<?> getDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(List<?> defaultAddress) {
+        this.defaultAddress = defaultAddress;
     }
 
     public static class ShowPriceBean {
         /**
-         * min : 4399
-         * max : 5599
-         * priceTypeStr : 拼团价
+         * min : 35.5
+         * max : 55.5
+         * priceTypeStr : 商城价
          */
 
         private String min;
@@ -542,24 +590,23 @@ public class Test {
 
     public static class SkuBean {
         /**
-         * tree : [{"k":"颜色","v":[{"id":1598,"name":"白色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1599,"name":"红色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1600,"name":"紫色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1602,"name":"黑色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1693,"name":"绿色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"}],"k_s":"s1"},{"k":"储存容量","v":[{"id":1695,"name":"64g","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1697,"name":"128g","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1698,"name":"256g","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"}],"k_s":"s2"}]
-         * list : [{"sku":"1598-1695","sku_name":"白色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"白色","title2":"64g","s1":"1598","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1598-1697","sku_name":"白色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"白色","title2":"128g","s1":"1598","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1598-1698","sku_name":"白色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"白色","title2":"256g","s1":"1598","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1599-1695","sku_name":"红色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"红色","title2":"64g","s1":"1599","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1599-1697","sku_name":"红色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"红色","title2":"128g","s1":"1599","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1599-1698","sku_name":"红色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"红色","title2":"256g","s1":"1599","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1600-1695","sku_name":"紫色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"紫色","title2":"64g","s1":"1600","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1600-1697","sku_name":"紫色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"紫色","title2":"128g","s1":"1600","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1600-1698","sku_name":"紫色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"紫色","title2":"256g","s1":"1600","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1602-1695","sku_name":"黑色-64g","inventory":99998,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"黑色","title2":"64g","s1":"1602","s2":"1695","s3":0,"supplier_id":1,"stock_num":99998,"quota":0,"quota_used":0},{"sku":"1602-1697","sku_name":"黑色-128g","inventory":99998,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"黑色","title2":"128g","s1":"1602","s2":"1697","s3":0,"supplier_id":1,"stock_num":99998,"quota":0,"quota_used":0},{"sku":"1602-1698","sku_name":"黑色-256g","inventory":99998,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"黑色","title2":"256g","s1":"1602","s2":"1698","s3":0,"supplier_id":1,"stock_num":99998,"quota":0,"quota_used":0},{"sku":"1693-1695","sku_name":"绿色-64g","inventory":99999,"price":"4599","market_price":"","cost_price":"4599","score":0,"max":0,"path":"","goods_num":"","title1":"绿色","title2":"64g","s1":"1693","s2":"1695","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1693-1697","sku_name":"绿色-128g","inventory":99999,"price":"4999","market_price":"","cost_price":"4999","score":0,"max":0,"path":"","goods_num":"","title1":"绿色","title2":"128g","s1":"1693","s2":"1697","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1693-1698","sku_name":"绿色-256g","inventory":99999,"price":"5799","market_price":"","cost_price":"5799","score":0,"max":0,"path":"","goods_num":"","title1":"绿色","title2":"256g","s1":"1693","s2":"1698","s3":0,"supplier_id":1,"stock_num":99999,"quota":0,"quota_used":0}]
-         * stock_num : 1499982
-         * collection_id : 423
+         * tree : [{"k":"重量","v":[{"id":1589,"name":"150g","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"},{"id":1590,"name":"250g","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}],"k_s":"s1"},{"k":"颜色","v":[{"id":1598,"name":"白色","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}],"k_s":"s2"},{"k":"瓶","v":[{"id":1645,"name":"100ml*3瓶","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"},{"id":1646,"name":"200ml*3瓶","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}],"k_s":"s3"}]
+         * list : [{"sku":"1589-1598-1645","sku_name":"150g-白色-100ml*3瓶","inventory":99999,"price":"35.5","market_price":"","cost_price":"30","score":0,"max":0,"path":"","goods_num":"","title1":"150g","title2":"白色","title3":"100ml*3瓶","s1":"1589","s2":"1598","s3":"1645","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1589-1598-1646","sku_name":"150g-白色-200ml*3瓶","inventory":99999,"price":"55.5","market_price":"","cost_price":"50","score":0,"max":0,"path":"","goods_num":"","title1":"150g","title2":"白色","title3":"200ml*3瓶","s1":"1589","s2":"1598","s3":"1646","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1590-1598-1645","sku_name":"250g-白色-100ml*3瓶","inventory":99999,"price":"35.5","market_price":"","cost_price":"30","score":0,"max":0,"path":"","goods_num":"","title1":"250g","title2":"白色","title3":"100ml*3瓶","s1":"1590","s2":"1598","s3":"1645","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0},{"sku":"1590-1598-1646","sku_name":"250g-白色-200ml*3瓶","inventory":99999,"price":"55.5","market_price":"","cost_price":"50","score":0,"max":0,"path":"","goods_num":"","title1":"250g","title2":"白色","title3":"200ml*3瓶","s1":"1590","s2":"1598","s3":"1646","supplier_id":17,"stock_num":99999,"quota":0,"quota_used":0}]
+         * stock_num : 399996
+         * collection_id : 352
          * none_sku : false
          * hide_stock : false
-         * start-sale-num : 2
+         * start_sale_num : 2
          * messages : []
-         * price : 5999.00
-         * market_price : 6199.00
+         * price : 33.90
+         * market_price : 69.90
          */
 
         private int stock_num;
         private String collection_id;
         private boolean none_sku;
         private boolean hide_stock;
-        @SerializedName("start-sale-num")
-        private int startsalenum;
+        private int start_sale_num;
         private String price;
         private String market_price;
         private List<TreeBean> tree;
@@ -598,12 +645,12 @@ public class Test {
             this.hide_stock = hide_stock;
         }
 
-        public int getStartsalenum() {
-            return startsalenum;
+        public int getStart_sale_num() {
+            return start_sale_num;
         }
 
-        public void setStartsalenum(int startsalenum) {
-            this.startsalenum = startsalenum;
+        public void setStart_sale_num(int start_sale_num) {
+            this.start_sale_num = start_sale_num;
         }
 
         public String getPrice() {
@@ -648,8 +695,8 @@ public class Test {
 
         public static class TreeBean {
             /**
-             * k : 颜色
-             * v : [{"id":1598,"name":"白色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1599,"name":"红色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1600,"name":"紫色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1602,"name":"黑色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"},{"id":1693,"name":"绿色","imgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg"}]
+             * k : 重量
+             * v : [{"id":1589,"name":"150g","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"},{"id":1590,"name":"250g","imgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg","previewImgUrl":"http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg"}]
              * k_s : s1
              */
 
@@ -683,10 +730,10 @@ public class Test {
 
             public static class VBean {
                 /**
-                 * id : 1598
-                 * name : 白色
-                 * imgUrl : http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg
-                 * previewImgUrl : http://static.laojia99.com/Uploads/image/20200717/efb88c606339cf50e00af310337005e7.jpg
+                 * id : 1589
+                 * name : 150g
+                 * imgUrl : http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg
+                 * previewImgUrl : http://static.laojia99.com/Uploads/image/20200319/261fbaa436647ee6233016b8392e9efb.jpg
                  */
 
                 private int id;
@@ -730,22 +777,23 @@ public class Test {
 
         public static class ListBean {
             /**
-             * sku : 1598-1695
-             * sku_name : 白色-64g
+             * sku : 1589-1598-1645
+             * sku_name : 150g-白色-100ml*3瓶
              * inventory : 99999
-             * price : 4599
+             * price : 35.5
              * market_price :
-             * cost_price : 4599
+             * cost_price : 30
              * score : 0
              * max : 0
              * path :
              * goods_num :
-             * title1 : 白色
-             * title2 : 64g
-             * s1 : 1598
-             * s2 : 1695
-             * s3 : 0
-             * supplier_id : 1
+             * title1 : 150g
+             * title2 : 白色
+             * title3 : 100ml*3瓶
+             * s1 : 1589
+             * s2 : 1598
+             * s3 : 1645
+             * supplier_id : 17
              * stock_num : 99999
              * quota : 0
              * quota_used : 0
@@ -763,9 +811,10 @@ public class Test {
             private String goods_num;
             private String title1;
             private String title2;
+            private String title3;
             private String s1;
             private String s2;
-            private int s3;
+            private String s3;
             private int supplier_id;
             private int stock_num;
             private int quota;
@@ -867,6 +916,14 @@ public class Test {
                 this.title2 = title2;
             }
 
+            public String getTitle3() {
+                return title3;
+            }
+
+            public void setTitle3(String title3) {
+                this.title3 = title3;
+            }
+
             public String getS1() {
                 return s1;
             }
@@ -883,11 +940,11 @@ public class Test {
                 this.s2 = s2;
             }
 
-            public int getS3() {
+            public String getS3() {
                 return s3;
             }
 
-            public void setS3(int s3) {
+            public void setS3(String s3) {
                 this.s3 = s3;
             }
 
@@ -926,72 +983,17 @@ public class Test {
     }
 
     public static class GoodsComemntBean {
-        /**
-         * headimgurl : http://himg.bdimg.com/sys/portrait/item/a6607a617a69353233363233000f.jpg
-         * name : 11
-         * star : 5
-         * content : 这个真的很棒棒哦
-         * sku_name : 黑色-256g
-         */
-
-        private String headimgurl;
-        private String name;
-        private int star;
-        private String content;
-        private String sku_name;
-
-        public String getHeadimgurl() {
-            return headimgurl;
-        }
-
-        public void setHeadimgurl(String headimgurl) {
-            this.headimgurl = headimgurl;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getStar() {
-            return star;
-        }
-
-        public void setStar(int star) {
-            this.star = star;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getSku_name() {
-            return sku_name;
-        }
-
-        public void setSku_name(String sku_name) {
-            this.sku_name = sku_name;
-        }
     }
 
     public static class ImgsBean {
         /**
-         * name : 6cfef7bda0565be3.jpg
-         * ext : jpg
-         * url : http://static.laojia99.com/Uploads/image/20200716/77fa25943a190bf45140b07fefe23526.jpg
-         * uid : 1594879190248
+         * name : L (3).jpg
+         * url : http://static.laojia99.com/Uploads/image/20200319/691e2316626ae653e9935dfcc053c86e.jpg
+         * uid : 1584599874882
          * status : success
          */
 
         private String name;
-        private String ext;
         private String url;
         private long uid;
         private String status;
@@ -1002,14 +1004,6 @@ public class Test {
 
         public void setName(String name) {
             this.name = name;
-        }
-
-        public String getExt() {
-            return ext;
-        }
-
-        public void setExt(String ext) {
-            this.ext = ext;
         }
 
         public String getUrl() {
@@ -1034,90 +1028,14 @@ public class Test {
 
         public void setStatus(String status) {
             this.status = status;
-        }
-    }
-
-    public static class TuangouBean {
-        /**
-         * title :
-         * price_id : 0
-         * number : 3
-         * price : 4399
-         * sku : []
-         * max : 1
-         * numberStr : 3人团
-         */
-
-        private String title;
-        private int price_id;
-        private String number;
-        private String price;
-        private String max;
-        private String numberStr;
-        private List<?> sku;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public int getPrice_id() {
-            return price_id;
-        }
-
-        public void setPrice_id(int price_id) {
-            this.price_id = price_id;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public void setNumber(String number) {
-            this.number = number;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getMax() {
-            return max;
-        }
-
-        public void setMax(String max) {
-            this.max = max;
-        }
-
-        public String getNumberStr() {
-            return numberStr;
-        }
-
-        public void setNumberStr(String numberStr) {
-            this.numberStr = numberStr;
-        }
-
-        public List<?> getSku() {
-            return sku;
-        }
-
-        public void setSku(List<?> sku) {
-            this.sku = sku;
         }
     }
 
     public static class IntroBean {
         /**
-         * name : af0a3a0ac16b6bb2.png
-         * url : http://static.laojia99.com/Uploads/image/20200716/07b2fff586b2e53872a843dc9e407b7d.png
-         * uid : 1594883595909
+         * name : L (2).jpg
+         * url : http://static.laojia99.com/Uploads/image/20200319/1bdd6b49c003429b244e984160971f8e.jpg
+         * uid : 1584599993195
          * status : success
          */
 
@@ -1156,6 +1074,52 @@ public class Test {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+    }
+
+    public static class FreightListBean {
+        /**
+         * id : 460000
+         * name : 海南省
+         * freight : 7
+         * freight_price : 700
+         */
+
+        private int id;
+        private String name;
+        private int freight;
+        private int freight_price;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getFreight() {
+            return freight;
+        }
+
+        public void setFreight(int freight) {
+            this.freight = freight;
+        }
+
+        public int getFreight_price() {
+            return freight_price;
+        }
+
+        public void setFreight_price(int freight_price) {
+            this.freight_price = freight_price;
         }
     }
 }

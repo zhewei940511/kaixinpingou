@@ -8,12 +8,17 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.stream.MalformedJsonException;
 import com.laojiashop.laojia.activity.UsercodeloginActivity;
 import com.laojiashop.laojia.utils.ActivityManage;
+import com.laojiashop.laojia.utils.BindCodeDialogUtil;
 import com.laojiashop.laojia.utils.BindPhoneDialogUtil;
+import com.laojiashop.laojia.utils.DialogUtil;
 import com.laojiashop.laojia.utils.LoginInfoUtil;
+import com.laojiashop.laojia.utils.ToastUtil;
 
 import java.io.IOException;
 
 import io.reactivex.disposables.Disposable;
+
+import static io.reactivex.schedulers.Schedulers.start;
 
 public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> implements ProgressCancelListener {
     private static final String TAG = "BaseObserver";
@@ -22,7 +27,7 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
     private Activity context;
     private Disposable d;
     private BaseResult<T> mData;
-    private Dialog dialog;
+    Dialog dialog;
 
     public BaseObserver(Activity aty) {
         this(aty, true);
@@ -63,21 +68,25 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
             //在这里做判断返回的0还是401并不是指定一个接口
             if (t.code.equals("0")) {
                 onHandleSuccess(t.data);
-               // ToastUtil.showToast(t.msg);
-            }else if (t.code.equals("2000")) {
+                // ToastUtil.showToast(t.msg);
+            } else if (t.code.equals("2000") || LoginInfoUtil.getToken().equals("")) {
+                //判断token是否为空或者为2000
                 //401code失效回到登录页面
 //                ActivityUtils.startActivity(UsercodeloginActivity.class);
 //                //移除所有activity
 //              // ActivityManage.finishAll();
 //                //清空登录信息
                 UsercodeloginActivity.start(context);
-               /// LoginInfoUtil.saveLoginInfo("","");
-            }else if (t.code.equals("2001"))
-            {
+//                LoginInfoUtil.saveLoginInfo("","");
+                /// LoginInfoUtil.saveLoginInfo("","");
+            } else if (t.code.equals("2001")) {
                 //绑定手机号
-                dialog=BindPhoneDialogUtil.showProtocolDialogNoBtns(context);
-            }
-            else {
+                dialog = BindPhoneDialogUtil.showProtocolDialogNoBtns(context);
+            } else if (t.code.equals("2008")) {
+                //当code码为2008的时候弹窗提示用户绑定邀请码在这里进行调用弹窗,后台请求接口返回2008标
+                ToastUtil.showToast("请先绑定上级关系");
+                dialog = BindCodeDialogUtil.showProtocolDialogNoBtns(context);
+            } else {
                 onError(new ApiException(t.code, t.msg));
             }
         } catch (Exception e) {
@@ -133,7 +142,7 @@ public abstract class BaseObserver<T> extends BaseHandleObserver<BaseResult<T>> 
         super.onError(e);
         dismissProgressDialog();
         if (e instanceof ApiException) {
-         //   onFailure(((ApiException) e).getErrorCode() + " " + e.getMessage());
+            //   onFailure(((ApiException) e).getErrorCode() + " " + e.getMessage());
         } else if (e instanceof MalformedJsonException) {
             onFailure("500 服务器数据格式错误");
         } else {

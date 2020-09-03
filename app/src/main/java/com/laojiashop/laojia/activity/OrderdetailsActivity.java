@@ -23,6 +23,7 @@ import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.view.ExpandLayout;
 
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,8 +120,13 @@ public class OrderdetailsActivity extends BaseActivity {
     Button btnDetailevaluation;
     //商品ID
     private int goodsid;
-    public static final String KEY_DATA = "KEY_DATA";
 
+    //订单id
+    private String order_id;
+    //待评价的商品ID
+    private int evaluationgoodid;
+    public static final String KEY_DATA = "KEY_DATA";
+    private  OrderGoodsdetailBean orderGoodsdetailBeans;
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_orderdetails);
@@ -145,6 +151,7 @@ public class OrderdetailsActivity extends BaseActivity {
         HttpRxObservable.getObservable(ApiUtils.getApiService().mallOrderdetail(goodsid)).subscribe(new BaseObserver<OrderGoodsdetailBean>(mAt) {
             @Override
             public void onHandleSuccess(OrderGoodsdetailBean orderGoodsdetailBean) throws IOException {
+                orderGoodsdetailBeans=orderGoodsdetailBean;
                 //判断订单状态
                 switch (orderGoodsdetailBean.getStatus()) {
                     //代支付
@@ -174,6 +181,9 @@ public class OrderdetailsActivity extends BaseActivity {
                     case 4:
                         lyPayinfo.setVisibility(View.VISIBLE);
                         lyLogisticsinfo.setVisibility(View.VISIBLE);
+                        btnDetailreturngoods.setVisibility(View.VISIBLE);
+                        btnDetailreturngoods.setBackgroundResource(R.drawable.shape_button_black_cc);
+                        btnDetailreturngoods.setTextColor(Color.parseColor("#969696"));
                         btnDetailevaluation.setVisibility(View.VISIBLE);
                         break;
                         //过期订单
@@ -198,11 +208,13 @@ public class OrderdetailsActivity extends BaseActivity {
                     Glide.with(mAt).load(orderGoodsdetailBean.getGoods_info().get(i).getPath()).apply(new RequestOptions().placeholder(R.mipmap.default_userhead_image)).into(imgOrdergoodpic);
                     tvOrdergoodtitle.setText(orderGoodsdetailBean.getGoods_info().get(i).getGoods_title());
                     tvOrdergoodsku.setText(orderGoodsdetailBean.getGoods_info().get(i).getSku_name());
+                    evaluationgoodid=orderGoodsdetailBean.getGoods_info().get(i).getGoods_id();
                 }
                 tvOrdergoodtotal.setText("￥" + orderGoodsdetailBean.getTotal());
                 tvOrdergoodfreight.setText("(含运费" + orderGoodsdetailBean.getFreight() + ")");
                 //订单信息
-                tvOrdergoodnum.setText(orderGoodsdetailBean.getOrder_no());
+                order_id=String.valueOf(orderGoodsdetailBean.getId());
+                tvOrdergoodnum.setText(String.valueOf(orderGoodsdetailBean.getOrder_no()));
                 tvOrdergoodpaynum.setText("￥" + orderGoodsdetailBean.getGoods_pay());
                 tvOrdergoodwuliu.setText("￥" + orderGoodsdetailBean.getFreight());
                 tvOrdergoodpaytotal.setText("￥" + orderGoodsdetailBean.getTotal());
@@ -218,14 +230,6 @@ public class OrderdetailsActivity extends BaseActivity {
                 tvLogisticsinformationuser.setText(orderGoodsdetailBean.getExpress_title());
                 tvLogisticsinformationnum.setText(orderGoodsdetailBean.getExpress_no());
                 tvLogisticsinformationtime.setText(orderGoodsdetailBean.getSend_time());
-                //判断是否显示物流信息和支付信息
-
-//                if (OrderStatus.DAI_FU_KUAN.status.equals(orderGoodsdetailBean.getStatus()))
-//                {
-//                    //隐藏支付信息物流信息
-//                    lyPayinfo.setVisibility(View.GONE);
-//                    lyPayinfo.setVisibility(View.GONE);
-//                }
             }
         });
     }
@@ -240,8 +244,7 @@ public class OrderdetailsActivity extends BaseActivity {
         switch (view.getId()) {
             //订单评价
             case R.id.btn_detailevaluation:
-                Intent intent=new Intent(mAt, GoodscommentActivity.class);
-                startActivity(intent);
+                GoodscommentActivity.invoke(mAt,evaluationgoodid,order_id,orderGoodsdetailBeans);
                 break;
             //取消订单
             case R.id.btn_detailscancle:
@@ -269,7 +272,7 @@ public class OrderdetailsActivity extends BaseActivity {
                 break;
             //退换货(暂不支持该功能)
             case R.id.btn_detailreturngoods:
-                showToast("退货功能完善中");
+                ApplyforaftersalesActivity.invoke(mAt,goodsid,evaluationgoodid,orderGoodsdetailBeans);
                 break;
             //确认收货
             case R.id.btn_detailconfirm:
@@ -301,13 +304,6 @@ public class OrderdetailsActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_DATA, goodsid);
         ActivityUtils.startActivity(bundle, OrderdetailsActivity.class);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
 

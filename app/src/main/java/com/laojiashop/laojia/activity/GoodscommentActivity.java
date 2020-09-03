@@ -1,5 +1,6 @@
 package com.laojiashop.laojia.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -12,16 +13,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.GridImageAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.FlieUploadBean;
+import com.laojiashop.laojia.entity.OrderGoodsdetailBean;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.utils.GlideEngine;
+import com.laojiashop.laojia.utils.ToastUtil;
 import com.laojiashop.laojia.view.FullyGridLayoutManager;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -29,16 +37,28 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
-import com.luck.picture.lib.style.PictureParameterStyle;
 import com.luck.picture.lib.tools.ScreenUtils;
-import com.luck.picture.lib.tools.SdkVersionUtils;
+import com.willy.ratingbar.ScaleRatingBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 商品评价界面
@@ -56,9 +76,35 @@ public class GoodscommentActivity extends BaseActivity {
     EditText idEditorDetail;
     @BindView(R.id.picselect_recycler)
     RecyclerView picselectRecycler;
+    //商品信息相关
+    @BindView(R.id.img_evaluationpic)
+    ImageView imgEvaluationpic;
+    @BindView(R.id.tv_evaluationtitle)
+    TextView tvEvaluationtitle;
+    @BindView(R.id.tv_evaluationsku)
+    TextView tvEvaluationsku;
+    @BindView(R.id.tv_evaluationprice)
+    TextView tvEvaluationprice;
+    @BindView(R.id.tv_evaluationallprice)
+    TextView tvEvaluationallprice;
+    //星级
+    @BindView(R.id.ratingBar)
+    ScaleRatingBar ratingBar;
+    // 图片最大选择
     private int maxSelectNum = 9;
-    private  FullyGridLayoutManager fullyGridLayoutManager;
+    private FullyGridLayoutManager fullyGridLayoutManager;
     private GridImageAdapter gridImageAdapter;
+    //商品ID，订单ID,商品信息
+    private OrderGoodsdetailBean goodsdetailBean;
+    //商品ID
+    private int goodsid;
+    //订单ID
+    private String orderid;
+    //图片集合
+    private List<String> urllist = new ArrayList<>();
+    //星级
+    private int star;
+
     @Override
     protected void setRootView() {
         setContentView(R.layout.activity_goodscomment);
@@ -67,12 +113,19 @@ public class GoodscommentActivity extends BaseActivity {
     @Override
     protected void initViews() {
         getBarDistance(headerTitleView);
+        goodsid = getIntent().getIntExtra("goods_id", 0);
+        orderid = getIntent().getStringExtra("order_id");
+        goodsdetailBean = (OrderGoodsdetailBean) getIntent().getSerializableExtra("data");
+        for (int i = 0; i < goodsdetailBean.getGoods_info().size(); i++) {
+            Glide.with(mAt).load(goodsdetailBean.getGoods_info().get(i).getPath()).apply(new RequestOptions().placeholder(R.mipmap.default_userhead_image)).into(imgEvaluationpic);
+            tvEvaluationtitle.setText(goodsdetailBean.getGoods_info().get(i).getGoods_title());
+            tvEvaluationsku.setText(goodsdetailBean.getGoods_info().get(i).getSku_name());
+        }
         tvHeaderTitle.setText("发表评价");
         tvHeaderRight.setVisibility(View.VISIBLE);
         tvHeaderRight.setTextColor(Color.parseColor("#FF666C"));
         tvHeaderRight.setText("提交");
-    //        picselectRecycler.setLayoutManager(new LinearLayoutManager(mAt));
-        fullyGridLayoutManager= new FullyGridLayoutManager(this,
+        fullyGridLayoutManager = new FullyGridLayoutManager(this,
                 3, GridLayoutManager.VERTICAL, false);
         gridImageAdapter = new GridImageAdapter(mAt, onAddPicClickListener);
         picselectRecycler.setLayoutManager(fullyGridLayoutManager);
@@ -101,12 +154,9 @@ public class GoodscommentActivity extends BaseActivity {
                         break;
                     default:
                         // 预览图片 可自定长按保存路径
-//                        PictureWindowAnimationStyle animationStyle = new PictureWindowAnimationStyle();
-//                        animationStyle.activityPreviewEnterAnimation = R.anim.picture_anim_up_in;
-//                        animationStyle.activityPreviewExitAnimation = R.anim.picture_anim_down_out;
                         PictureSelector.create(mAt)
                                 .themeStyle(R.style.picture_default_style) // xml设置主题
-                              //  .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
+                                //  .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
                                 //.setPictureWindowAnimationStyle(animationStyle)// 自定义页面启动动画
                                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)// 设置相册Activity方向，不设置默认使用系统
                                 .isNotPreviewDownload(true)// 预览图片长按是否可以下载
@@ -118,19 +168,6 @@ public class GoodscommentActivity extends BaseActivity {
             }
         });
 
-//        gridImageAdapter.setItemLongClickListener((holder, position, v) -> {
-//            //如果item不是最后一个，则执行拖拽
-//            needScaleBig = true;
-//            needScaleSmall = true;
-//            int size = mAdapter.getData().size();
-//            if (size != maxSelectNum) {
-//                mItemTouchHelper.startDrag(holder);
-//                return;
-//            }
-//            if (holder.getLayoutPosition() != size - 1) {
-//                mItemTouchHelper.startDrag(holder);
-//            }
-//        });
 
     }
 
@@ -150,19 +187,7 @@ public class GoodscommentActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.iv_header_back)
-    public void onViewClicked() {
-        finish();
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-    private GridImageAdapter.onAddPicClickListener onAddPicClickListener=new GridImageAdapter.onAddPicClickListener() {
+    private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
         @Override
         public void onAddPicClick() {
             //参数很多，根据需要添加
@@ -194,10 +219,56 @@ public class GoodscommentActivity extends BaseActivity {
                     .forResult(new MyResultCallback(gridImageAdapter));//结果回调onActivityResult code
         }
     };
+
+
+    @OnClick({R.id.iv_header_back, R.id.tv_header_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_header_back:
+                finish();
+                break;
+            case R.id.tv_header_right:
+                star = (int) ratingBar.getRating();
+                String content = idEditorDetail.getText().toString().trim();
+                if (TextUtils.isEmpty(content)) {
+                    ToastUtil.showToast("请输入内容");
+                }
+                List<Map<String,String>> list=new ArrayList<>();
+                for (int i=0;i<urllist.size();i++)
+                {
+                    //循环遍历所有
+                    Map<String,String> map=new HashMap<>();
+                    map.put("url",urllist.get(i));
+                    list.add(map);
+                }
+//                //转换json字符串
+                System.out.println("list显示"+list);
+                String s=JSON.toJSONString(list);
+                System.out.println("数据显示"+s);
+                HttpRxObservable.getObservable(ApiUtils.getApiService().applyComment("Comment", orderid, goodsid, star, content, s)).subscribe(new BaseObserver<Object>(mAt) {
+                    @Override
+                    public void onHandleSuccess(Object o) throws IOException {
+                        ToastUtil.showToast("提交评价成功");
+                        Intent havethegoodsintent = new Intent(mAt, ShoporderActivity.class);
+                        havethegoodsintent.putExtra("index", "5");
+                        startActivity(havethegoodsintent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        ToastUtil.showToast("失败" + e.toString());
+                    }
+                });
+                break;
+        }
+    }
+
     /**
      * 返回结果回调
      */
-    private static class MyResultCallback implements OnResultCallbackListener<LocalMedia> {
+    private class MyResultCallback implements OnResultCallbackListener<LocalMedia> {
         private WeakReference<GridImageAdapter> mAdapterWeakReference;
 
         public MyResultCallback(GridImageAdapter adapter) {
@@ -207,20 +278,29 @@ public class GoodscommentActivity extends BaseActivity {
 
         @Override
         public void onResult(List<LocalMedia> result) {
-            for (LocalMedia media : result) {
-                Log.i(TAG, "是否压缩:" + media.isCompressed());
-                Log.i(TAG, "压缩:" + media.getCompressPath());
-                Log.i(TAG, "原图:" + media.getPath());
-                Log.i(TAG, "是否裁剪:" + media.isCut());
-                Log.i(TAG, "裁剪:" + media.getCutPath());
-                Log.i(TAG, "是否开启原图:" + media.isOriginal());
-                Log.i(TAG, "原图路径:" + media.getOriginalPath());
-                Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
-                Log.i(TAG, "Size: " + media.getSize());
-                // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
-            }
             if (mAdapterWeakReference.get() != null) {
+                for (int i = 0; i < result.size(); i++) {
+                    //String path = result.get(i).getPath();
+                    String pathone=result.get(i).getAndroidQToPath();
+                    File file = new File(pathone);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file_data", file.getName(), requestFile);
+                    HttpRxObservable.getObservable(ApiUtils.getApiService().uploadtosave(body)).subscribe(new BaseObserver<FlieUploadBean>(mAt) {
+                        @Override
+                        public void onHandleSuccess(FlieUploadBean flieUploadBean) throws IOException {
+                            ToastUtil.showToast("上传成功");
+                            urllist.add(flieUploadBean.getPath());
+                            System.out.println("图片集合" + urllist);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            ToastUtil.showToast("上传失败");
+                        }
+                    });
+                }
+                //加载显示图片
                 mAdapterWeakReference.get().setList(result);
                 mAdapterWeakReference.get().notifyDataSetChanged();
             }
@@ -232,42 +312,14 @@ public class GoodscommentActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-        {
-            switch (requestCode)
-            {
-                case PictureConfig.CHOOSE_REQUEST:
-                    // 图片选择结果回调
-                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    // 例如 LocalMedia 里面返回五种path
-                    // 1.media.getPath(); 原图path
-                    // 2.media.getCutPath();裁剪后path，需判断media.isCut();切勿直接使用
-                    // 3.media.getCompressPath();压缩后path，需判断media.isCompressed();切勿直接使用
-                    // 4.media.getOriginalPath()); media.isOriginal());为true时此字段才有值
-                    // 5.media.getAndroidQToPath();Android Q版本特有返回的字段，但如果开启了压缩或裁剪还是取裁剪或压缩路径；注意：.isAndroidQTransform 为false 此字段将返回空
-                    // 如果同时开启裁剪和压缩，则取压缩路径为准因为是先裁剪后压缩
-                    for (LocalMedia media : selectList) {
-                        Log.i(TAG, "是否压缩:" + media.isCompressed());
-                        Log.i(TAG, "压缩:" + media.getCompressPath());
-                        Log.i(TAG, "原图:" + media.getPath());
-                        Log.i(TAG, "是否裁剪:" + media.isCut());
-                        Log.i(TAG, "裁剪:" + media.getCutPath());
-                        Log.i(TAG, "是否开启原图:" + media.isOriginal());
-                        Log.i(TAG, "原图路径:" + media.getOriginalPath());
-                        Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                        Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
-                        Log.i(TAG, "Size: " + media.getSize());
-
-                        // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
-                    }
-                    gridImageAdapter.setList(selectList);
-                    gridImageAdapter.notifyDataSetChanged();
-                    break;
-
-            }
-        }
+    //参数传递
+    public static void invoke(Activity activity, int goodid, String order_id, OrderGoodsdetailBean item) {
+        Intent intent = new Intent(activity, GoodscommentActivity.class);
+        //cao.//
+        intent.putExtra("goods_id", goodid);
+        intent.putExtra("order_id", order_id);
+        intent.putExtra("data", (Serializable) item);
+        activity.startActivity(intent);
     }
+
 }

@@ -14,16 +14,7 @@ import com.laojiashop.laojia.entity.HotstyletorecommendBean;
 
 import java.util.List;
 
-public class AddressmanagementAdapter extends BaseItemDraggableAdapter<AddressmanagementBean.DataBean, BaseViewHolder> {
-
-    //    public AddressmanagementAdapter(int layoutResId, @Nullable List<HotstyletorecommendBean> data) {
-//        super(layoutResId, data);
-//    }
-//
-//    @Override
-//    protected void convert(@NonNull BaseViewHolder helper, HotstyletorecommendBean item) {
-//
-//    }
+public class AddressmanagementAdapter extends BaseQuickAdapter<AddressmanagementBean.DataBean, BaseViewHolder> {
     public AddressmanagementAdapter(@Nullable List<AddressmanagementBean.DataBean> data) {
         super(R.layout.item_address_management, data);
     }
@@ -31,6 +22,9 @@ public class AddressmanagementAdapter extends BaseItemDraggableAdapter<Addressma
     @Override
     protected void convert(@NonNull BaseViewHolder helper, AddressmanagementBean.DataBean item) {
         helper.addOnClickListener(R.id.img_editaddress);
+        helper.addOnClickListener(R.id.tv_delectaddress);
+        helper.addOnClickListener(R.id.content);
+       // helper.addOnClickListener(R.id.ly_addressinfo);
         helper.setText(R.id.tv_addressusername,item.getName())
                 .setText(R.id.tv_addressuserphone,item.getPhone())
                 .setText(R.id.tv_addressusercontent,item.getSsq());

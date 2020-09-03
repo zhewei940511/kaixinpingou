@@ -25,16 +25,12 @@ public class MeShopFragmentAdapter extends BaseQuickAdapter<OrderBean.DataBean, 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, OrderBean.DataBean item) {
         //添加事件
-        helper.addOnClickListener(R.id.btn_orderdetails,R.id.btn_cancelorders,R.id.btn_delectorder,R.id.btn_confirmthegoods);
+        helper.addOnClickListener(R.id.btn_orderdetails,R.id.btn_cancelorders,R.id.btn_delectorder,R.id.btn_confirmthegoods,R.id.img_copyorder);
         helper.setText(R.id.orderNumTxt, "编号:"+item.getOrder_no())
                 .setText(R.id.statusTxt, item.getStatus_txt())
                 .setText(R.id.specTxt, "￥" + item.getGoods_pay())
                 .setText(R.id.freighttxt, "(含运费￥" + item.getFreight() + ")")
                 .setText(R.id.total, "￥" + item.getTotal());
-
-      //  int position = helper.getLayoutPosition();
-        //System.out.println("position" + item.getGoods_info().get(position));
-       // Button cancleButton=helper.getView(R.id.btn_cancelorders);
         //获取用户信息
         List<OrderBean.DataBean.GoodsInfoBean> goodsInfoBeanList=item.getGoods_info();
         for (int i = 0; i < goodsInfoBeanList.size(); i++) {

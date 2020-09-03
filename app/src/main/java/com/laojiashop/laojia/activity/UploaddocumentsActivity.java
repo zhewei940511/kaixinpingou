@@ -1,23 +1,30 @@
 package com.laojiashop.laojia.activity;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.laojiashop.laojia.R;
 import com.laojiashop.laojia.adapter.GridImageAdapter;
 import com.laojiashop.laojia.base.BaseActivity;
 import com.laojiashop.laojia.base.BasePresenter;
+import com.laojiashop.laojia.entity.FlieUploadBean;
+import com.laojiashop.laojia.entity.ServiceFeeBean;
+import com.laojiashop.laojia.http.ApiUtils;
+import com.laojiashop.laojia.http.BaseObserver;
+import com.laojiashop.laojia.http.HttpRxObservable;
 import com.laojiashop.laojia.utils.GlideEngine;
+import com.laojiashop.laojia.utils.ToastUtil;
 import com.laojiashop.laojia.view.FullyGridLayoutManager;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -27,12 +34,20 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.luck.picture.lib.tools.ScreenUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 上传凭证
@@ -46,10 +61,23 @@ public class UploaddocumentsActivity extends BaseActivity {
     RelativeLayout headerTitleView;
     @BindView(R.id.picselect_recycler)
     RecyclerView picselectRecycler;
+    @BindView(R.id.tv_levelStr)
+    TextView tvLevelStr;
+    @BindView(R.id.tv_cycle)
+    TextView tvCycle;
+    @BindView(R.id.tv_performance)
+    TextView tvPerformance;
+    @BindView(R.id.btn_upload)
+    Button btnUpload;
 
     private int maxSelectNum = 6;
     private FullyGridLayoutManager fullyGridLayoutManager;
     private GridImageAdapter gridImageAdapter;
+    //图片集合
+    private List<String> urllist = new ArrayList<>();
+    //请求参数声明
+    private String  record_id;
+    private int level;
 
     @Override
     protected void setRootView() {
@@ -89,10 +117,6 @@ public class UploaddocumentsActivity extends BaseActivity {
                                 .externalPictureAudio(PictureMimeType.isContent(media.getPath()) ? media.getAndroidQToPath() : media.getPath());
                         break;
                     default:
-                        // 预览图片 可自定长按保存路径
-//                        PictureWindowAnimationStyle animationStyle = new PictureWindowAnimationStyle();
-//                        animationStyle.activityPreviewEnterAnimation = R.anim.picture_anim_up_in;
-//                        animationStyle.activityPreviewExitAnimation = R.anim.picture_anim_down_out;
                         PictureSelector.create(mAt)
                                 .themeStyle(R.style.picture_default_style) // xml设置主题
                                 //  .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
@@ -116,7 +140,16 @@ public class UploaddocumentsActivity extends BaseActivity {
 
     @Override
     public void getDataFromServer() {
-
+        HttpRxObservable.getObservable(ApiUtils.getApiService().getServiceFeeindex()).subscribe(new BaseObserver<ServiceFeeBean>(mAt) {
+            @Override
+            public void onHandleSuccess(ServiceFeeBean serviceFeeBean) throws IOException {
+                tvLevelStr.setText(serviceFeeBean.getRecordInfo().getLevelStr());
+                tvCycle.setText(serviceFeeBean.getRecordInfo().getAssessment_cycle() + "天");
+                tvPerformance.setText(String.valueOf(serviceFeeBean.getRecordInfo().getNeed_achieve_performance()));
+                level = serviceFeeBean.getRecordInfo().getLevel();
+                record_id = String.valueOf(serviceFeeBean.getRecordInfo().getId());
+            }
+        });
     }
 
     @Override
@@ -154,9 +187,55 @@ public class UploaddocumentsActivity extends BaseActivity {
                     .rotateEnabled(false) // 裁剪是否可旋转图片
                     //.scaleEnabled()// 裁剪是否可放大缩小图片
                     //.recordVideoSecond()//录制视频秒数 默认60s
-                    .forResult(new UploaddocumentsActivity.MyResultCallback(gridImageAdapter));//结果回调onActivityResult code
+                    .forResult(new MyResultCallback(gridImageAdapter));//结果回调onActivityResult code
         }
     };
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.iv_header_back, R.id.btn_upload})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_header_back:
+                break;
+            case R.id.btn_upload:
+                if (urllist == null) {
+                    ToastUtil.showToast("请选择图片");
+                    return;
+                }
+                List<Map<String, String>> list = new ArrayList<>();
+                for (int i = 0; i < urllist.size(); i++) {
+                    //循环遍历所有
+                    Map<String, String> map = new HashMap<>();
+                    map.put("url", urllist.get(i));
+                    list.add(map);
+                }
+                System.out.println("list显示" + urllist);
+                String s = JSON.toJSONString(urllist);
+                System.out.println("数据显示" + s);
+                HttpRxObservable.getObservable(ApiUtils.getApiService().serviceFeeupdate(level, record_id, s)).subscribe(new BaseObserver<Object>(mAt) {
+                    @Override
+                    public void onHandleSuccess(Object o) throws IOException {
+                        ToastUtil.showToast("您的凭证上传成功");
+                        jumpActivity(RecruittoInthereviewActivity.class);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        ToastUtil.showToast(e.getMessage());
+                    }
+                });
+                break;
+        }
+    }
 
     @OnClick(R.id.iv_header_back)
     public void onViewClicked() {
@@ -166,7 +245,7 @@ public class UploaddocumentsActivity extends BaseActivity {
     /**
      * 返回结果回调
      */
-    private static class MyResultCallback implements OnResultCallbackListener<LocalMedia> {
+    private class MyResultCallback implements OnResultCallbackListener<LocalMedia> {
         private WeakReference<GridImageAdapter> mAdapterWeakReference;
 
         public MyResultCallback(GridImageAdapter adapter) {
@@ -176,20 +255,29 @@ public class UploaddocumentsActivity extends BaseActivity {
 
         @Override
         public void onResult(List<LocalMedia> result) {
-            for (LocalMedia media : result) {
-                Log.i(TAG, "是否压缩:" + media.isCompressed());
-                Log.i(TAG, "压缩:" + media.getCompressPath());
-                Log.i(TAG, "原图:" + media.getPath());
-                Log.i(TAG, "是否裁剪:" + media.isCut());
-                Log.i(TAG, "裁剪:" + media.getCutPath());
-                Log.i(TAG, "是否开启原图:" + media.isOriginal());
-                Log.i(TAG, "原图路径:" + media.getOriginalPath());
-                Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
-                Log.i(TAG, "Size: " + media.getSize());
-                // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
-            }
             if (mAdapterWeakReference.get() != null) {
+                for (int i = 0; i < result.size(); i++) {
+//                    String path = result.get(i).getPath();
+                    String path = result.get(i).getAndroidQToPath();
+                    File file = new File(path);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file_data", file.getName(), requestFile);
+                    HttpRxObservable.getObservable(ApiUtils.getApiService().uploadtosave(body)).subscribe(new BaseObserver<FlieUploadBean>(mAt) {
+                        @Override
+                        public void onHandleSuccess(FlieUploadBean flieUploadBean) throws IOException {
+                            ToastUtil.showToast("上传成功");
+                            urllist.add(flieUploadBean.getPath());
+                            System.out.println("图片集合" + urllist);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            ToastUtil.showToast("上传失败");
+                        }
+                    });
+                }
+                //加载显示图片
                 mAdapterWeakReference.get().setList(result);
                 mAdapterWeakReference.get().notifyDataSetChanged();
             }
@@ -198,43 +286,6 @@ public class UploaddocumentsActivity extends BaseActivity {
         @Override
         public void onCancel() {
             Log.i(TAG, "PictureSelector Cancel");
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case PictureConfig.CHOOSE_REQUEST:
-                    // 图片选择结果回调
-                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    // 例如 LocalMedia 里面返回五种path
-                    // 1.media.getPath(); 原图path
-                    // 2.media.getCutPath();裁剪后path，需判断media.isCut();切勿直接使用
-                    // 3.media.getCompressPath();压缩后path，需判断media.isCompressed();切勿直接使用
-                    // 4.media.getOriginalPath()); media.isOriginal());为true时此字段才有值
-                    // 5.media.getAndroidQToPath();Android Q版本特有返回的字段，但如果开启了压缩或裁剪还是取裁剪或压缩路径；注意：.isAndroidQTransform 为false 此字段将返回空
-                    // 如果同时开启裁剪和压缩，则取压缩路径为准因为是先裁剪后压缩
-                    for (LocalMedia media : selectList) {
-                        Log.i(TAG, "是否压缩:" + media.isCompressed());
-                        Log.i(TAG, "压缩:" + media.getCompressPath());
-                        Log.i(TAG, "原图:" + media.getPath());
-                        Log.i(TAG, "是否裁剪:" + media.isCut());
-                        Log.i(TAG, "裁剪:" + media.getCutPath());
-                        Log.i(TAG, "是否开启原图:" + media.isOriginal());
-                        Log.i(TAG, "原图路径:" + media.getOriginalPath());
-                        Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
-                        Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
-                        Log.i(TAG, "Size: " + media.getSize());
-
-                        // TODO 可以通过PictureSelectorExternalUtils.getExifInterface();方法获取一些额外的资源信息，如旋转角度、经纬度等信息
-                    }
-                    gridImageAdapter.setList(selectList);
-                    gridImageAdapter.notifyDataSetChanged();
-                    break;
-
-            }
         }
     }
 

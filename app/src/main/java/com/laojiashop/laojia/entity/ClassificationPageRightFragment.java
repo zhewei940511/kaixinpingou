@@ -60,8 +60,6 @@ public class ClassificationPageRightFragment extends BaseFragment {
         bannertop.setLayoutParams(layoutParams);
         //加载数据
         initBanner(bannertop);
-
-
     }
 
     @Override
@@ -86,14 +84,6 @@ public class ClassificationPageRightFragment extends BaseFragment {
                 bannertop.setBannerData(bannerBeans);
                 //banner下的rv
                 sonBeans = classificationPageBeans.get(position).getSon();
-                //SharedPreferencesManager.put("soninfo",sonBeans);
-                //数据存储這裡弃用
-//                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CLASSIFICA_INFO", Context.MODE_PRIVATE);
-//                Gson classifi_gson = new Gson();
-//                String classifi_gsonstr = classifi_gson.toJson(sonBeans);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("SON_DATA", classifi_gsonstr);
-//                editor.commit();
                 //设置适配器相关
                 rvClassifica.setLayoutManager(new GridLayoutManager(mAty, 3));
                 classificaInfoAdapter = new ClassificaInfoAdapter(R.layout.item_classificainfo, sonBeans);
@@ -102,10 +92,6 @@ public class ClassificationPageRightFragment extends BaseFragment {
                 classificaInfoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                        Intent intent=new Intent(mAty, ClassificationDetailsActivity.class);
-//                        //System.out.println("你点击了"+sonBeans.get(position).getId());
-//                        Toast.makeText(mAty,"你点击了"+sonBeans.get(position).getId(),Toast.LENGTH_LONG).show();
-//                        startActivity(intent);
                         List<ClassificationPageBean.SonBean> data = classificaInfoAdapter.getData();
                         //你这个数据封装有问题啊啥问题？你看哈
                         ClassificationDetailsActivity.invoke(getActivity(), data,position);
